@@ -6,10 +6,11 @@ import { EncryptionService } from '../../common/crypto/encryption.service';
 import { AuditService } from '../audit/audit.service';
 
 const mockPrisma = {
-  user: { findUnique: jest.fn(), findMany: jest.fn(), update: jest.fn() },
+  user: { findUnique: jest.fn(), findMany: jest.fn(), update: jest.fn(), delete: jest.fn() },
   psychologist: { findUnique: jest.fn(), findMany: jest.fn(), update: jest.fn() },
   client: { findUnique: jest.fn(), update: jest.fn() },
   appointment: { findMany: jest.fn() },
+  sessionNote: { deleteMany: jest.fn() },
   auditLog: { create: jest.fn() },
 };
 
@@ -102,18 +103,18 @@ describe('UsersService', () => {
     });
   });
 
-  describe('deactivateUser', () => {
-    it('kullanıcıyı pasif yapar', async () => {
-      mockPrisma.user.findUnique.mockResolvedValue({ id: 'u1', role: 'CLIENT', isActive: true });
-      mockPrisma.user.update.mockResolvedValue({ id: 'u1', isActive: false });
+  describe('deleteUser', () => {
+    it('kullanıcıyı siler', async () => {
+      mockPrisma.user.findUnique.mockResolvedValue({ id: 'u1', role: 'CLIENT', isActive: true, psychologist: null });
+      mockPrisma.user.delete.mockResolvedValue({ id: 'u1' });
 
-      const result = await service.deactivateUser('u1', 'admin-1');
-      expect(result.isActive).toBe(false);
+      const result = await service.deleteUser('u1', 'admin-1');
+      expect(result).toEqual({ message: 'Kullanıcı silindi' });
     });
 
-    it('admin kullanıcıyı devre dışı bırakmaya ForbiddenException fırlatır', async () => {
-      mockPrisma.user.findUnique.mockResolvedValue({ id: 'u1', role: 'ADMIN' });
-      await expect(service.deactivateUser('u1', 'admin-1')).rejects.toThrow(ForbiddenException);
+    it('admin kullanıcıyı silmeye ForbiddenException fırlatır', async () => {
+      mockPrisma.user.findUnique.mockResolvedValue({ id: 'u1', role: 'ADMIN', psychologist: null });
+      await expect(service.deleteUser('u1', 'admin-1')).rejects.toThrow(ForbiddenException);
     });
   });
 
