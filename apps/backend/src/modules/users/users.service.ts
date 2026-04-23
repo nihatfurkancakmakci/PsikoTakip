@@ -101,6 +101,7 @@ export class UsersService {
 
   async findAllUsers(search?: string, role?: Role) {
     const where: Prisma.UserWhereInput = {
+      isActive: true,
       ...(role ? { role } : {}),
       ...(search ? {
         OR: [
