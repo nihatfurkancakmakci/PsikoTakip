@@ -177,24 +177,29 @@ export class UsersService {
     return { message: 'Hesabınız başarıyla silindi.' };
   }
 
-  async deactivateUser(userId: string, adminId: string) {
-    const user = await this.prisma.user.findUnique({ where: { id: userId } });
-    if (!user) throw new NotFoundException('Kullanıcı bulunamadı');
-    if (user.role === Role.ADMIN) throw new ForbiddenException('Admin kullanıcı devre dışı bırakılamaz');
-
-    const updated = await this.prisma.user.update({
+  async deleteUser(userId: string, adminId: string) {
+    const user = await this.prisma.user.findUnique({
       where: { id: userId },
-      data: { isActive: false },
+      include: { psychologist: true },
     });
+    if (!user) throw new NotFoundException('Kullanıcı bulunamadı');
+    if (user.role === Role.ADMIN) throw new ForbiddenException('Admin kullanıcı silinemez');
+
+    if (user.psychologist) {
+      await this.prisma.sessionNote.deleteMany({ where: { psychologistId: user.psychologist.id } });
+    }
+
+    await this.prisma.user.delete({ where: { id: userId } });
 
     await this.auditService.log({
       userId: adminId,
       action: 'DELETE',
       entity: 'User',
       entityId: userId,
+      details: { deletedEmail: user.email, deletedRole: user.role },
     });
 
-    return updated;
+    return { message: 'Kullanıcı silindi' };
   }
 
   async getPsychologistClients(psychologistUserId: string) {

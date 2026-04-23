@@ -51,10 +51,10 @@ export default function AdminUsersPage() {
     onError: (e: any) => toast.error(e.response?.data?.message ?? 'Hata'),
   });
 
-  const deactivateMutation = useMutation({
+  const deleteMutation = useMutation({
     mutationFn: (userId: string) => api.delete(`/users/${userId}`),
     onSuccess: () => {
-      toast.success('Kullanıcı devre dışı bırakıldı');
+      toast.success('Kullanıcı silindi');
       qc.invalidateQueries({ queryKey: ['admin-users'] });
     },
     onError: (e: any) => toast.error(e.response?.data?.message ?? 'Hata'),
@@ -143,15 +143,15 @@ export default function AdminUsersPage() {
                             >Reddet</button>
                           </>
                         )}
-                        {u.isActive && u.role !== 'ADMIN' && (
+                        {u.role !== 'ADMIN' && (
                           <button
                             onClick={() => {
-                              if (confirm(`${u.firstName} ${u.lastName} kullanıcısını devre dışı bırakmak istediğinizden emin misiniz?`)) {
-                                deactivateMutation.mutate(u.id);
+                              if (confirm(`${u.firstName} ${u.lastName} adlı kullanıcıyı kalıcı olarak silmek istediğinizden emin misiniz? Bu işlem geri alınamaz.`)) {
+                                deleteMutation.mutate(u.id);
                               }
                             }}
-                            className="text-xs text-gray-400 hover:text-red-500 px-2 py-1 rounded hover:bg-red-50"
-                          >Devre Dışı</button>
+                            className="text-xs bg-red-600 text-white px-2.5 py-1 rounded hover:bg-red-700"
+                          >Sil</button>
                         )}
                       </div>
                     </td>

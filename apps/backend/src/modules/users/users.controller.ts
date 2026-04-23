@@ -123,8 +123,8 @@ export class UsersController {
 
   @Delete(':id')
   @Roles(Role.ADMIN)
-  @ApiOperation({ summary: 'Kullanıcıyı devre dışı bırak (admin)' })
-  deactivateUser(@Param('id') id: string, @CurrentUser() admin: JwtPayload) {
-    return this.usersService.deactivateUser(id, admin.sub);
+  @ApiOperation({ summary: 'Kullanıcıyı sil (admin)' })
+  deleteUser(@Param('id') id: string, @CurrentUser() admin: JwtPayload) {
+    return this.usersService.deleteUser(id, admin.sub);
   }
 }
