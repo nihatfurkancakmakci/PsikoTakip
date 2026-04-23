@@ -9,7 +9,7 @@ import { toast } from 'sonner';
 interface UserWithMeta extends User {
   createdAt: string;
   isActive: boolean;
-  psychologist?: { approvalStatus: string };
+  psychologist?: { id: string; approvalStatus: string };
 }
 
 const roleLabel: Record<UserRole, string> = {
@@ -134,11 +134,11 @@ export default function AdminUsersPage() {
                         {u.role === 'PSYCHOLOGIST' && u.psychologist?.approvalStatus === 'PENDING_APPROVAL' && (
                           <>
                             <button
-                              onClick={() => approveMutation.mutate({ psychId: u.id, status: 'APPROVED' })}
+                              onClick={() => approveMutation.mutate({ psychId: u.psychologist!.id, status: 'APPROVED' })}
                               className="text-xs bg-green-600 text-white px-2.5 py-1 rounded hover:bg-green-700"
                             >Onayla</button>
                             <button
-                              onClick={() => approveMutation.mutate({ psychId: u.id, status: 'REJECTED' })}
+                              onClick={() => approveMutation.mutate({ psychId: u.psychologist!.id, status: 'REJECTED' })}
                               className="text-xs bg-red-100 text-red-700 px-2.5 py-1 rounded hover:bg-red-200"
                             >Reddet</button>
                           </>
