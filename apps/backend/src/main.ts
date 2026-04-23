@@ -17,8 +17,14 @@ async function bootstrap() {
   app.use(compression());
   app.use(cookieParser());
 
+  const allowedOrigins = [
+    config.get<string>('FRONTEND_URL', 'http://localhost:3000'),
+    'http://localhost:3000',
+    /^https:\/\/psiko-takip-frontend.*\.vercel\.app$/,
+  ];
+
   app.enableCors({
-    origin: config.get<string>('FRONTEND_URL', 'http://localhost:3000'),
+    origin: allowedOrigins,
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
   });
