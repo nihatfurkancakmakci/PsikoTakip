@@ -1,0 +1,16 @@
+node_modules/
+dist/
+.next/
+build/
+.env
+.env.local
+.env.production
+.env.staging
+*.env
+coverage/
+.nyc_output/
+prisma/migrations/*.sql.bak
+*.log
+npm-debug.log*
+.DS_Store
+.turbo/

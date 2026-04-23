@@ -1,0 +1,62 @@
+version: '3.9'
+
+services:
+  db:
+    image: postgres:15-alpine
+    container_name: psikotakip-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: psiko
+      POSTGRES_PASSWORD: psiko1234
+      POSTGRES_DB: psikotakip
+    ports:
+      - '5432:5432'
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U psiko -d psikotakip']
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build:
+      context: ./apps/backend
+      dockerfile: Dockerfile
+    container_name: psikotakip-backend
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: postgresql://psiko:psiko1234@db:5432/psikotakip?schema=public
+      DIRECT_URL: postgresql://psiko:psiko1234@db:5432/psikotakip?schema=public
+      JWT_ACCESS_SECRET: psikotakip-access-secret-minimum-32-chars!!
+      JWT_REFRESH_SECRET: psikotakip-refresh-secret-minimum-32chars!!
+      JWT_ACCESS_EXPIRES_IN: 15m
+      JWT_REFRESH_EXPIRES_IN: 7d
+      ENCRYPTION_KEY: psikotakip-enc-key-32bytes12345!
+      PORT: 3001
+      NODE_ENV: production
+      FRONTEND_URL: http://localhost:3000
+      API_PREFIX: api/v1
+      THROTTLE_TTL: 60
+      THROTTLE_LIMIT: 60
+    ports:
+      - '3001:3001'
+
+  frontend:
+    build:
+      context: ./apps/frontend
+      dockerfile: Dockerfile
+    container_name: psikotakip-frontend
+    restart: unless-stopped
+    depends_on:
+      - backend
+    environment:
+      NEXT_PUBLIC_API_URL: http://localhost:3001/api/v1
+    ports:
+      - '3000:3000'
+
+volumes:
+  postgres_data:

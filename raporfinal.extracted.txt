@@ -1,0 +1,1794 @@
+ISPARTA UYGULAMALI BİLİMLER ÜNİVERSİTESİ BİLGİSAYAR MÜHENDİSLİĞİ BÖLÜMÜ YAZILIM MÜHENDİSLİĞİ SİSTEM TANIMI VE GEREKSİNİM RAPORUISPARTA UYGULAMALI BİLİMLER ÜNİVERSİTESİ BİLGİSAYAR MÜHENDİSLİĞİ BÖLÜMÜ YAZILIM MÜHENDİSLİĞİ SİSTEM TANIMI VE GEREKSİNİM RAPORU20232023
+ISPARTA UYGULAMALI BİLİMLER ÜNİVERSİTESİ BİLGİSAYAR MÜHENDİSLİĞİ BÖLÜMÜ YAZILIM MÜHENDİSLİĞİ SİSTEM TANIMI VE GEREKSİNİM RAPORU
+ISPARTA UYGULAMALI BİLİMLER ÜNİVERSİTESİ BİLGİSAYAR MÜHENDİSLİĞİ BÖLÜMÜ YAZILIM MÜHENDİSLİĞİ SİSTEM TANIMI VE GEREKSİNİM RAPORU
+2023
+2023
+İÇİNDEKİLER
+IProje Tanımları5
+1Proje Tanımı5
+2Projenin Amacı5
+2aProjenin Arka Planında Yapılan İşler5
+2bProjenin Hedefleri5
+2cProjenin Yenilikçi Yönü6
+2dÖlçümler/Başarı Ölçütleri6
+3Çalışmanın Kapsamı6
+3aMevcut Durum İncelemesi6
+3bÇalışmanın Kapsamı6
+3cÇalışmanın Bölümlere Ayrılması8
+3dRakip-Alternatif Ürünler9
+3eTakım Organizasyonu ve Yazılım Süreç Modeli10
+3fİş Paketleri Listesi11
+4Ürün Senaryoları13
+4aÜrün Senaryo Listesi13
+4bBireysel Ürün Senaryoları13
+5Paydaşlar15
+5aMüşteriler15
+5bAlıcılar15
+5cÜrünün Uygulamalı Kullanıcıları15
+5dKullanıcılara Atanan Öncelikler17
+5eKullanıcı Katılımı17
+5fBakım Kullanıcıları ve Servis Teknisyenleri18
+5gDiğer Paydaşlar18
+6Zorunlu Kısıtlar19
+6aÇözüm Kısıtları19
+6bMevcut Sistemin Uygulama Ortamı20
+6cİş Ortağı veya İşbirlikçi Uygulamalar21
+6dHazır Yazılım21
+6eBeklenen İşyeri Ortamı22
+6fKısıtların Çizelgesi23
+6gBütçe Kısıtları24
+7Adlandırma Kuralları ve Tanımlamalar25
+7aAnahtar Kelimeler Sözlüğü25
+7bBu belgede Kullanılan UML ve Diğer Notasyonlar26
+7cDahil Edilen Tüm Modeller için Veri Sözlüğü27
+8Proje ile İlgili Gerçekler ve Varsayımlar27
+8aGerçekler27
+8bVarsayımlar28
+IIGereksinimler29
+9Ürün Kullanım Senaryoları29
+9aKullanım Durum Diyagramları29
+9bÜrün Kullanım Durum Listesi.31
+9cBireysel Ürün Kullanım Durumları31
+10Fonksiyonel Gereksinimler33
+11Veri Gereksinimleri34
+12Performans Gereksinimleri36
+12aHız ve Gecikme Gereksinimleri36
+12bKesinlik veya Doğruluk Gereksinimleri37
+12cKapasite Gereksinimleri37
+13Güvenilirlik Gereksinimleri38
+13aGüvenilirlik Gereksinimleri38
+13bKullanılabilirlik Gereksinimleri38
+13cSağlamlık veya Hata Toleransı Gereksinimleri39
+13dGüvenlik Açısından Kritik Gereksinimler39
+14Bakım ve Desteklenebilirlik Gereksinimleri40
+14aBakım Gereksinimleri40
+14bDesteklenebilirlik Gereksinimleri41
+14cUyarlanabilirlik Gereksinimleri41
+14dÖlçeklenebilirlik veya Genişletilebilirlik Gereksinimleri42
+14eUzun Ömürlü Gereksinimler42
+15Güvenlik Gereksinimleri42
+15aErişim Gereksinimleri42
+15bBütünlük Gereksinimleri43
+15cGizlilik Gereksinimleri44
+15dDenetim Gereksinimleri44
+15eMuafiyet Gereksinimleri45
+16Kullanılabilirlik ve İnsanlık Gereksinimleri45
+16aKullanım Kolaylığı Gereksinimleri45
+16bKişiselleştirme ve Uluslararasılaştırma Gereksinimleri46
+16cÖğrenme Gereksinimleri47
+16dAnlaşılabilirlik ve Kibarlık Gereksinimleri48
+16eErişilebilirlik Gereksinimleri49
+16fKullanıcı Dokümantasyonu Gereksinimleri49
+16gEğitim Gereksinimleri50
+17Görünüm ve Hissetme Gereksinimleri50
+17aGörünüm Gereksinimleri50
+17bStil Gereksinimleri51
+18Operasyonel ve Çevresel Gereklilikler52
+18aBeklenen Fiziksel Çevre52
+18bBitişik Sistemlerle Arayüz Gereksinimleri52
+18cÜretim Gereksinimleri53
+18dSürüm Gereksinimleri53
+19Kültürel ve Politik Gereksinimler54
+19aKültürel Gereksinimler54
+19bPolitik Gereksinimler55
+20Yasal Gereksinimler55
+20aUyumluluk Gereksinimleri55
+20bStandard Gereksinimleri56
+Bu Dokuman Nasıl Kullanılır
+Bu belge, belirli bir yazılım mühendisliği projesine uyacak şekilde kopyalanabilen ve düzenlenebilen örnek bir şablon olarak tasarlanmıştır. Bu belgedeki başlıklardan eğer ihtiyacınız yoksa başlığı tamamen siliniz. Dokuman Times New Roman 12 punto ile hazırlanmıştır. Şekiller ve Tablolara resim-şekil yazısı eklenmelidir. Ekleme yapıldıktan sonra şekiller dizini ve tablolar dizini Alanı Güncelleştir yapılarak güncellenmelidir. Başlıkların yapısı bozulmadan içindekiler dizini Alanı Güncelleştir yapılarak dokümanın içeriği güncellenir. Raporu hazırlarken dokümanın açıklamaları silinmelidir.
+Ödevin hangi aşamada olduğu her hafta takip edilecektir. Ödev vize haftasında ilan edilen sınav takvimine göre teslim edilecektir.
+ŞEKİLLER DİZİNİ
+Şekil 1 Çalışma Kapsamı Diyagram Örneği 17
+Şekil 2 Çalışma Kapsam Diyagram Örneği 28
+Şekil 3 Örnek Use Case Diyagramı 130
+Şekil 4 Örnek Use Case Diyagramı 230
+Şekil 5 Örnek Use Case Diyagramı 331
+Şekil 6 Örnek Class-Sınıf Diyagramı35
+TABLOLAR DİZİNİ
+Tablo 1 Çalışmanın Bölümlere Ayrılması Çizelge9
+Tablo 2 Proje Takım Üyeleri10
+Tablo 3 Senaryo Örneği 114
+Tablo 4 Ürünün Uygulamalı Kullanıcıları16
+Tablo 5 Örnek Bütçe Tablosu24
+Tablo 6 Alet / Teçhizat / Yazılım / Yayın Alımları24
+Tablo 7 Giderler Tablosu25
+Tablo 8 Örnek Use Case 132
+Tablo 9 Örnek Use Case 233
+Tablo 10 Örnek Fonksiyonel Gereksinim Tablosu33
+Tablo 11 Örnek Fonksiyonel Gereksinim Tablosu 234
+Proje Tanımları
+Proje Tanımı
+PsikoTakip, psikoloji klinikleri için geliştirilecek kapsamlı bir web tabanlı yönetim sistemidir. Sistem; çoklu psikolog desteği ile klinik yönetimi, randevu planlama (online seans için otomatik video görüşme linki üretimi dahil), danışan takibi, seans notu yönetimi, psikolojik test uygulama ve otomatik skorlama, danışan ilerleme grafikleri, bildirim sistemi ve admin paneli modüllerini içermektedir. Misafir, danışan, psikolog ve admin olmak üzere dört farklı kullanıcı rolü desteklenmektedir. Sistem, KVKK uyumlu veri güvenliği standartlarında geliştirilecek ve gerçek bir alan adı üzerinden yayımlanacaktır.
+Proje Numarası
+PYS-2026-001
+Projenin Adı
+Psikolog Yönetim Sistemi (PsikoTakip)
+Proje Başlama Tarihi
+01.03.2026
+Proje Bitiş Tarihi
+01.06.2026
+Proje Süresi
+3 Ay (12 Hafta — 6 Sprint)
+Projenin Amacı
+Projenin Arka Planında Yapılan İşler
+İçerik
+Türkiye'de psikoloji alanında dijitalleşme hızla artmakla birlikte, klinik bazlı çoklu psikolog yönetimi sunan, psikolojik test entegrasyonu olan ve KVKK uyumlu bir Türkçe platform bulunmamaktadır. Mevcut çözümler genellikle tek psikolog odaklı, sınırlı özellikli veya yüksek maliyetlidir. Proje öncesinde ekip içi anket çalışması gerçekleştirilmiş; sistemde bulunması gereken modüller, tercih edilen teknolojiler ve farklılaştırıcı özellikler belirlenmiştir.
+Motivasyon
+Psikologların günlük iş yükünün büyük kısmı randevu takibi, seans notu yazımı ve danışan ilerleme değerlendirmesi gibi tekrarlayan idari görevlerden oluşmaktadır. Bu süreçlerin dijitalleştirilmesi, psikologların asıl uzmanlık alanları olan terapi sürecine daha fazla zaman ayırmalarını sağlayacaktır. Psikolojik testlerin otomatik skorlanması ise insan hatasını minimize ederek daha güvenilir sonuçlar elde edilmesine katkıda bulunacaktır.
+Hususlar
+Psikoloji kliniklerinde dijital yönetim eksikliği ciddi bir sorundur. Kağıt tabanlı veya Excel tabanlı takip sistemleri veri kaybı riski taşımakta, KVKK uyumsuzluğu yaratmakta ve verimli raporlama imkânı sunmamaktadır. Danışan verileri, 6698 sayılı KVKK kapsamında "özel nitelikli kişisel veri" kategorisinde olup ek güvenlik önlemleri ve yasal yükümlülükler gerektirmektedir.
+Projenin Hedefleri
+İçerik
+PsikoTakip projesi ile psikoloji kliniklerinin tüm operasyonel süreçlerini tek bir platform üzerinden yönetmelerini sağlamak, danışan-psikolog etkileşimini dijitalleştirmek ve psikolojik değerlendirme süreçlerini otomatikleştirmek hedeflenmektedir.
+Motivasyon
+Proje sürecinde geliştirme çabaları arttıkça ve ekip üyeleri teknik olarak neyin mümkün olduğunu keşfettikçe, orijinal hedeflerden sapma riski bulunmaktadır. Örneğin, "video görüşme sistemi gömülü olarak yazılsın" veya "ödeme sistemi de eklensin" gibi kapsam dışı istekler gündeme gelebilir. Bu sapmaları önlemek için Scrum Master (Arda Özkaya) hedeflerin korunmasından sorumlu olarak atanmıştır. Her Sprint Review toplantısında (2 haftada bir) proje hedefleri gözden geçirilecek ve Product Backlog bu hedeflere göre yeniden önceliklendirilecektir. Hedeflerde değişiklik ancak tüm ekibin katıldığı Sprint Planning toplantısında ortak kararla yapılabilecektir. Böylece projenin yönünü kaybetmeden, kontrollü bir şekilde ilerlemesi sağlanacaktır.
+Örnekler
+Psikologların randevu yönetimi, seans notu ve danışan takibi süreçlerini dijitalleştirerek idari iş yükünü en az %40 azaltmak istiyoruz.
+Psikolojik testlerin otomatik skorlanması ile değerlendirme süresini dakikalardan saniyelere indirmek ve danışan ilerleme grafiklerini görselleştirmek istiyoruz.
+Projenin Yenilikçi Yönü
+İçerik
+PsikoTakip'in yenilikçi yönleri şunlardır: Mevcut Türkçe çözümlerden farklı olarak çoklu psikolog destekli klinik yönetim yapısı sunmaktadır. Psikolojik testlerin (Beck Depresyon, Beck Anksiyete, SCL-90) dijital ortamda uygulanması ve anlık otomatik skorlanması ile psikologun manuel hesaplama ihtiyacını ortadan kaldırmaktadır. Test sonuçlarının zaman serisi olarak görselleştirildiği danışan ilerleme grafikleri sayesinde terapi sürecindeki değişim somut verilerle takip edilebilmektedir. Sağlık verilerinin AES-256 şifreleme ve kapsamlı audit log sistemi ile korunduğu KVKK uyumlu güvenlik mimarisi üzerine inşa edilmiştir. Ayrıca online seans tercih edildiğinde otomatik video görüşme linki üretimi ile randevu süreci uçtan uca dijitalleştirilmiştir.
+Ölçümler/Başarı Ölçütleri
+Sistem, 4 farklı kullanıcı rolünü (misafir, danışan, psikolog, admin) eksiksiz desteklemelidir.
+Randevu oluşturma işlemi kullanıcı tarafından 30 saniyeden kısa sürede tamamlanabilmelidir.
+Psikolojik test skorlama işlemi 2 saniye altında gerçekleştirilmelidir.
+Sistem %99.5 uptime ile 7/24 erişilebilir olmalıdır.
+Tüm hassas veriler şifrelenmiş olarak saklanmalı ve KVKK uyumluluğu sağlanmalıdır.
+Minimum 50 eş zamanlı kullanıcı sorunsuz desteklenmelidir.
+Test coverage oranı %80'in üzerinde olmalıdır.
+Kullanıcı memnuniyet anketi sonuçları 5 üzerinden en az 4 olmalıdır.
+Her sprint sonunda (2 haftalık döngüler) bu ölçütler Sprint Review toplantısında değerlendirilecek ve gerekli düzeltmeler yapılacaktır.
+Çalışmanın Kapsamı
+Mevcut Durum İncelemesi
+İçerik
+Psikoloji kliniklerinde mevcut durum incelendiğinde süreçlerin büyük oranda manuel yürütüldüğü tespit edilmiştir. Randevu yönetimi genellikle telefon veya WhatsApp üzerinden yapılmakta, seans notları kağıt dosyalarda veya Word belgelerinde tutulmakta, psikolojik testler basılı formlarla uygulanıp manuel olarak skorlanmakta, danışan ilerleme takibi psikologun kişisel değerlendirmesine bırakılmakta ve genel iletişim düzensiz kanallardan yürütülmektedir. Bazı klinikler genel amaçlı randevu araçları (Google Calendar vb.) kullanmakta ancak bu araçlar psikolojik test, seans notu ve klinik yönetimi gibi alana özgü ihtiyaçları karşılamamaktadır.
+Motivasyon
+Manuel süreçlerin dijitalleştirilmesi; veri kaybı riskini ortadan kaldıracak, KVKK uyumluluğunu sağlayacak ve psikologların idari iş yükünü önemli ölçüde azaltacaktır. Mevcut durumun analizi, PsikoTakip'in hangi süreçleri öncelikli olarak otomatikleştirmesi gerektiğini belirlememizi sağlamıştır.
+Çalışmanın Kapsamı
+İçerik
+PsikoTakip sistemi dört ana aktör grubu ile etkileşim halindedir: danışanlar, psikologlar, admin (klinik yöneticisi) ve misafir kullanıcılar. Bitişik sistemler olarak video görüşme servisi (online seans), e-posta servisi (bildirimler ve hatırlatmalar), web tarayıcısı (kullanıcı arayüzü) ve bulut veritabanı (Supabase/PostgreSQL) bulunmaktadır.
+Sistemin kapsamına dahil olan işlevler: kullanıcı kayıt ve kimlik doğrulama, psikolog profil yönetimi, randevu oluşturma/iptal/güncelleme, online seans için otomatik video görüşme linki üretimi, seans notu yönetimi, psikolojik test uygulama ve otomatik skorlama, danışan ilerleme grafikleri, bildirim gönderimi (e-posta/SMS), danışan portalı ve admin panel yönetimidir.
+Kapsam dışında kalan konular: ödeme ve fatura sistemi, sigorta entegrasyonu ve detaylı finansal raporlamadır.
+Motivasyon
+PsikoTakip'in çalışma kapsamının net bir şekilde tanımlanması, geliştirme sürecinde kapsam kaymasının (scope creep) önlenmesi açısından kritik öneme sahiptir. Kapsam sınırları belirlenmeden, ekibin "ödeme sistemi de ekleyelim" veya "ilaç takibi de olsun" gibi isteklerle karşılaşması ve projenin zamanında teslim edilememesi riski doğmaktadır. Yukarıda belirlenen kapsam dahili ve kapsam dışı işlevler, tüm ekip tarafından kabul edilmiş olup Sprint Planning toplantılarında bu sınırlara sadık kalınacaktır. Bitişik sistemlerle olan arayüzlerin (video görüşme servisi, e-posta servisi, bulut veritabanı) açıkça tanımlanması, entegrasyon noktalarındaki belirsizlikleri ortadan kaldırmakta ve her modülün sorumluluğunu netleştirmektedir.
+Örnekler
+Şekil 1. PsikoTakip Çalışma Kapsamı Diyagramı
+Hususlar
+Kapsam diyagramında kullanılan tüm adlar (Danışan, Psikolog, Admin, Misafir Kullanıcı, E-posta Servisi, Video Görüşme Servisi, Bulut Veritabanı) Bölüm 7'deki anahtar kelimeler sözlüğü ve veri sözlüğü tanımlarıyla tutarlıdır. Diyagramda gösterilen veri akışları tüm ekip üyeleri tarafından Sprint Planning toplantısında gözden geçirilmiş ve kabul edilmiştir. Kapsam dışı bırakılan işlevler (ödeme sistemi, ilaç takibi, sigorta entegrasyonu) bilinçli bir karar olup ileride genişletme potansiyeli korunmaktadır.
+Çalışmanın Bölümlere Ayrılması
+Motivasyon
+İş olaylarının bu şekilde listelenmesi, PsikoTakip'in mantıksal alt sistemlerini belirlememize olanak sağlamıştır. Her bir iş olayı ayrı bir modüle karşılık gelmekte olup Sprint planlamasında iş paketlerinin önceliklendirilmesinde temel referans olarak kullanılacaktır. Bu bölümleme aynı zamanda ekip üyeleri arasındaki görev dağılımının netleştirilmesine ve her modülün bağımsız olarak geliştirilebilmesine zemin hazırlamaktadır.
+İşlem Adı
+Girdi ve Çıktılar
+Özet
+1. Kullanıcı kayıt ve giriş
+E-posta, şifre, kişisel bilgiler → JWT token, oturum bilgisi
+Kullanıcı sisteme kayıt olur veya giriş yapar, rol bazlı yetkilendirme sağlanır
+2. Psikolog profil yönetimi
+Uzmanlık alanı, biyografi, fotoğraf, çalışma saatleri → Güncellenmiş profil sayfası
+Psikolog kendi profil bilgilerini oluşturur ve günceller
+3. Randevu oluşturma/yönetme
+Psikolog seçimi, tarih, saat, seans türü → Randevu kaydı, bildirim, video görüşme linki
+Danışan müsait slotlardan randevu alır, sistem bildirim gönderir
+4. Seans notu yönetimi
+Danışan bilgisi, seans tarihi, not içeriği → Kaydedilmiş seans notu
+Psikolog seans sonrası not oluşturur, düzenler ve danışan bazında görüntüler
+5. Psikolojik test uygulama
+Test türü seçimi, danışan cevapları → Otomatik skor, yorum, tarihçe
+Danışana test atanır, danışan çözer, sistem anlık skorlar
+6. İlerleme grafiği görüntüleme
+Danışan test geçmişi → Zaman serisi grafiği
+Test skorları grafiksel olarak görselleştirilir, psikolog izniyle danışana açılır
+7. Bildirim gönderimi
+Randevu bilgisi, hatırlatma zamanı → E-posta bildirimi
+Randevu onayı, hatırlatma ve iptal bildirimleri otomatik gönderilir (SMS altyapısı hazır, başlangıçta pasif)
+8. Admin panel yönetimi
+Psikolog bilgileri, sistem ayarları → Güncellenmiş klinik yapılandırması
+Admin psikolog ekler/çıkarır, sistem istatistiklerini görüntüler, klinik ayarlarını yönetir
+9. Danışan portalı
+Danışan giriş bilgileri → Randevularım, test sonuçlarım, ilerleme grafiğim
+Danışan kendi randevularını, test sonuçlarını ve ilerleme durumunu görüntüler
+10. Online seans yönetimi
+Seans türü (online), randevu bilgisi → Video görüşme linki
+Online seans seçildiğinde otomatik video görüşme bağlantısı üretilir ve paylaşılır
+Hususlar
+İş olaylarının listelenmesi sürecinde, başlangıçta belirlenen çalışma kapsamı diyagramında küçük güncellemeler yapılmıştır. Örneğin ödeme sistemi başlangıçta değerlendirilmiş ancak kapsam dışı bırakılmıştır. Her iş olayı ayrı bir sprint backlog öğesi olarak ele alınabilecek şekilde yönetilebilir birimlere ayrılmıştır. Bu sayede ekip üyeleri kendi sorumluluk alanlarındaki modülleri bağımsız olarak geliştirebilecektir.
+Rakip-Alternatif Ürünler
+İçerik
+Mevcut alternatif ürünler incelenmiştir. PsikologNet, Türkiye'de yaygın kullanılan bir platform olup temel randevu ve danışan yönetimi sunmaktadır; ancak psikolojik test entegrasyonu bulunmamakta, çoklu psikolog klinik yapısını desteklememekte ve aylık abonelik ücreti yüksektir. SimplePractice, uluslararası pazarda kapsamlı özellikler sunan bir çözüm olmakla birlikte Türkçe desteği yoktur, KVKK uyumlu değildir ve fiyatlandırması Türkiye pazarı için oldukça yüksektir. Bunların dışında bazı klinikler Google Calendar ve Google Drive kombinasyonunu kullanmaktadır; ancak bu araçlar alana özgü hiçbir özellik sunmamakta ve sağlık verisi güvenliği açısından yetersiz kalmaktadır. PsikoTakip, bu alternatiflerin eksikliklerini gidererek Türkçe, KVKK uyumlu, çoklu psikolog destekli, psikolojik test entegrasyonlu ve açık kaynak kodlu bir çözüm sunacaktır.
+Motivasyon
+Mevcut alternatiflerin analizi, PsikoTakip'in farklılaşma stratejisini belirlememize yardımcı olmuştur. Özellikle psikolojik test otomatik skorlama ve danışan ilerleme grafikleri özellikleri, hiçbir Türkçe rakipte bulunmayan özelliklerdir ve projemizin temel rekabet avantajını oluşturmaktadır.
+Hususlar
+PsikoTakip ile hazır satın alınabilecek çözümler arasındaki temel fark, PsikoTakip'in sıfırdan özel olarak geliştirilmesi ve açık kaynak kodlu olmasıdır. Projede kullanılan hazır yazılım bileşenleri (NestJS, Next.js, Prisma, Recharts vb.) Bölüm 6d'de ayrıca detaylandırılmıştır.
+Takım Organizasyonu ve Yazılım Süreç Modeli
+İçerik
+Projede Çevik (Agile) yazılım geliştirme metodolojisi ve Scrum çerçevesi kullanılacaktır. 2 haftalık sprint döngüleri ile iteratif geliştirme yapılacaktır. Her sprint sonunda çalışan bir yazılım artışı (increment) üretilecek, Sprint Review ve Sprint Retrospective toplantıları düzenlenecektir. Günlük Daily Scrum yazışmaları ile ekip senkronizasyonu sağlanacaktır. Product Backlog, Sprint Backlog ve Burndown Chart araçları kullanılarak süreç yönetimi yapılacaktır. Versiyon kontrolü için GitHub, CI/CD için GitHub Actions, proje takibi için GitHub Projects kullanılacaktır.
+Motivasyon
+PsikoTakip orta ölçekli bir proje olup, 3 aylık geliştirme süresi ve 5 kişilik ekip yapısı ile Scrum çerçevesi en uygun seçenektir. Çevik yaklaşım; değişen gereksinimlere hızlı adaptasyonu, erken ve sürekli teslimatı ve kullanıcı geri bildirimine dayalı geliştirmeyi mümkün kılmaktadır. Plan tabanlı modeller (Şelale, V-Model) bu ölçekte gereksiz bürokratik yük oluşturacağından tercih edilmemiştir.
+Sıra No
+Takım Üyesi
+Rolü
+1
+Arda Özkaya
+Scrum Master / Proje Yöneticisi
+2
+Recep Çalışkan
+Backend Geliştirici
+3
+Mesut Özdemir
+Frontend Geliştirici / Test Desteği
+4
+Hasan Tozlu
+Test / QA Mühendisi
+5
+Nihat Furkan Çakmakcı
+DevOps / CI-CD Mühendisi
+Proje Yöneticisi:
+Alan
+Değer
+Adı-Soyadı
+Arda Özkaya
+Ünvanı/Görevi
+Scrum Master / Proje Yöneticisi
+Yazışma Adresi
+(üniversite adresini yaz)
+Telefon
+(0553)2513242
+E-Posta
+ardaozkaya841@gmail.com
+Takım Üyesi:
+Alan
+Üye 1
+Üye 2
+Üye 3
+Üye 4
+Adı-Soyadı
+Recep Çalışkan
+Mesut Özdemir
+Hasan Tozlu
+Nihat Furkan Çakmakcı
+Ünvanı/Görevi
+Backend Geliştirici
+Frontend Geliştirici
+Test / QA Mühendisi
+DevOps / CI-CD Mühendisi
+Yazışma Adresi
+(boş veya üni adresi)
+(boş veya üni adresi)
+(boş veya üni adresi)
+(boş veya üni adresi)
+Telefon
+(0544)8704969
+(0546)6252582
+(0537)3533881
+(0505)2910545
+E-Posta
+recepcaliskan9405@gmail.com
+ozdemir.mesut5561@gmail.com
+h.tozlu183@gmail.com
+furkanisubu@gmail.com
+Takım üyelerinin daha önce tamamladığı bir Ar-Ge projesi bulunmamaktadır. Bu proje, ekibin ilk kapsamlı yazılım mühendisliği projesidir.
+3f İş Paketleri Listesi
+İş Paketi Sıra No: 1 İş Paketi Adı: İP1: Proje Fizibilite ve Ön Araştırma Başlama-Bitiş Tarihi ve Süresi: 01.03.2026 – 14.03.2026 (2 Hafta) İlgili Kuruluşlar: Proje Ekibi (5 kişi)
+1- İş paketi faaliyetlerini listeleyiniz.
+1.1 Proje Süreçleri ve Ekonomik Fizibilite:
+Pazar araştırması ve rakip analizi (PsikologNet, SimplePractice vb.)
+Ekip içi anket çalışması (modüller, teknolojiler, farklılaştırıcı özellikler)
+Maliyet analizi (ücretsiz hosting ve araç kullanımı değerlendirmesi)
+Proje takvimi ve sprint planlaması
+1.2 Teknolojik Fizibilite:
+Teknoloji stack belirleme (NestJS, Next.js, PostgreSQL, Prisma)
+Mimari kararlar (Clean/Onion Architecture, SOLID prensipleri, Design Patterns)
+Geliştirme ortamı kurulumu (VS Code, Node.js, Docker, Git)
+Proof-of-concept: NestJS + PostgreSQL bağlantı testi
+2- İş paketinde kullanılacak yöntemleri açıklayıp, incelenecek parametreleri listeleyiniz.
+Araştırma yöntemi olarak anket, literatür taraması ve rakip analizi kullanılacaktır. Teknoloji seçiminde performans, öğrenme eğrisi, topluluk desteği, Claude Code uyumu ve ücretsiz kullanılabilirlik parametreleri incelenecektir.
+3- İş paketindeki deney, test ve analizleri listeleyiniz.
+Teknoloji stack'inin proof-of-concept uygulaması ile doğrulanması
+NestJS + Supabase (PostgreSQL) bağlantı testi
+Next.js + Tailwind CSS arayüz prototipi
+Docker Compose ile yerel geliştirme ortamı doğrulaması
+4- İş paketi çıktılarını ve başarı kriterlerini belirtiniz
+Çıktılar:
+Sistem Gereksinim Raporu
+Teknoloji Stack Kararı dokümanı
+Proje planı ve sprint takvimi
+Ekip geliştirme ortamı kurulum kılavuzu
+Başarı Kriterleri:
+Tüm ekip üyelerinin geliştirme ortamını başarıyla kurmuş olması
+Gereksinim raporunun ders sorumlusu tarafından onaylanması
+Proof-of-concept uygulamasının çalışır durumda olması
+5- Elde edilen çıktıların diğer iş paketleriyle ilişkisini belirtiniz.
+İP1'in çıktıları İP2 (Sistem Analiz ve Tasarımı) için temel girdileri oluşturmaktadır. Teknoloji kararları ve gereksinimler tüm sonraki iş paketlerini doğrudan etkilemektedir. Geliştirme ortamının kurulmuş olması İP3'te kodlamaya hızlı geçişi sağlayacaktır.
+İş Paketi Sıra No: 2 İş Paketi Adı: İP2: Sistem Analiz ve Tasarımı Başlama-Bitiş Tarihi ve Süresi: 15.03.2026 – 28.03.2026 (2 Hafta) İlgili Kuruluşlar: Proje Ekibi (5 kişi)
+1- İş paketi faaliyetlerini listeleyiniz.
+2.1 Detaylı gereksinim analizi ve kullanım senaryolarının oluşturulması 2.2 UML diyagramlarının hazırlanması (Use Case, Class, Sequence, Activity) 2.3 Veritabanı şemasının tasarlanması (ER diyagramı, Prisma şeması) 2.4 RESTful API endpoint tasarımı ve dokümantasyonu 2.5 UI/UX wireframe ve mockup tasarımları 2.6 Güvenlik mimarisi tasarımı (JWT, RBAC, AES-256 şifreleme, audit log)
+2- İş paketinde kullanılacak yöntemleri açıklayıp, incelenecek parametreleri listeleyiniz.
+UML 2.0 notasyonu kullanılacaktır. Veritabanı tasarımında normalizasyon kuralları (3NF) uygulanacaktır. Clean/Onion Architecture katmanlı yapısı, Repository Pattern, Strategy Pattern ve Observer Pattern incelenecektir. API tasarımında RESTful standartlar ve OpenAPI spesifikasyonu referans alınacaktır.
+3- İş paketindeki deney, test ve analizleri listeleyiniz.
+Tasarım dokümanlarının ekip içi gözden geçirmesi (peer review)
+Veritabanı şemasının normalizasyon kontrolü
+API tasarımının RESTful standartlara uygunluk analizi
+Wireframe'lerin kullanılabilirlik açısından değerlendirilmesi
+4- İş paketi çıktılarını ve başarı kriterlerini belirtiniz
+Çıktılar:
+Yazılım Tasarım Dokümanı (SDD)
+UML Diyagramları (Use Case, Class, Sequence, Activity)
+Veritabanı ER Diyagramı ve Prisma şeması
+API Dokümantasyonu (Swagger/OpenAPI)
+UI/UX Wireframe'ler
+Başarı Kriterleri:
+Tüm kullanım senaryolarının dokümante edilmesi
+Tasarımın SOLID prensiplerine uygunluğunun doğrulanması
+Veritabanı şemasının en az 3NF'ye uygun olması
+5- Elde edilen çıktıların diğer iş paketleriyle ilişkisini belirtiniz.
+İP2'nin çıktıları İP3 (Sistem Yazılımının Geliştirilmesi) için doğrudan girdi oluşturmaktadır. UML diyagramları ve API dokümantasyonu kodlama sürecinin referans noktası olacaktır. Veritabanı şeması Prisma migration'ları için temel teşkil edecektir.
+İş Paketi Sıra No: 3 İş Paketi Adı: İP3: Sistem Yazılımının ve Prototipinin Geliştirilmesi Başlama-Bitiş Tarihi ve Süresi: 29.03.2026 – 09.05.2026 (6 Hafta / 3 Sprint) İlgili Kuruluşlar: Proje Ekibi (5 kişi)
+1- İş paketi faaliyetlerini listeleyiniz.
+Sprint 1 (Hafta 1-2): Temel altyapı ve kimlik doğrulama
+Proje iskeleti oluşturma (NestJS + Next.js + Docker)
+Kullanıcı kayıt/giriş sistemi (JWT + bcrypt)
+Rol tabanlı erişim kontrolü (RBAC — 4 rol)
+Veritabanı migration'ları (Prisma ORM)
+CI/CD pipeline kurulumu (GitHub Actions)
+Sprint 2 (Hafta 3-4): Ana modüller
+Psikolog profil yönetimi
+Randevu oluşturma/iptal/güncelleme sistemi
+Seans notu CRUD işlemleri
+Danışan portalı
+Bildirim sistemi (e-posta aktif, SMS altyapısı hazır)
+Sprint 3 (Hafta 5-6): Farklılaştırıcı özellikler
+Psikolojik test modülü (Beck Depresyon, Beck Anksiyete, SCL-90)
+Otomatik test skorlama ve kategorilendirme
+Danışan ilerleme grafikleri (Recharts)
+Admin paneli
+Video görüşme linki entegrasyonu
+2- İş paketinde kullanılacak yöntemleri açıklayıp, incelenecek parametreleri listeleyiniz.
+Agile/Scrum metodolojisi ile iteratif geliştirme yapılacaktır. Test Driven Development (TDD) yaklaşımı benimsenecektir. Clean Architecture katmanlı yapısı uygulanacaktır. SOLID prensipleri her modülde gözetilecektir. CI/CD pipeline ile sürekli entegrasyon ve dağıtım sağlanacaktır. Her Pull Request için zorunlu code review süreci uygulanacaktır.
+3- İş paketindeki deney, test ve analizleri listeleyiniz.
+Her sprint sonunda aşağıdaki testler uygulanacaktır:
+Birim testleri (Jest — her modül için)
+Entegrasyon testleri (Supertest — API endpoint'leri)
+UI testleri (Cypress — kritik kullanıcı akışları)
+Kod kalite analizi (ESLint + Prettier)
+Sprint Demo ve kabul testleri
+4- İş paketi çıktılarını ve başarı kriterlerini belirtiniz
+Çıktılar:
+Çalışan web uygulaması (MVP)
+Kaynak kod (GitHub repository)
+Docker container'ları (docker-compose.yml)
+API dokümantasyonu (Swagger)
+Başarı Kriterleri:
+Tüm fonksiyonel gereksinimlerin karşılanması
+Test coverage oranının %80'in üzerinde olması
+Tüm API endpoint'lerinin çalışır durumda olması
+Her sprint sonunda çalışan bir demo sunulabilmesi
+5- Elde edilen çıktıların diğer iş paketleriyle ilişkisini belirtiniz.
+İP3'ün çıktısı olan çalışan yazılım, İP4 (Test ve Revizyon) için test edilecek ana ürünü oluşturmaktadır. Docker container'ları deploy sürecini kolaylaştıracaktır. API dokümantasyonu test senaryolarının yazılmasında referans olarak kullanılacaktır.
+İş Paketi Sıra No: 4 İş Paketi Adı: İP4: Prototip Uygulama, Test ve Revizyon Çalışmaları Başlama-Bitiş Tarihi ve Süresi: 10.05.2026 – 01.06.2026 (3 Hafta) İlgili Kuruluşlar: Proje Ekibi (5 kişi)
+1- İş paketi faaliyetlerini listeleyiniz.
+4.1 Kapsamlı sistem testi (fonksiyonel, performans, güvenlik) 4.2 Kullanıcı kabul testleri (UAT) — ekip üyeleri farklı rolleri simüle ederek 4.3 Güvenlik penetrasyon testi (OWASP Top 10 kontrol listesi) 4.4 Hata düzeltme ve performans optimizasyonu 4.5 Production ortamına deploy (Vercel + Railway) 4.6 Alan adı yapılandırması ve SSL sertifikası 4.7 Kullanıcı dokümantasyonu hazırlanması 4.8 Final sunumu ve proje teslimi
+2- İş paketinde kullanılacak yöntemleri açıklayıp, incelenecek parametreleri listeleyiniz.
+Kara kutu ve beyaz kutu test yöntemleri uygulanacaktır. Stres testi ve yük testi ile performans ölçülecektir. OWASP Top 10 güvenlik kontrol listesi referans alınacaktır. Kullanılabilirlik testi ile son kullanıcı deneyimi değerlendirilecektir. İncelenecek parametreler: yanıt süresi, eş zamanlı kullanıcı kapasitesi, hata oranı, güvenlik açıkları ve kullanıcı memnuniyetidir.
+3- İş paketindeki deney, test ve analizleri listeleyiniz.
+Fonksiyonel test senaryolarının yürütülmesi (tüm modüller)
+Performans testi (50+ eş zamanlı kullanıcı simülasyonu)
+Güvenlik taraması (SQL Injection, XSS, CSRF kontrolleri)
+Cross-browser uyumluluk testi (Chrome, Firefox, Safari, Edge)
+Responsive tasarım testi (mobil, tablet, masaüstü)
+KVKK uyumluluk kontrolü (veri şifreleme, erişim logları)
+4- İş paketi çıktılarını ve başarı kriterlerini belirtiniz
+Çıktılar:
+Production ortamında yayınlanmış sistem (gerçek alan adı ile)
+Test raporları (fonksiyonel, performans, güvenlik)
+Kullanıcı kılavuzu
+Proje final raporu
+Başarı Kriterleri:
+Kritik (P1) ve yüksek (P2) öncelikli hata sayısının sıfır olması
+Performans gereksinimlerinin karşılanması (sayfa yüklenme < 3 sn, API yanıt < 2 sn)
+Güvenlik testlerinin başarıyla geçilmesi
+Sistemin gerçek alan adı üzerinden erişilebilir olması
+5- Elde edilen çıktıların diğer iş paketleriyle ilişkisini belirtiniz.
+İP4, projenin son aşamasıdır ve tüm önceki iş paketlerinin çıktılarını birleştirerek nihai ürünü ortaya koymaktadır. Test raporları ve kullanıcı kılavuzu proje teslim dosyasının parçası olarak sunulacaktır.
+Ürün Senaryoları
+4a Ürün Senaryo Listesi
+SN001 — Danışan Randevu Alma SN002 — Psikolog Seans Notu Yazma SN003 — Psikolojik Test Uygulama ve Skorlama SN004 — Danışan İlerleme Grafiği Görüntüleme SN005 — Admin Psikolog Ekleme ve Yönetme SN006 — Misafir Kullanıcı Klinik İnceleme SN007 — Online Seans Başlatma SN008 — Danışan Kayıt ve Giriş SN009 — Bildirim Gönderimi (Randevu Hatırlatma) SN010 — Randevu İptali ve Güncelleme
+4b Bireysel Ürün Senaryoları
+Danışan Randevu Alma: Ayşe, daha önce kaydolduğu PsikoTakip sistemine e-posta ve şifresi ile giriş yapar. Ana sayfadaki "Randevu Al" butonuna tıklar. Karşısına klinikte çalışan psikologların listesi gelir; her psikologun uzmanlık alanı ve müsait saatleri görünmektedir. Ayşe, anksiyete alanında uzman olan bir psikoloğu seçer. Takvimde müsait günler yeşil ile gösterilmektedir. Çarşamba günü saat 14:00'ü seçer, seans türü olarak "online" tercih eder ve randevuyu onaylar. Sistem otomatik olarak bir video görüşme linki oluşturur ve hem Ayşe'ye hem de psikologa e-posta bildirimi gönderir. Randevu saatinden 1 saat önce hatırlatma bildirimi gider.
+Psikolog Seans Notu Yazma: Psikolog Mehmet, seans sonrasında PsikoTakip'e giriş yapar. "Danışanlarım" bölümünden Ayşe'nin profilini açar. "Yeni Seans Notu" butonuna tıklar. Seans tarihi otomatik olarak dolmuştur. Seans içeriğini, gözlemlerini ve bir sonraki seans için hedeflerini yazar. Notu kaydeder. Not yalnızca Psikolog Mehmet tarafından görüntülenebilir; Ayşe bu nota erişemez.
+Psikolojik Test Uygulama ve Skorlama: Psikolog Mehmet, Ayşe'ye Beck Depresyon Ölçeği uygulamak ister. Ayşe'nin profilinden "Test Ata" butonuna tıklar ve test listesinden Beck Depresyon Ölçeği'ni seçer. Ayşe'ye e-posta bildirimi gider. Ayşe sisteme giriş yaparak "Testlerim" bölümünden atanan testi görür ve soruları yanıtlar. Testi tamamladığında sistem anlık olarak puanı hesaplar, sonucu kategorize eder (minimal, hafif, orta, şiddetli) ve sonucu psikologun paneline yansıtır.
+Danışan İlerleme Grafiği Görüntüleme: Psikolog Mehmet, Ayşe'nin 3 aydır devam eden terapi sürecindeki değişimi görmek ister. Ayşe'nin profilinden "İlerleme Grafikleri" sekmesine tıklar. Farklı tarihlerde uygulanan Beck Depresyon testlerinin skorları zaman serisi grafiği olarak karşısına çıkar. Skorların düşüş eğiliminde olduğunu görür. Mehmet, bu grafiği Ayşe ile paylaşmak istediğine karar verir ve "Danışana Göster" butonunu aktif eder. Artık Ayşe da kendi portalından ilerleme grafiğini görebilir.
+Admin Psikolog Ekleme ve Yönetme: Klinik yöneticisi, yeni işe başlayan bir psikolog için hesap açmak ister. Admin paneline giriş yapar, "Psikolog Yönetimi" bölümünden "Yeni Psikolog Ekle" butonuna tıklar. Psikologun ad-soyad, e-posta, uzmanlık alanı ve çalışma saatlerini girer. Sistem otomatik olarak psikologa giriş bilgilerini e-posta ile gönderir. Admin ayrıca mevcut psikologların durumlarını (aktif/pasif) yönetebilir ve klinik istatistiklerini görüntüleyebilir.
+Misafir Kullanıcı Klinik İnceleme: Bir kişi internette psikolojik destek ararken PsikoTakip üzerinde yayınlanan klinik sayfasına ulaşır. Kayıt olmadan kliniğin tanıtım sayfasını, çalışan psikologların profillerini ve uzmanlık alanlarını inceleyebilir. Bir psikologdan randevu almak istediğinde sistem onu kayıt sayfasına yönlendirir.
+Online Seans Başlatma: Randevu saati yaklaştığında hem danışan hem de psikolog e-posta ile hatırlatma alır. Hatırlatmada video görüşme bağlantısı yer almaktadır. Psikolog bağlantıya tıklayarak görüşmeyi başlatır, danışan da aynı bağlantı ile katılır. Seans tamamlandıktan sonra psikolog seans notunu sisteme girer.
+Danışan Kayıt ve Giriş: Yeni bir danışan PsikoTakip'e ilk kez giriyor. "Kayıt Ol" butonuna tıklar. Ad-soyad, e-posta, telefon numarası ve şifre bilgilerini girer. KVKK aydınlatma metnini ve açık rıza formunu onaylar. Sistem doğrulama e-postası gönderir. Danışan e-postasını doğruladıktan sonra sisteme giriş yapabilir.
+Bildirim Gönderimi: Sistem her gün belirlenen saatte o günkü randevuları kontrol eder. Randevusu olan danışanlara ve psikologlarına e-posta ile hatırlatma gönderir. Randevudan 1 saat önce ikinci bir hatırlatma daha gider. Randevu iptal edildiğinde her iki tarafa da anlık bildirim gönderilir.
+Randevu İptali ve Güncelleme: Danışan Ayşe, planları değiştiği için Çarşamba günkü randevusunu iptal etmek ister. "Randevularım" sayfasından ilgili randevuyu bulur ve "İptal Et" butonuna tıklar. Sistem en az 24 saat önceden iptal kuralını kontrol eder. Kural sağlanıyorsa randevu iptal edilir ve psikologa bildirim gönderilir. Ayşe dilerse "Tarih Değiştir" seçeneği ile randevuyu başka bir müsait saate taşıyabilir.
+Senaryo Tablosu
+Alan
+Değer
+Senaryo ID
+SN001
+Senaryo Adı
+Danışan Randevu Alma
+Oluşturan/Güncelleyen
+Arda Özkaya
+Oluşturma/Güncelleme Tarihi
+08.03.2026
+Rol/Kullanıcı
+Danışan
+Tanım
+Kayıtlı danışan, sisteme giriş yaparak uygun psikologun müsait saatlerinden birini seçerek randevu oluşturur
+Girdiler
+Danışan giriş bilgileri, psikolog seçimi, tarih, saat, seans türü (yüz yüze/online)
+Kaynak
+Danışan hesabı, psikolog müsaitlik takvimi
+Çıktılar
+Randevu onay bildirimi, takvime eklenen randevu kaydı, video görüşme linki (online ise)
+Hedef
+Randevu yönetim modülü, bildirim sistemi
+Olaylar
+Danışan giriş yapar, psikolog seçer, tarih/saat seçer, seans türü belirler, onaylar. Sistem kaydeder ve bildirim gönderir. Online seans ise video görüşme linki üretilir.
+Paydaşlar
+Danışan, Psikolog, Klinik Yöneticisi
+Kısıtlar
+Aynı saatte çakışan randevu olmamalıdır. Psikologun müsait slotu bulunmalıdır.
+Öncelik
+1 (Yüksek)
+Ön koşul
+Danışan sisteme giriş yapmış olmalıdır
+Son koşul
+Randevu veritabanına kaydedilir, takvim güncellenir, bildirimler gönderilir
+Riskler
+Aynı anda iki danışanın aynı slotu seçmesi (race condition)
+İstisna Durumları
+Seçilen slotun son anda dolması durumunda danışana uyarı gösterilir
+Alternatif Senaryo
+Psikolog veya sekreter telefon ile gelen talep üzerine manuel randevu oluşturabilir
+Paydaşlar
+5a Müşteriler
+İçerik
+Müşteri: Dr. Öğretim Üyesi Cevriye Altıntaş (Yazılım Mühendisliği dersi sorumlusu ve proje müşterisi). Projenin kabulü ve değerlendirmesi konusunda son söz sahibidir.
+Motivasyon
+Ders kapsamında geliştirilen bu projede müşteri, ders sorumlusu Dr. Öğretim Üyesi Cevriye Altıntaş'tır. Projenin başarı değerlendirmesi ve kabulü bu kişi tarafından yapılacaktır. Ayrıca gerçek kullanım senaryosunda psikoloji klinik sahipleri ve klinik yöneticileri potansiyel müşteri profilini oluşturmaktadır.
+Hususlar
+Projenin iki boyutlu bir müşteri yapısı bulunmaktadır. Akademik boyutta ders sorumlusu müşteri konumundadır. Gerçek dünya boyutunda ise psikoloji klinikleri ve bireysel psikologlar hedef müşteri kitlesini oluşturmaktadır. Gereksinimler her iki perspektif gözetilerek belirlenmiştir.
+5b Alıcılar
+İçerik
+PsikoTakip açık kaynak kodlu ve ücretsiz bir proje olarak geliştirilecektir. Potansiyel alıcı profili; özel psikoloji klinikleri, bireysel psikologlar ve ruh sağlığı merkezleridir. Proje akademik bir çalışma olup doğrudan ticari satış hedeflenmemektedir ancak ileride ticarileştirme potansiyeli mevcuttur.
+Motivasyon
+Projenin açık kaynak kodlu olması, alıcı profilini geleneksel satın alma modelinden farklılaştırmaktadır. Alıcılar sistemi ücretsiz olarak kullanabilecek, ihtiyaçlarına göre özelleştirebilecek ve kendi sunucularına deploy edebilecektir.
+5c Ürünün Uygulamalı Kullanıcıları
+İçerik
+Sistemin potansiyel kullanıcıları aşağıdaki tabloda listelenmiştir.
+Kullanıcı Adı
+Kullanıcı Rolü
+Konuyla İlgili Deneyim
+Teknolojik Deneyim
+Diğer Kullanıcı Özellikleri
+Admin
+Sistem yöneticisi, klinik sahibi
+Usta
+Kalfa
+Kliniğin tüm dijital süreçlerini yönetir. Teknolojiye açık. 30-55 yaş arası.
+Psikolog
+Danışan yönetimi, seans ve test işlemleri
+Usta
+Kalfa
+Bilgisayar kullanımında orta-iyi düzey. 25-55 yaş arası. Yoğun iş temposunda verimlilik bekler.
+Danışan
+Randevu alma, test çözme, ilerleme takibi
+Acemi
+Acemi-Kalfa
+Geniş yaş aralığı (18-65+). Teknoloji deneyimi değişken. Psikolojik destek sürecinde hassas durumda olabilir.
+Misafir Kullanıcı
+Klinik bilgilerini görüntüleme, psikolog profillerini inceleme
+Acemi
+Acemi
+Kayıtsız kullanıcı. Sadece genel bilgilere erişir. Her yaş grubundan olabilir.
+Motivasyon
+Kullanıcı profillerinin detaylı tanımlanması, arayüz tasarımında her kullanıcı grubunun ihtiyaçlarının karşılanmasını sağlamaktadır. Özellikle danışanların teknoloji deneyiminin değişken olması, arayüzün sezgisel ve basit tutulmasını gerektirmektedir.
+5d Kullanıcılara Atanan Öncelikler
+İçerik
+Anahtar Kullanıcılar: Psikologlar — sistemin birincil kullanıcılarıdır, tüm temel modülleri aktif olarak kullanacaklardır. Gereksinimlerde en yüksek önceliğe sahiptir (%35). Psikologların memnuniyetsizliği sistemin klinik tarafından terk edilmesine yol açacaktır.
+Anahtar Kullanıcılar: Danışanlar — randevu, test ve ilerleme modüllerinin doğrudan kullanıcılarıdır. Sistemin varlık sebebi danışan memnuniyetidir (%40). Danışanlar için arayüzün kolay ve anlaşılır olması kritik öneme sahiptir.
+İkincil Kullanıcılar: Admin/Klinik Yöneticisi — sistem yönetimi ve raporlama işlevlerini kullanır. Psikolog ve danışan gereksinimleri ile çelişki olduğunda düşük öncelik alır (%15).
+Önemsiz Kullanıcılar: Misafir kullanıcılar — yalnızca genel bilgileri görüntüler, sisteme kayıt olmadan sınırlı erişime sahiptir (%10). Bu kullanıcılardan gelen gereksinimler en düşük tasarım önceliğine sahiptir.
+Motivasyon
+Psikolog ve danışan memnuniyeti sistemin başarısı için belirleyici faktördür. Psikologlar sistemi günlük olarak yoğun şekilde kullanacağından, arayüz verimliliği ve hız bu kullanıcı grubu için kritik öneme sahiptir. Danışanlar ise farklı teknoloji seviyelerinden geldiklerinden, sezgisel ve basit bir deneyim sunulması zorunludur.
+5e Kullanıcı Katılımı
+İçerik
+Psikologlar: Sprint Review toplantılarına geri bildirim sağlayıcı olarak dahil edilecektir. Arayüz prototipi değerlendirmesi ve psikolojik test içeriklerinin doğrulanması beklenmektedir. Tahmini katılım süresi: haftada 2 saat.
+Danışanlar: Kullanılabilirlik testi ve arayüz geri bildirimi için davet edilecektir. Tahmini katılım: proje süresince toplamda 4 saat.
+Admin: Yönetim paneli gereksinimleri ve raporlama ihtiyaçlarının belirlenmesi için görüş bildirecektir. Tahmini katılım: haftada 1 saat.
+Not: Akademik proje kapsamında gerçek psikolog ve danışan katılımı simüle edilecek olup ekip üyeleri farklı kullanıcı rollerini üstlenerek test sürecini yürütecektir.
+Motivasyon
+Kullanıcı katılımının önceden planlanması, proje sürecinde gereksinimlerin eksik kalmasını önlemektedir. Ekip üyelerinin farklı rolleri simüle etmesi, gerçek kullanıcı perspektifinin mümkün olduğunca yansıtılmasını sağlayacaktır.
+5f Bakım Kullanıcıları ve Servis Teknisyenleri
+İçerik
+Sistemin bakım kullanıcıları geliştirme ekibi üyeleridir. DevOps sorumlusu (Nihat Furkan Çakmakcı) sunucu bakımı, CI/CD pipeline yönetimi ve veritabanı yedekleme işlemlerinden sorumludur. Backend geliştirici (Recep Çalışkan) API güncelleme ve hata düzeltme işlemlerini yürütecektir. Frontend geliştirici (Mesut Özdemir) arayüz güncellemeleri ve kullanıcı deneyimi iyileştirmelerini gerçekleştirecektir. Proje tesliminden sonra bakım sorumluluğu ekip üyeleri arasında paylaşılacaktır.
+Motivasyon
+Bakım kullanıcılarının özelliklerinin tanımlanması, sistemin sürdürülebilirlik gereksinimlerini belirlememize yardımcı olmaktadır. Kodun okunabilir, dokümante edilmiş ve modüler olması, bakım sürecini kolaylaştıracaktır.
+5g Diğer Paydaşlar
+İçerik
+Sponsor/Akademik Danışman: Dr. Öğretim Üyesi Cevriye Altıntaş — proje sürecinde akademik danışmanlık ve değerlendirme sağlamaktadır. Katılım derecesi yüksek, etki derecesi yüksektir.
+Test Kullanıcıları: Ekip üyeleri (Arda Özkaya, Recep Çalışkan, Mesut Özdemir, Hasan Tozlu, Nihat Furkan Çakmakcı) — farklı kullanıcı rollerini simüle ederek sistemi test edeceklerdir. Katılım derecesi yüksek, etki derecesi orta.
+Teknoloji Uzmanı: Claude Code AI asistanı — geliştirme sürecinde kod üretimi, mimari danışmanlık ve hata ayıklama için kullanılacaktır. Katılım derecesi yüksek, etki derecesi orta.
+Hukuk/Uyumluluk: KVKK gereksinimleri için Kişisel Verileri Koruma Kurumu'nun yayınladığı rehberler ve kılavuzlar referans alınacaktır. Katılım derecesi düşük, etki derecesi yüksek.
+Motivasyon
+Tüm paydaşların tanımlanması, gereksinimlerin eksiksiz belirlenmesini sağlamaktadır. Özellikle KVKK uyumluluk paydaşının belirlenmesi, yasal gereksinimlerin gözden kaçmamasını garanti altına almaktadır.
+Zorunlu Kısıtlar
+6a Çözüm Kısıtları
+İçerik
+PROJE KISITLARI
+Proje 01.06.2026 tarihine kadar tamamlanmış ve deploy edilmiş olacaktır.
+Proje 5 kişilik ekip tarafından geliştirilecektir.
+Proje bütçesi minimumda tutulacaktır; ücretsiz araçlar ve servisler tercih edilecektir.
+Agile/Scrum metodolojisi ile 2 haftalık sprint döngülerinde geliştirilecektir.
+TASARIM KISITLARI
+Backend: NestJS v10+ (TypeScript) ile geliştirilecektir. Gerekçe: Modüler yapısı Clean Architecture'a uygun, TypeScript ile tip güvenliği sağlar, Claude Code ile yüksek uyumluluk sunar.
+Frontend: Next.js v14+ (TypeScript) + Tailwind CSS ile geliştirilecektir. Gerekçe: SEO desteği, sunucu taraflı render, hızlı UI geliştirme imkanı sağlar.
+Veritabanı: PostgreSQL 15+ (Supabase üzerinde) kullanılacaktır. Gerekçe: Ücretsiz, güçlü, her bulut platformunda desteklenir, JSON desteği ile esnek veri saklama imkanı sunar.
+ORM: Prisma ORM kullanılacaktır. Gerekçe: Tip güvenli veritabanı erişimi, otomatik migration yönetimi sağlar.
+Uygulama web tabanlı olacak ve modern tarayıcılar (Chrome 90+, Firefox 90+, Safari 14+, Edge 90+) desteklenecektir.
+Uygulamaya erişebilmek için herhangi bir ek donanım veya yazılım kurulumu gerekmeyecektir.
+Responsive tasarım ile mobil, tablet ve masaüstü uyumluluğu sağlanacaktır.
+Clean/Onion Architecture katmanlı mimari yapısı uygulanacaktır.
+SOLID prensipleri ve Design Pattern'lar (Repository, Strategy, Observer, Factory) kullanılacaktır.
+KVKK uyumlu veri güvenliği standartları sağlanacaktır.
+Ödeme sistemi kapsam dışıdır.
+Motivasyon
+Teknoloji seçimlerinde performans, geliştirme hızı, topluluk desteği, ücretsiz kullanılabilirlik ve Claude Code AI asistanı ile uyumluluk parametreleri belirleyici olmuştur. Bu kısıtlamalar karşılanmadığında projenin zamanında ve beklenen kalitede teslim edilmesi mümkün olmayacaktır.
+Hususlar
+Teknoloji kısıtlamaları belirlenirken ekip içi anket sonuçları ve proof-of-concept testleri referans alınmıştır. Seçilen teknolojiler kesinlikle pazarlık konusu değildir; tüm geliştirme bu stack üzerinde gerçekleştirilecektir.
+6b Mevcut Sistemin Uygulama Ortamı
+İçerik
+Sistem bulut tabanlı olarak çalışacaktır. Frontend Vercel platformunda, Backend Railway platformunda, Veritabanı Supabase (PostgreSQL) üzerinde barındırılacaktır. Kullanıcılar herhangi bir modern web tarayıcısı üzerinden sisteme erişebilecektir. Minimum gereksinimler: internet bağlantısı ve güncel bir web tarayıcısıdır. Herhangi bir ek yazılım veya donanım kurulumu gerektirmeyecektir.
+Geliştirme ortamı bileşenleri: VS Code (editör), Claude Code (AI asistan), Docker (konteyner), Git/GitHub (versiyon kontrol), Node.js v18+ (çalışma zamanı).
+CI/CD: GitHub Actions ile otomatik test ve deploy pipeline'ı kurulacaktır. Her pull request'te otomatik testler çalışacak, main branch'e merge sonrası otomatik deploy gerçekleşecektir.
+Motivasyon
+Bulut tabanlı uygulama ortamı, ekip üyelerinin herhangi bir yerden geliştirme yapabilmesini ve kullanıcıların kurulum gerektirmeden sisteme erişmesini sağlamaktadır. Seçilen platformlar (Vercel, Railway, Supabase) ücretsiz katmanlar sunmakta olup proje bütçe kısıtlarına uygundur.
+Hususlar
+Ücretsiz hosting katmanlarının sınırlamaları (Railway'de uyku modu, Supabase'de 500 MB veritabanı limiti) göz önünde bulundurulmuştur. Proje ölçeği için bu limitler yeterlidir. Gerektiğinde ücretli planlara geçiş yapılabilir.
+6c İş Ortağı veya İşbirlikçi Uygulamalar
+İçerik
+PsikoTakip aşağıdaki harici servislerle entegre çalışacaktır:
+Video Görüşme Servisi: Online seans için video görüşme altyapısı sağlar. Randevu oluşturulduğunda seans türü "online" seçilmişse otomatik olarak video görüşme linki üretilecektir. Entegrasyon RESTful API aracılığıyla gerçekleştirilecektir.
+E-posta Servisi (SMTP): Bildirim, randevu hatırlatma, hesap doğrulama ve şifre sıfırlama e-postaları için kullanılacaktır. Nodemailer kütüphanesi ile ücretsiz SMTP servisi (Resend veya Gmail SMTP) entegre edilecektir.
+Supabase: Bulut veritabanı yönetimi ve gerçek zamanlı veri erişimi sağlar. Prisma ORM aracılığıyla bağlantı kurulacaktır.
+Motivasyon
+Harici servislerle entegrasyon noktalarının önceden tanımlanması, olası uyumluluk sorunlarının erken aşamada tespit edilmesini sağlamaktadır. Tüm entegrasyonlar RESTful API standartlarına uygun olarak gerçekleştirilecektir.
+Hususlar
+Video görüşme servisi ve e-posta servisi dışarıdan bağımlılık oluşturmaktadır. Bu servislerin çalışmaması durumunda temel sistem işlevleri (randevu yönetimi, seans notu, test uygulama) etkilenmeyecektir. Başarısız bildirimler Bull Queue ile kuyruğa alınarak yeniden denenecektir.
+6d Hazır Yazılım
+İçerik
+Projede kullanılacak açık kaynak kodlu hazır yazılım ve kütüphaneler aşağıda listelenmiştir:
+Backend: NestJS (web framework), Prisma (ORM), Passport.js (kimlik doğrulama), Winston (loglama), class-validator (veri doğrulama), Helmet.js (HTTP güvenlik başlıkları), Bull Queue (arka plan görevleri ve kuyruk yönetimi), @nestjs/schedule (zamanlanmış görevler), Nodemailer (e-posta gönderimi), bcrypt (şifre hashleme).
+Frontend: Next.js (React framework), Tailwind CSS (stil kütüphanesi), Recharts (grafik ve veri görselleştirme), Axios (HTTP istemci), React Hook Form (form yönetimi).
+DevOps: Docker ve Docker Compose (konteyner yönetimi), GitHub Actions (CI/CD pipeline), Vercel CLI (frontend deploy), Railway CLI (backend deploy).
+Test: Jest (birim test), Supertest (API entegrasyon test), Cypress (uçtan uca UI test), ESLint ve Prettier (kod kalitesi).
+Tüm bu bileşenler açık kaynak kodlu ve ücretsiz olarak kullanılabilir durumdadır.
+Motivasyon
+Hazır yazılım bileşenlerinin kullanılması, geliştirme süresini önemli ölçüde kısaltmakta ve kanıtlanmış çözümlerle sistem güvenilirliğini artırmaktadır. Tüm seçilen bileşenler geniş topluluk desteğine sahiptir ve aktif olarak geliştirilmektedir.
+Hususlar
+Tüm bağımlılıklar MIT veya Apache 2.0 lisansı altında olup ticari kullanıma uygundur. Bağımlılıkların güvenlik güncellemeleri npm audit komutu ile düzenli olarak kontrol edilecektir. Herhangi bir OTS bileşeninin proje gereksinimleriyle çelişmesi durumunda alternatif bileşenler değerlendirilecektir.
+6e Beklenen İşyeri Ortamı
+İçerik
+Psikologlar sistemi klinik ofislerinde masaüstü bilgisayar veya dizüstü bilgisayar üzerinden kullanacaktır. Ortam sessiz ve profesyonel bir ofis ortamıdır. Danışanlar ise hem klinik içinden hem de kendi kişisel cihazlarından (akıllı telefon, tablet, bilgisayar) sisteme erişecektir. Online seans durumunda danışanlar ev ortamından bağlanacaktır. Admin kullanıcıları ofis ortamından çalışacaktır. Tüm kullanıcıların internet erişimi olması gerekmektedir.
+Motivasyon
+İşyeri ortamının tanımlanması, arayüz tasarımında dikkate alınması gereken kısıtlamaları ortaya koymaktadır. Psikologların seans aralarında hızlı not alması gerektiğinden arayüz verimli olmalıdır. Danışanların farklı cihazlardan erişmesi responsive tasarımı zorunlu kılmaktadır.
+Hususlar
+Danışanların psikolojik destek sürecinde hassas durumda olabileceği göz önünde bulundurulmalıdır. Arayüz tasarımı sakinleştirici ve güven veren bir görünüme sahip olmalı, gereksiz karmaşıklıktan kaçınılmalıdır.
+6f Kısıtların Çizelgesi
+İçerik
+Proje zaman çizelgesi aşağıdaki gibidir:
+01.03.2026 – 14.03.2026: İP1 — Fizibilite ve Ön Araştırma (Gereksinim Raporu teslimi) 15.03.2026 – 28.03.2026: İP2 — Sistem Analiz ve Tasarımı (Tasarım Dokümanı teslimi) 29.03.2026 – 09.05.2026: İP3 — Geliştirme (3 Sprint, her sprint sonunda çalışan demo) 10.05.2026 – 01.06.2026: İP4 — Test, Revizyon ve Deploy 01.06.2026: Final Teslim Tarihi (kesin, ertelenmeyecek)
+Vize haftasında ara teslim yapılacaktır. Ara teslimde İP1 ve İP2 çıktıları değerlendirilecektir.
+Motivasyon
+Proje ders takvimi ile sınırlandırılmıştır. 01.06.2026 final teslim tarihi kesindir ve ertelenmesi mümkün değildir. Bu tarihte sistem production ortamında çalışır durumda olmalıdır. Son teslim tarihine uyulamaması durumunda proje başarısız sayılacaktır.
+Hususlar
+Son teslim tarihinin kesinliği göz önünde bulundurularak, İP3 sürecinde önceliklendirme yapılacaktır. Zamanın yetmemesi durumunda Must Have özellikler öncelikli olarak tamamlanacak, Nice to Have özellikler sonraki sürümlere bırakılacaktır.
+6g Bütçe Kısıtları
+İçerik
+Proje bütçesi minimum düzeyde tutulmuştur. Tüm geliştirme araçları ve hosting servisleri ücretsiz katmanlarda kullanılacaktır.
+Bütçe Tablosu:
+BÜTÇE (TL)
+ÖNERİLEN
+ONAYLANAN
+Ücretsiz Servisler (Vercel, Railway, Supabase)
+0
+0
+Alan Adı (.com — yıllık)
+500
+500
+TOPLAM BÜTÇE
+500
+500
+Ekonomik Getiri Tahminleri:
+Kalem
+Değer
+Pazara çıkış süresi (ay)
+3
+Satış hasılatında beklenen artış (%)
+Uygulanamaz (açık kaynak proje)
+Pazar payında beklenen artış (%)
+Uygulanamaz (açık kaynak proje)
+Kara geçiş noktası
+Uygulanamaz (akademik proje)
+Alet / Teçhizat / Yazılım / Yayın Alımları:
+Sıra No
+Alet / Yazılım Adı
+Adet
+Kullanım Amacı
+Birim Fiyatı (TL)
+Toplam (TL)
+1
+VS Code (ücretsiz)
+5
+Kod editörü
+0
+0
+2
+Claude Pro (AI asistan)
+1
+Geliştirme asistanı
+600/ay
+1.800
+3
+GitHub (ücretsiz)
+1
+Versiyon kontrol, CI/CD
+0
+0
+4
+Alan adı (.com)
+1
+Production yayını
+500/yıl
+500
+Toplam
+2.300 TL
+Giderler Tablosu:
+Maliyet Kalemi
+1. Dönem (TL)
+2. Dönem (TL)
+TOPLAM (TL)
+ORAN (%)
+Personel
+0
+0
+0
+0
+Seyahat
+0
+0
+0
+0
+Alet / Yazılım
+1.400
+900
+2.300
+100
+Yurtiçi Ar-Ge ve Test
+0
+0
+0
+0
+Danışmanlık
+0
+0
+0
+0
+Malzeme
+0
+0
+0
+0
+Toplam Maliyet
+1.400
+900
+2.300
+100
+Motivasyon
+Proje akademik bir çalışma olup ticari gelir hedeflenmemektedir. Bütçe minimumda tutulması, ücretsiz ve açık kaynak araçların tercih edilmesinin temel nedenidir. 2.300 TL'lik toplam bütçe, 5 kişilik ekip için oldukça düşük olup projenin sürdürülebilirliğini etkilememektedir.
+Hususlar
+Bu bütçe dahilinde profesyonel kalitede bir ürün oluşturmak gerçekçidir. Ücretsiz hosting platformlarının sınırlamaları proje ölçeği için yeterlidir. Claude Pro maliyeti Scrum Master tarafından karşılanacaktır.
+Adlandırma Kuralları ve Tanımlamalar
+İşte PsikoTakip projesine özel doldurulmuş hali. Direkt yapıştırabilirsin:
+7a. Anahtar Kelimeler Sözlüğü
+PsikoTakip Projesinde Kullanılan Terimler ve Kısaltmalar
+Terim / Kısaltma
+Açıklama
+PsikoTakip
+Bu projede geliştirilen psikolog-hasta randevu ve seans yönetim web uygulamasının adı.
+Psikolog
+Sisteme kayıtlı, randevu kabul eden ve seans yürüten ruh sağlığı uzmanı. Sistemde PSIKOLOG rolüne sahip kullanıcı.
+Hasta
+Psikologlarla randevu alarak seans gerçekleştiren bireyler. Sistemde HASTA rolüne sahip kullanıcı.
+Admin
+Sistemi yöneten, kullanıcıları onaylayan ve platform ayarlarını düzenleyen yetkili. ADMIN rolüne sahip kullanıcı.
+Randevu
+Bir hastanın bir psikologa belirli tarih ve saatte rezervasyon yaptırması işlemi. BEKLEMEDE, ONAYLANDI, TAMAMLANDI veya IPTAL_EDILDI durumlarından birinde olabilir.
+Seans
+Onaylanmış bir randevu sonucu gerçekleştirilen görüşme oturumu. Psikolog tarafından başlatılıp sonlandırılır; notlar ve gizli notlar içerebilir.
+Rapor
+Bir seans sonunda psikolog tarafından oluşturulan, tanı ve tavsiyeleri içeren belge. PDF olarak indirilebilir.
+Müsaitlik Slotu
+Bir psikoloğun randevu kabul edebileceği gün ve saat aralıkları.
+RBAC
+Role-Based Access Control — Rol Tabanlı Erişim Kontrolü. Kullanıcıların yetkilerini rol üzerinden (ADMIN / PSIKOLOG / HASTA) belirleyen güvenlik modeli.
+JWT
+JSON Web Token. Kullanıcı kimlik doğrulaması ve oturum yönetimi için kullanılan imzalı token standardı.
+Access Token
+Kullanıcının sisteme erişimini doğrulayan kısa ömürlü (15 dakika) JWT. Her API isteğinde Authorization başlığına eklenir.
+Refresh Token
+Süresi dolan Access Token'ı yenilemek için kullanılan uzun ömürlü (7 gün) token. HttpOnly cookie olarak saklanır.
+NestJS
+PsikoTakip backend'inin geliştirildiği TypeScript tabanlı Node.js uygulama çerçevesi.
+Next.js
+PsikoTakip frontend'inin geliştirildiği React tabanlı, SSR (Sunucu Taraflı Render) destekli web uygulama çerçevesi (Sürüm 14).
+Prisma ORM
+PostgreSQL veritabanıyla iletişimi yöneten, TypeScript uyumlu nesne-ilişkisel eşleyici.
+Supabase
+PostgreSQL veritabanı, kimlik doğrulama ve dosya depolama hizmetlerini barındıran bulut platformu.
+Vercel
+PsikoTakip frontend uygulamasının dağıtıldığı CDN destekli bulut barındırma platformu.
+Railway
+PsikoTakip NestJS backend API'sinin dağıtıldığı bulut çalıştırma platformu.
+Docker
+Uygulamaların bağımsız konteynerler içinde çalıştırılmasını sağlayan sanallaştırma platformu. CI/CD süreçlerinde kullanılır.
+GitHub Actions
+Kod değişikliklerinde otomatik test ve dağıtım (CI/CD) işlemlerini tetikleyen GitHub tabanlı otomasyon servisi.
+REST API
+Representational State Transfer — HTTP protokolü üzerinden JSON formatında veri alışverişi yapılan mimari stil. PsikoTakip'in tüm frontend-backend iletişimi bu şekilde gerçekleşir.
+DTO
+Data Transfer Object. API katmanları arasında veri taşıyan, doğrulama kuralları içeren TypeScript sınıfı.
+ORM
+Object-Relational Mapping — Nesne-İlişkisel Eşleme. Veritabanı tablolarını TypeScript nesnelerine eşleyen araç. Projede Prisma ORM kullanılır.
+CI/CD
+Continuous Integration / Continuous Deployment — Sürekli Entegrasyon / Sürekli Dağıtım. Kod değişikliklerinin otomatik test ve dağıtım sürecine sokulması.
+KVKK
+Kişisel Verilerin Korunması Kanunu. Hastaların kişisel ve sağlık verilerinin işlenmesi, saklanması ve silinmesine ilişkin Türkiye Cumhuriyeti yasal düzenlemesi.
+Sprint
+Scrum metodolojisinde kullanılan 2 haftalık geliştirme döngüsü. PsikoTakip projesi toplam 7 sprint'ten oluşmaktadır.
+Scrum Master
+Scrum sürecini yöneten, engelleri gideren ve ekibin metodolojiye uyumunu sağlayan rol. Projede Arda Özkaya üstlenmektedir.
+Bcrypt
+Kullanıcı şifrelerini güvenli şekilde hash'lemek için kullanılan kriptografik algoritma.
+UUID
+Universally Unique Identifier — Evrensel Benzersiz Tanımlayıcı. Veritabanındaki tüm kayıtların birincil anahtarı olarak kullanılan benzersiz kimlik formatı.
+SSR
+Server-Side Rendering — Sunucu Taraflı Render. Sayfa içeriğinin sunucuda oluşturulup tarayıcıya gönderilmesi. Next.js tarafından sağlanır.
+E2E Test
+End-to-End Test. Kullanıcı senaryolarının baştan sona tarayıcı üzerinde test edilmesi. Projede Cypress kullanılır.
+WAL
+Write-Ahead Log — Önceden Yazma Günlüğü. PostgreSQL'in her yazma işlemini diske kaydetme mekanizması; artımlı yedekleme için kullanılır.
+FCP
+First Contentful Paint — İlk İçerik Boyaması. Tarayıcının ilk içeriği ekranda göstermesi için geçen süre. PsikoTakip hedefi: < 1.5 saniye.
+Rate Limiting
+Bir IP adresinin birim zamanda yapabileceği API isteği sayısının kısıtlanması. PsikoTakip'te 100 istek/dakika/IP olarak yapılandırılmıştır.
+Guard
+NestJS'te bir endpoint'e erişim öncesinde yetkilendirme kontrolü yapan yapı. JwtAuthGuard ve RolesGuard olarak kullanılır.
+Interceptor
+NestJS'te gelen istek ve giden yanıtlar üzerinde dönüştürme işlemi yapan yapı. LoggingInterceptor ve TransformInterceptor olarak kullanılır.
+Tailwind CSS
+Önceden tanımlanmış CSS sınıflarını kullanarak arayüz geliştirmeyi hızlandıran utility-first CSS çerçevesi.
+Recharts
+React tabanlı grafik ve istatistik görselleştirme kütüphanesi. Psikolog dashboard'unda kullanılır.
+Zustand
+React uygulamalarında global durum yönetimi için kullanılan hafif store kütüphanesi.
+7b. Bu Belgede Kullanılan UML ve Diğer Notasyonlar
+Bu belgede kullanılan diyagram ve notasyon standartları aşağıda açıklanmıştır.
+UML (Unified Modeling Language) 2.0 standardı temel alınmıştır. Kullanılan diyagram türleri ve notasyonları:
+Class Diyagramı Notasyonu:
+Sınıf kutusunun üst bölümü sınıf adını, orta bölümü öznitelikleri, alt bölümü metotları gösterir.
++ işareti public, - işareti private erişim belirleyicisini gösterir.
+<<Entity>> stereotipi veritabanı varlığını, <<interface>> stereotipi arayüzü temsil eder.
+<<enum>> stereotipi sabit değer kümesini gösterir.
+Düz ok (→): ilişkilendirme (association); kesik ok (- ->): gerçekleştirme (realization/implements).
+1, N, 1..1, 1..N çokluk (multiplicity) gösterimleridir.
+ER Diyagramı Notasyonu:
+Crow's Foot (Karga Ayağı) notasyonu kullanılmıştır.
+[PK] etiketi birincil anahtarı (Primary Key), [FK] etiketi yabancı anahtarı (Foreign Key) gösterir.
+1 tek tarafı, N çok tarafı temsil eder.
+Tablolar dikdörtgen, ilişkiler bağlantı çizgileriyle gösterilir.
+Sequence Diyagramı Notasyonu:
+Dikey kesik çizgiler yaşam çizgilerini (lifeline) temsil eder.
+Düz ok giden mesajı, kesik geri ok dönüş mesajını gösterir.
+Aktivasyon kutuları (ince dikdörtgenler) işlemin aktif yürütüldüğü süreyi gösterir.
+Veri Akış Diyagramı (VAD / DFD) Notasyonu:
+Dış varlıklar dikdörtgen, prosesler yuvarlak köşeli dikdörtgen, veri depoları çift çizgili dikdörtgen olarak gösterilir.
+Oklar veri akışının yönünü gösterir.
+Mimari Diyagram Notasyonu:
+Katmanlar soldan sağa ya da yukarıdan aşağıya hiyerarşik sırayla gösterilir.
+Kesik kenarlı kutular bulut ortamlarını (Vercel, Railway, Supabase) temsil eder.
+Renk Kodlaması:
+Lacivert / Koyu Mavi (#1F3864): Backend ve veritabanı katmanları
+Orta Mavi (#2E75B6): API, servis ve arayüz bileşenleri
+Yeşil (#27AE60): Başarılı durumlar, onaylı işlemler
+Turuncu (#F39C12): Beklemede olan durumlar, uyarılar
+Kırmızı (#E74C3C): Hata durumları, iptal işlemleri
+7c. Dahil Edilen Tüm Modeller için Veri Sözlüğü
+Belgede kullanılan tüm veri akışları, varlıklar ve arayüz elemanlarının tanımları aşağıda verilmiştir.
+Temel Veri Varlıkları:
+User = id + email + sifre_hash + ad + soyad + rol + aktif + createdAt + updatedAt
+Sistemdeki tüm kullanıcıların ortak kaydı. Rol alanı; ADMIN, PSIKOLOG veya HASTA değerlerinden birini alır.
+Psikolog = id + user_id + unvan + biyografi + uzmanliklar + ucret + onaylandi
+User kaydına bağlı psikolog profili. Onaylandi alanı admin tarafından false→true yapılmadan sistem üzerinde aktif randevu alınamaz.
+Hasta = id + user_id + dogum_tarihi + cinsiyet + telefon + anamnez
+User kaydına bağlı hasta profili. Anamnez alanı ilk görüşme notlarını içerir.
+Randevu = id + psikolog_id + hasta_id + baslangic_zamani + bitis_zamani + durum + tur + hasta_notlari
+Durum: BEKLEMEDE (oluşturuldu, psikolog onayı bekleniyor) → ONAYLANDI (psikolog onayladı) → TAMAMLANDI (seans gerçekleşti) | IPTAL_EDILDI.
+Tur: YÜZYÜZE veya ONLINE.
+Seans = id + randevu_id + psikolog_id + hasta_id + baslangic + bitis + sure + notlar + gizli_not
+Notlar: hastaya gösterilebilir seans notları. Gizli_not: yalnızca psikologun görebileceği alan.
+Rapor = id + seans_id + psikolog_id + baslik + tani + icerik + tavsiyeler + olusturma_tarihi
+Seans tamamlandıktan sonra psikolog tarafından oluşturulur. PDF olarak dışa aktarılabilir.
+MusaitlikSlot = id + psikolog_id + gun + baslangic + bitis + aktif
+Gun: PAZARTESİ, SALI, ÇARŞAMBA, PERŞEMBE, CUMA, CUMARTESİ, PAZAR.
+Odeme = id + randevu_id + miktar + yontem + durum + tarih
+Durum: BEKLEMEDE, TAMAMLANDI, IADE_EDILDI.
+API Arayüz Veri Akışları:
+POST /auth/login → istek: { email, sifre } → yanıt: { access_token, refresh_token, user }
+GET /psikologlar → istek: { uzmanlik?, sehir?, sayfa? } → yanıt: { data: Psikolog[], meta: { toplam, sayfa } }
+POST /randevular → istek: { psikolog_id, baslangic_zamani, bitis_zamani, tur, hasta_notlari? } → yanıt: { id, durum: "BEKLEMEDE" }
+PATCH /randevular/:id/onayla → istek: { } → yanıt: { id, durum: "ONAYLANDI" }
+POST /seanslar/baslat → istek: { randevu_id } → yanıt: { id, baslangic }
+PATCH /seanslar/:id/bitir → istek: { notlar, gizli_not? } → yanıt: { id, sure, bitis }
+Standart API Yanıt Yapısı:
+Başarılı: { data: T, statusCode: number, message: string }
+Hata: { statusCode: number, message: string, error: string }
+Sayfalandırma: { data: T[], meta: { toplam, sayfa, sayfaBasinaKayit } }
+Proje_Durumları8a. Gerçekler
+Aşağıda PsikoTakip ürünü üzerinde doğrudan etkisi olan ve gereksinim kısıtlaması niteliği taşımayan olgusal gerçekler listelenmiştir:
+Türkiye'de psikolog başına düşen hasta sayısı yüksek olmakla birlikte psikologların büyük çoğunluğu randevu ve hasta takibini hâlâ manuel yöntemlerle (Excel, Google Takvim, telefon/WhatsApp) yürütmektedir. PsikoTakip bu süreçleri dijitalleştirmeye yönelik bir çözüm sunmaktadır.
+KVKK kapsamında ruh sağlığı verileri "özel nitelikli kişisel veri" olarak sınıflandırılmaktadır. Bu veriler için ek güvenlik önlemleri zorunludur; açık rıza alınmadan işlenemez.
+Projenin tüm altyapısı ücretsiz katmanlarda (Vercel Free, Railway Starter, Supabase Free) çalıştırılmaktadır. Ücretsiz katman kapasite sınırlamaları mevcuttur: Supabase Free'de 500 MB depolama ve 2 GB bant genişliği, Railway Starter'da aylık 5 USD kredi ile kısıtlıdır.
+Projedeki 5 geliştirici aynı anda farklı modüller üzerinde çalışmaktadır. Kod çakışmalarını önlemek amacıyla Git Flow dallanma stratejisi uygulanmakta; main, develop ve feature/* dalları kullanılmaktadır.
+NestJS modüler mimarisi sayesinde her iş birimi (auth, randevu, seans vb.) bağımsız olarak geliştirip test edilebilmektedir. Bu durum paralel geliştirmeyi kolaylaştırmakta ve proje süresini kısaltmaktadır.
+Next.js 14 App Router'ın sunucu bileşenleri (Server Components) sayesinde istemci tarafında JavaScript yükü azaltılmakta; bu durum FCP < 1.5 saniye hedefine ulaşmayı kolaylaştırmaktadır.
+Proje süresi kısıtlıdır: 01.03.2026 – 01.06.2026 tarihleri arasında 7 sprint planlanmıştır. Toplam geliştirme süresi 13 haftadır.
+PostgreSQL'in yerleşik ENUM türleri; RandevuDurum, Rol ve RandevuTur alanları için kullanılmaktadır. Bu yaklaşım uygulama katmanında ek doğrulama gerektirmeksizin veri bütünlüğünü garanti altına almaktadır.
+Prisma ORM migration sistemi, veritabanı şeması değişikliklerini sürüm kontrolü altında tutmakta ve geri alma (rollback) işlemlerini mümkün kılmaktadır.
+Sistem şu an için yalnızca Türkçe dilini desteklemekte; çoklu dil desteği kapsam dışında bırakılmıştır.
+8b. Varsayımlar
+Aşağıda PsikoTakip projesi boyunca geliştirme ekibinin benimsediği varsayımlar listelenmiştir:
+Platform erişilebilirliği: Vercel, Railway ve Supabase ücretsiz katmanlarının proje bitiş tarihine kadar (01.06.2026) hizmet vermeye devam edeceği varsayılmaktadır. Herhangi bir platformun politika değiştirmesi durumunda alternatif olarak Render.com ve Neon PostgreSQL değerlendirilebilir.
+Tarayıcı uyumluluğu: Kullanıcıların güncel sürümlü tarayıcılar (Chrome 100+, Firefox 100+, Safari 15+, Edge 100+) kullandığı varsayılmaktadır. Internet Explorer desteği verilmeyecektir.
+İnternet bağlantısı: Sistemin çevrimiçi (online) bir ortamda çalışacağı, kullanıcıların sürekli internet erişimine sahip olduğu varsayılmaktadır. Çevrimdışı (offline) çalışma modu kapsam dışındadır.
+E-posta servisi: Randevu bildirimleri ve hatırlatmaları için Nodemailer üzerinden SMTP bağlantısı kurulacaktır. Geliştirme ortamında Mailtrap, üretim ortamında ise Gmail SMTP veya SendGrid kullanılacağı varsayılmaktadır.
+Kullanıcı sayısı: Eş zamanlı en fazla 50 kullanıcının sistemi kullanacağı varsayılmaktadır. Bu kısıt, ücretsiz katman sınırlamalarıyla örtüşmektedir. Daha yüksek kullanıcı sayısı gerektiğinde ücretli katmana geçiş yapılacaktır.
+Mobil uygulama: PsikoTakip'in bu aşamada yalnızca responsive (duyarlı) bir web uygulaması olarak geliştirileceği varsayılmaktadır. Native (yerel) iOS veya Android uygulaması bu projenin kapsamında değildir.
+Ödeme entegrasyonu: Ödeme modülü veri yapısı tanımlanmış olmakla birlikte, gerçek ödeme altyapısı (İyzico, Stripe vb.) entegrasyonunun bu proje döneminde tamamlanmayacağı varsayılmaktadır. Ödeme modülü, gelecekteki entegrasyona hazır şekilde iskelet olarak bırakılacaktır.
+Psikolog onayı: Sisteme kaydolan her psikoloğun aktif hale gelebilmesi için admin onayı gerekeceği varsayılmaktadır. Onay süreci manuel olarak admin panelinden yürütülecektir; otomatik kimlik doğrulama entegrasyonu kapsam dışındadır.
+Veri yedeklemesi: Supabase'in günlük otomatik yedekleme özelliğinin aktif olduğu varsayılmaktadır. Ek yedekleme betikleri (scripts) kritik veritabanı değişiklikleri öncesinde manuel tetiklenerek çalıştırılacaktır.
+Test ortamı: Her geliştiricinin yerel makinesinde Docker ve Node.js 20+ kurulumunun tamamlanmış olduğu varsayılmaktadır. CI/CD pipeline'ı GitHub Actions üzerinde yapılandırılacak olup her pull request'te otomatik testler çalışacaktır.
+Gizlilik politikası: Hastalar sisteme kaydolurken kişisel verilerinin işlenmesine açıkça onay verecektir. Bu onay kaydı veritabanında saklanacak; KVKK uyumluluğu bu mekanizma üzerinden sağlanacaktır.
+Çakışma kontrolü: Bir psikoloğun aynı zaman dilimine birden fazla randevu alınmasını engelleyen çakışma kontrolü, backend servis katmanında uygulanacaktır. Bu kontrol, istemci tarafında değil sunucu tarafında zorunlu tutulacaktır.
+Gereksinimler
+2.1 Ürün Kullanım Senaryoları
+PsikoTakip sistemi; hastalar, psikologlar ve sistem yöneticilerinden oluşan üç temel kullanıcı rolüne hizmet etmektedir. Bu bölüm, her rolün sistem ile nasıl etkileşime girdiğini, hangi adımları izlediğini ve sistemin hangi işlemleri otomatik olarak gerçekleştirdiğini ayrıntılı biçimde tanımlamaktadır.
+Kullanım senaryoları; işlevsel gereksinimlerin belirlenmesinde, NestJS modül sınırlarının tanımlanmasında ve veritabanı varlık ilişkilerinin (User, Psikolog, Hasta, Randevu, Seans, Rapor) modellenmesinde temel referans kaynağı olarak kullanılmıştır. Her senaryo, Next.js frontend ile NestJS backend arasındaki API çağrılarını ve RBAC yetkilendirme kurallarını doğrudan yansıtmaktadır.
+PsikoTakip'te kullanım senaryoları üç kategoriye ayrılmıştır: Hasta senaryoları (kayıt, psikolog arama, randevu alma ve seans takibi), Psikolog senaryoları (profil yönetimi, müsaitlik takvimi, seans yürütme ve rapor oluşturma) ve Admin senaryoları (kullanıcı yönetimi, psikolog onayı, sistem denetimi ve platform yönetimi).
+2.2 Kullanım Durum Diyagramları
+PsikoTakip sistemi, kullanıcı rolleri arasındaki karmaşıklık nedeniyle üç ayrı kullanım durumu diyagramı ile modellenmiştir. Her diyagram, ilgili rolün sistem sınırı içindeki işlemlerini ve dış aktörlerle (E-posta Servisi, Admin Sistemi, Veritabanı) olan etkileşimlerini UML 2.0 notasyonuyla göstermektedir.
+Diyagramlarda kullanılan gösterim kuralları şunlardır: Sistem sınırı dikdörtgen ile, kullanım durumları elips ile, aktörler çubuk adam simgesiyle temsil edilmektedir. <<include>> ilişkisi bir kullanım durumunun her çalışmasında zorunlu olarak tetiklenen alt işlemi, <<extend>> ilişkisi ise koşula bağlı olarak devreye giren isteğe bağlı işlevi göstermektedir.
+Ürün Kullanım Durum Listesi.
+Sistem sınırı kararları şu kriterlere dayanmaktadır: hasta ve psikolog arasındaki randevu sürecinin tamamı otomatikleştirilmekte; ödeme doğrulama ve resmi kimlik teyidi ise kapsam dışında bırakılmaktadır. Aşağıda PsikoTakip sistemine ait 15 ürün kullanım durumu listelenmiştir.
+UC ID
+Kullanım Durumu Adı
+Birincil Aktör
+Öncelik
+UC001
+Sisteme Kayıt Ol
+Hasta / Psikolog
+Must Have
+UC002
+Sisteme Giriş Yap
+Hasta / Psikolog / Admin
+Must Have
+UC003
+Psikolog Ara ve Filtrele
+Hasta
+Must Have
+UC004
+Randevu Al
+Hasta
+Must Have
+UC005
+Randevu Onayla / Reddet
+Psikolog
+Must Have
+UC006
+Randevu İptal Et
+Hasta / Psikolog
+Must Have
+UC007
+Müsaitlik Takvimi Yönet
+Psikolog
+Must Have
+UC008
+Seans Yürüt (Başlat – Not Kaydet – Bitir)
+Psikolog
+Must Have
+UC009
+Rapor Oluştur ve PDF İndir
+Psikolog / Hasta
+Should Have
+UC010
+Dashboard İstatistiklerini Görüntüle
+Psikolog / Admin
+Should Have
+UC011
+Psikolog Onayı Ver / Reddet
+Admin
+Must Have
+UC012
+Kullanıcı Hesabını Yönet
+Admin
+Must Have
+UC013
+Profil Bilgilerini Güncelle
+Hasta / Psikolog
+Should Have
+UC014
+Bildirim Al (E-posta)
+Hasta / Psikolog
+Should Have
+UC015
+Sistem Denetim Kayıtlarını Görüntüle
+Admin
+Could Have
+Bireysel Ürün Kullanım Durumları
+Tablo 1 – UC001: Sisteme Kayıt Ol
+Alan
+İçerik
+Use Case ID
+UC001
+Use Case Adı
+Sisteme Kayıt Ol
+Oluşturan
+Nihat Furkan Çakmakcı
+Son Güncelleyen
+Recep Çalışkan
+Oluşturma Tarihi
+01.03.2026
+Son Güncelleme Tarihi
+08.03.2026
+Rol / Kullanıcı
+Hasta, Psikolog
+Açıklama
+Kullanıcı, ad, soyad, e-posta ve şifre bilgileriyle sisteme yeni hesap oluşturur. Psikolog rolünü seçenler için ek olarak unvan ve uzmanlık alanı girilir.
+Ön Koşullar
+Kullanıcının sisteme kayıtlı bir hesabı bulunmamalıdır. Geçerli ve benzersiz bir e-posta adresi girilmelidir.
+Tamamlanma Koşulu
+Veritabanına User kaydı oluşturulmuştur. Hasta rolü seçildiyse otomatik olarak aktif hale gelir. Psikolog rolü seçildiyse hesap "onay bekliyor" durumunda kalır.
+Başlatıcılar / Olaylar
+Kullanıcı kayıt formunu doldurup "Kayıt Ol" butonuna tıklar.
+Paydaşlar
+Hasta, Psikolog, Admin (psikolog onayı için)
+Öncelik (MoSCoW)
+Must Have
+Kullanım
+POST /auth/register → JWT access_token + refresh_token döner. Bcrypt ile şifre hash'lenir.
+Ana Başarı Senaryosu
+1. Kullanıcı kayıt formunu doldurur ve rol seçer. 2. Sistem e-posta benzersizliğini doğrular. 3. Şifre bcrypt ile hash'lenir, User kaydı oluşturulur. 4. Hasta ise doğrudan giriş yapabilir. Psikolog ise onay bekleme ekranı gösterilir.
+Alternatif Senaryolar
+A1: E-posta zaten kayıtlıysa sistem "Bu e-posta adresi zaten kullanımda" mesajı döner, kayıt tamamlanmaz.
+İstisna Senaryoları
+E1: Veritabanı bağlantısı kesilirse 500 hatası döner ve kullanıcıya "Lütfen daha sonra tekrar deneyin" mesajı gösterilir. E2: Şifre minimum gereksinimleri (8 karakter, büyük harf, rakam) sağlanmazsa form doğrulama hatası döner.
+Kısıtlar
+Şifre en az 8 karakter, en az bir büyük harf ve bir rakam içermelidir. E-posta RFC 5321 formatına uygun olmalıdır.
+İş Kuralları
+Psikolog hesabı, admin onayı olmadan randevu kabul edemez. Bir e-posta adresiyle yalnızca tek hesap açılabilir.
+Riskler
+Sahte e-posta adresleriyle toplu kayıt saldırısı. Rate limiting (100 istek/dk/IP) ile önlenmektedir.
+Varsayımlar
+Kullanıcının geçerli ve erişilebilir bir e-posta adresine sahip olduğu varsayılmaktadır.
+Durum
+Onaylandı
+Notlar / Konular
+Sprint 2'de (15–28.03.2026) geliştirilecektir. E-posta doğrulama linki ilerleyen sprintlerde eklenebilir.
+Tablo 2 – UC002: Sisteme Giriş Yap
+Alan
+İçerik
+Use Case ID
+UC002
+Use Case Adı
+Sisteme Giriş Yap
+Oluşturan
+Recep Çalışkan
+Son Güncelleyen
+Recep Çalışkan
+Oluşturma Tarihi
+01.03.2026
+Son Güncelleme Tarihi
+08.03.2026
+Rol / Kullanıcı
+Hasta, Psikolog, Admin
+Açıklama
+Kayıtlı kullanıcı e-posta ve şifresiyle sisteme giriş yapar. Başarılı girişte JWT access_token (15 dk) ve refresh_token (7 gün) üretilir.
+Ön Koşullar
+Kullanıcının aktif bir hesabı bulunmalıdır. Psikolog hesabı admin tarafından onaylanmış olmalıdır.
+Tamamlanma Koşulu
+Kullanıcıya JWT token çifti verilmiştir ve rol bazlı dashboard ekranı gösterilmektedir.
+Başlatıcılar / Olaylar
+Kullanıcı e-posta ve şifresini girip "Giriş Yap" butonuna tıklar.
+Paydaşlar
+Hasta, Psikolog, Admin
+Öncelik (MoSCoW)
+Must Have
+Kullanım
+POST /auth/login → { access_token, refresh_token, user: { id, rol, ad } }
+Ana Başarı Senaryosu
+1. Kullanıcı e-posta ve şifresini girer. 2. Sistem şifreyi bcrypt ile doğrular. 3. JWT access_token ve refresh_token üretilir. 4. Kullanıcı rolüne göre ilgili dashboard'a yönlendirilir.
+Alternatif Senaryolar
+A1: Şifre yanlışsa "E-posta veya şifre hatalı" mesajı gösterilir. A2: 5 başarısız denemede hesap 15 dakika kilitlenir.
+İstisna Senaryoları
+E1: Hesap pasif durumdaysa "Hesabınız askıya alınmıştır, yönetici ile iletişime geçin" mesajı döner. E2: Psikolog henüz onaylanmamışsa "Hesabınız onay sürecindedir" mesajı gösterilir.
+Kısıtlar
+Brute-force koruması: 5 başarısız denemede 15 dakika kilitleme. Rate limiting: 100 istek/dk/IP.
+İş Kuralları
+Access token süresi 15 dakika, refresh token süresi 7 gündür. Refresh token HttpOnly cookie olarak saklanır.
+Riskler
+Token çalınması durumunda yetkisiz erişim. HttpOnly cookie ve HTTPS zorunluluğuyla azaltılmaktadır.
+Varsayımlar
+Tüm iletişim HTTPS üzerinden gerçekleşmektedir.
+Durum
+Onaylandı
+Notlar / Konular
+Sprint 2'de geliştirilecektir. Sosyal giriş (Google OAuth) ilerleyen sürümlere bırakılmıştır.
+Tablo 3 – UC004: Randevu Al
+Alan
+İçerik
+Use Case ID
+UC004
+Use Case Adı
+Randevu Al
+Oluşturan
+Recep Çalışkan
+Son Güncelleyen
+Mesut Özdemir
+Oluşturma Tarihi
+01.03.2026
+Son Güncelleme Tarihi
+08.03.2026
+Rol / Kullanıcı
+Hasta
+Açıklama
+Kayıtlı hasta, seçtiği psikoloğun müsait slotlarından birini seçerek randevu oluşturur. Randevu BEKLEMEDE durumunda oluşturulur ve psikolog onayı beklenir.
+Ön Koşullar
+Hasta sisteme giriş yapmış olmalıdır (UC002). Seçilen psikolog aktif ve onaylı olmalıdır. Seçilen zaman diliminde çakışan başka randevu bulunmamalıdır.
+Tamamlanma Koşulu
+Randevu BEKLEMEDE durumuyla veritabanına kaydedilmiştir. Hem hastaya hem psikologa e-posta bildirimi gönderilmiştir.
+Başlatıcılar / Olaylar
+Hasta, psikolog profilinde müsait bir slotu seçip "Randevu Al" butonuna tıklar.
+Paydaşlar
+Hasta, Psikolog, E-posta Servisi
+Öncelik (MoSCoW)
+Must Have
+Kullanım
+POST /randevular → { psikolog_id, baslangic_zamani, bitis_zamani, tur, hasta_notlari? }
+Ana Başarı Senaryosu
+1. Hasta psikolog listesinden bir psikolog seçer. 2. Müsait slotlar görüntülenir. 3. Hasta uygun bir slot ve randevu türünü (yüz yüze / online) seçer. 4. Sistem çakışma kontrolü yapar. 5. Randevu BEKLEMEDE durumuyla kaydedilir. 6. Psikologa ve hastaya bildirim e-postası gönderilir.
+Alternatif Senaryolar
+A1: Seçilen slot başka bir hasta tarafından aynı anda alınmışsa "Bu saat dolu, lütfen başka bir saat seçin" mesajı döner.
+İstisna Senaryoları
+E1: E-posta servisi ulaşılamaz durumdaysa randevu yine de oluşturulur, bildirim başarısız olarak loglanır. E2: Psikolog hesabı arada pasif yapılmışsa işlem reddedilir.
+Kısıtlar
+Bir hasta aynı psikologa aynı gün için yalnızca bir randevu alabilir. Geçmiş tarihe randevu alınamaz.
+İş Kuralları
+Çakışma kontrolü backend servis katmanında zorunlu olarak uygulanır; istemci tarafı kontrolü yeterli değildir.
+Riskler
+Eş zamanlı randevu alma durumunda aynı slota iki randevu düşebilir. Veritabanı transaction kilidi ile önlenmektedir.
+Varsayımlar
+Psikolog müsaitlik slotlarını önceden tanımlamış olmalıdır (UC007).
+Durum
+Onaylandı
+Notlar / Konular
+Sprint 3'te (29.03–11.04.2026) geliştirilecektir.
+Tablo 4 – UC008: Seans Yürüt
+Alan
+İçerik
+Use Case ID
+UC008
+Use Case Adı
+Seans Yürüt (Başlat – Not Kaydet – Bitir)
+Oluşturan
+Recep Çalışkan
+Son Güncelleyen
+Hasan Tozlu
+Oluşturma Tarihi
+01.03.2026
+Son Güncelleme Tarihi
+08.03.2026
+Rol / Kullanıcı
+Psikolog
+Açıklama
+Psikolog, onaylanmış randevu zamanı geldiğinde seansı başlatır, görüşme notlarını ve isteğe bağlı gizli notları sisteme kaydeder, ardından seansı bitirir.
+Ön Koşullar
+İlgili randevu ONAYLANDI durumunda olmalıdır. Psikolog sisteme giriş yapmış olmalıdır.
+Tamamlanma Koşulu
+Seans TAMAMLANDI durumuyla kaydedilmiştir. Süre (dakika), notlar ve gizli notlar veritabanına yazılmıştır. Bağlı randevu da TAMAMLANDI olarak güncellenir.
+Başlatıcılar / Olaylar
+Psikolog randevu listesinden ilgili randevuya tıklayıp "Seansı Başlat" butonuna basar.
+Paydaşlar
+Psikolog, Hasta
+Öncelik (MoSCoW)
+Must Have
+Kullanım
+POST /seanslar/baslat → { randevu_id } / PATCH /seanslar/:id/bitir → { notlar, gizli_not? }
+Ana Başarı Senaryosu
+1. Psikolog "Seansı Başlat" butonuna tıklar; başlangıç zamanı kaydedilir. 2. Görüşme süresince psikolog not alanına yazar. 3. Psikolog isteğe bağlı olarak gizli not ekler (yalnızca psikolog görebilir). 4. "Seansı Bitir" butonuna tıklanır; bitiş zamanı ve toplam süre hesaplanarak kaydedilir. 5. Seans TAMAMLANDI durumuna geçer.
+Alternatif Senaryolar
+A1: Psikolog bağlantısı kesilirse seans taslak olarak saklanır, yeniden bağlandığında kaldığı yerden devam edebilir.
+İstisna Senaryoları
+E1: Randevu ONAYLANDI durumunda değilse seans başlatılamaz, 403 hatası döner.
+Kısıtlar
+Gizli notlara yalnızca ilgili psikolog erişebilir; hasta ve admin göremez.
+İş Kuralları
+Bir randevu için yalnızca bir seans kaydı oluşturulabilir. Seans başlatıldıktan sonra randevu iptal edilemez.
+Riskler
+Tarayıcı kapanması durumunda not kaybı. Otomatik taslak kayıt mekanizmasıyla azaltılacaktır.
+Varsayımlar
+Psikolog ve hasta aynı anda sistemde olacaktır (yüz yüze veya video görüşme yürütülmektedir).
+Durum
+Onaylandı
+Notlar / Konular
+Sprint 4'te (12–25.04.2026) geliştirilecektir.
+Tablo 5 – UC011: Psikolog Onayı Ver / Reddet
+Alan
+İçerik
+Use Case ID
+UC011
+Use Case Adı
+Psikolog Onayı Ver / Reddet
+Oluşturan
+Arda Özkaya
+Son Güncelleyen
+Recep Çalışkan
+Oluşturma Tarihi
+01.03.2026
+Son Güncelleme Tarihi
+08.03.2026
+Rol / Kullanıcı
+Admin
+Açıklama
+Admin, sisteme kayıt olan psikologların başvurularını inceler; onay verir ya da gerekçe belirterek reddeder. Onaylanan psikolog aktif hale gelir ve randevu kabul etmeye başlayabilir.
+Ön Koşullar
+Psikolog UC001 ile kayıt olmuş ve hesabı "onay bekliyor" durumundadır. Admin sisteme giriş yapmış olmalıdır.
+Tamamlanma Koşulu
+Psikolog kaydının onaylandi alanı true/false olarak güncellenmiştir. Psikologa sonucu bildiren e-posta gönderilmiştir.
+Başlatıcılar / Olaylar
+Admin, bekleyen başvurular listesinden bir psikolog seçip "Onayla" veya "Reddet" butonuna tıklar.
+Paydaşlar
+Admin, Psikolog, E-posta Servisi
+Öncelik (MoSCoW)
+Must Have
+Kullanım
+PATCH /admin/psikologlar/:id/onayla veya /reddet
+Ana Başarı Senaryosu
+1. Admin bekleyen psikolog listesini görüntüler. 2. Psikolog profilini ve belgelerini inceler. 3. "Onayla" butonuna tıklar. 4. Psikolog kaydı onaylandi=true olarak güncellenir. 5. Psikologa onay e-postası gönderilir. 6. Psikolog artık müsaitlik slotu oluşturabilir ve randevu kabul edebilir.
+Alternatif Senaryolar
+A1: Admin "Reddet" seçeneğini kullanırsa ret gerekçesi girilmesi istenir ve psikologa ret e-postası gönderilir.
+İstisna Senaryoları
+E1: E-posta servisi çalışmıyorsa işlem yine de tamamlanır; bildirim başarısız olarak loglanır.
+Kısıtlar
+Onaylanmamış psikolog hesabı randevu kabul edemez, müsaitlik slotu oluşturamaz.
+İş Kuralları
+Onay işlemi geri alınamaz; tekrar pasif yapılmak istenirse ayrı "Hesabı Askıya Al" işlevi (UC012) kullanılır.
+Riskler
+Sahte belgeyle kayıt olma. Manuel inceleme süreci bu riski azaltmaktadır.
+Varsayımlar
+Psikolog belgelerinin doğrulanması manuel olarak admin tarafından yapılır; otomatik kimlik doğrulama bu kapsam dışındadır.
+Durum
+Onaylandı
+Notlar / Konular
+Sprint 2'de geliştirilecektir. İleride diploma doğrulama API entegrasyonu eklenebilir.
+Fonksiyonel Gereksinimler
+Tablo – Fonksiyonel Gereksinim Detay Tablosu
+Alan
+İçerik
+Fonksiyonel Gereksinim ID
+FR001
+Gereksinim Tipi
+İşlevsel
+Tanım
+Sistem, e-posta ve şifre ile kullanıcı kaydı ve girişini desteklemelidir. Şifreler bcrypt ile hash'lenerek saklanmalı, oturum JWT (access 15 dk + refresh 7 gün) ile yönetilmelidir.
+Gerekçe
+Sisteme yetkisiz erişimi engellemek ve kullanıcı verilerini korumak için kimlik doğrulama zorunludur.
+Üreten Kişi
+Recep Çalışkan
+Uyum Kriteri
+Geçerli kimlik bilgileriyle giriş yapıldığında 200 ve JWT token dönmelidir. Hatalı kimlik bilgilerinde 401 dönmelidir. 5 başarısız denemede hesap 15 dk kilitlenmelidir.
+Müşteri Memnuniyet Derecesi
+5
+Müşteri Memnuniyetsizlik Derecesi
+5
+Öncelik
+5
+Destekleyici Materyal
+UC001, UC002; NestJS JWT Guard, Bcrypt kütüphanesi
+Çatışmalar
+Yok
+Alan
+İçerik
+Fonksiyonel Gereksinim ID
+FR002
+Gereksinim Tipi
+İşlevsel
+Tanım
+Sistem, RBAC (Rol Tabanlı Erişim Kontrolü) uygulamalıdır. HASTA, PSIKOLOG ve ADMIN rolleri tanımlanmalı; her endpoint yalnızca yetkili role açık olmalıdır.
+Gerekçe
+Hastaların psikolog notlarına, psikologların başka hastaların verilerine erişimini engellemek için rol bazlı yetkilendirme zorunludur.
+Üreten Kişi
+Recep Çalışkan
+Uyum Kriteri
+Hasta kullanıcı /admin veya /psikologlar/notlar endpoint'lerine erişmeye çalıştığında 403 dönmelidir.
+Müşteri Memnuniyet Derecesi
+5
+Müşteri Memnuniyetsizlik Derecesi
+5
+Öncelik
+5
+Destekleyici Materyal
+NestJS RolesGuard, @Roles() dekoratörü
+Çatışmalar
+Yok
+Alan
+İçerik
+Fonksiyonel Gereksinim ID
+FR003
+Gereksinim Tipi
+İşlevsel
+Tanım
+Sistem, psikolog arama ve filtreleme işlevini desteklemelidir. Hasta; uzmanlık alanı, ücret aralığı ve müsaitlik durumuna göre psikolog arayabilmelidir.
+Gerekçe
+Hastaların ihtiyaçlarına uygun psikoloğu kolayca bulabilmesi sistemin temel kullanım amacıdır.
+Üreten Kişi
+Mesut Özdemir
+Uyum Kriteri
+GET /psikologlar?uzmanlik=anksiyete&ucret_max=500 isteği yalnızca eşleşen psikologları sayfalandırılmış şekilde döndürmelidir.
+Müşteri Memnuniyet Derecesi
+4
+Müşteri Memnuniyetsizlik Derecesi
+4
+Öncelik
+4
+Destekleyici Materyal
+UC003; Prisma ORM where/filter
+Çatışmalar
+Yok
+Alan
+İçerik
+Fonksiyonel Gereksinim ID
+FR004
+Gereksinim Tipi
+İşlevsel
+Tanım
+Sistem, randevu oluşturma, onaylama, reddetme ve iptal etme işlemlerini desteklemelidir. Çakışan randevuların önlenmesi için backend'de çakışma kontrolü yapılmalıdır.
+Gerekçe
+Randevu yönetimi sistemin temel iş sürecidir; çakışma kontrolü veri bütünlüğü için zorunludur.
+Üreten Kişi
+Recep Çalışkan
+Uyum Kriteri
+Aynı psikolog ve zaman dilimine ikinci randevu oluşturulduğunda 409 Conflict hatası dönmelidir. Onaylama işlemi yalnızca ilgili psikolog tarafından yapılabilmelidir.
+Müşteri Memnuniyet Derecesi
+5
+Müşteri Memnuniyetsizlik Derecesi
+5
+Öncelik
+5
+Destekleyici Materyal
+UC004, UC005, UC006; Prisma transaction
+Çatışmalar
+Yok
+Alan
+İçerik
+Fonksiyonel Gereksinim ID
+FR005
+Gereksinim Tipi
+İşlevsel
+Tanım
+Sistem, seans başlatma, not kaydetme, gizli not ekleme ve seansı bitirme işlevlerini desteklemelidir. Gizli notlara yalnızca ilgili psikolog erişebilmelidir.
+Gerekçe
+Seans yönetimi psikologların iş akışının dijitalleştirilmesinin özüdür. Gizli not alanı klinik gizlilik gereksinimini karşılar.
+Üreten Kişi
+Recep Çalışkan
+Üreten Kişi
+Recep Çalışkan
+Uyum Kriteri
+Hasta kullanıcı gizli_not alanını içeren endpoint'e eriştiğinde bu alan null dönmelidir. Seans bitişinde süre otomatik hesaplanmalıdır.
+Müşteri Memnuniyet Derecesi
+5
+Müşteri Memnuniyetsizlik Derecesi
+5
+Öncelik
+5
+Destekleyici Materyal
+UC008; NestJS interceptor, RolesGuard
+Çatışmalar
+Yok
+Alan
+İçerik
+Fonksiyonel Gereksinim ID
+FR006
+Gereksinim Tipi
+İşlevsel
+Tanım
+Sistem, seans tamamlandıktan sonra psikologun rapor oluşturmasına ve hastanın bu raporu PDF olarak indirmesine olanak sağlamalıdır.
+Gerekçe
+Tedavi sürekliliği için seans raporlarının kayıt altına alınması ve hasta tarafından erişilebilir olması gerekmektedir.
+Üreten Kişi
+Hasan Tozlu
+Uyum Kriteri
+POST /raporlar isteği başarılı olduğunda GET /raporlar/:id/pdf isteği geçerli bir PDF dosyası döndürmelidir.
+Müşteri Memnuniyet Derecesi
+4
+Müşteri Memnuniyetsizlik Derecesi
+3
+Öncelik
+4
+Destekleyici Materyal
+UC009; PdfFactory tasarım kalıbı, @react-pdf/renderer
+Çatışmalar
+Yok
+Tablo – Fonksiyonel Gereksinim Özet Tablosu
+Fonksiyonel Gereksinim ID
+Fonksiyonel Gereksinim Açıklaması
+FR001
+Sistem, kullanıcı e-posta ve şifresi ile kayıt ve giriş yapılmasına olanak sağlayacaktır.
+FR002
+Sistem, RBAC ile HASTA / PSIKOLOG / ADMIN rollerine göre endpoint erişimini kısıtlayacaktır.
+FR003
+Sistem, hastaların uzmanlık alanı ve ücrete göre psikolog arayıp filtrelemesine olanak sağlayacaktır.
+FR004
+Sistem, randevu oluşturma, onaylama, reddetme ve iptal etme işlemlerini ve çakışma kontrolünü destekleyecektir.
+FR005
+Sistem, psikologların seans başlatmasına, not ve gizli not kaydetmesine ve seansı bitirmesine olanak sağlayacaktır.
+FR006
+Sistem, seans sonrası rapor oluşturulmasına ve PDF olarak indirilmesine olanak sağlayacaktır.
+FR007
+Sistem, psikologların haftalık müsaitlik takvimi oluşturmasına ve güncellemesine olanak sağlayacaktır.
+FR008
+Sistem, randevu ve seans olaylarında ilgili kullanıcılara otomatik e-posta bildirimi gönderecektir.
+FR009
+Sistem, admin tarafından psikolog başvurularının onaylanmasına veya reddedilmesine olanak sağlayacaktır.
+FR010
+Sistem, psikolog ve admin kullanıcılarına randevu sayısı, tamamlanan seans ve gelir istatistiklerini gösteren dashboard sunacaktır.
+Veri Gereksinimleri
+İçerik
+PsikoTakip sisteminin temel iş varlıkları, nesneleri ve sınıfları UML sınıf modeli ile tanımlanmıştır. Model; sisteme kayıt olan tüm kullanıcıları temsil eden User sınıfını, psikolog ve hasta profillerini, randevu ve seans süreçlerini, klinik raporları, müsaitlik takvimini ve ödeme kayıtlarını kapsamaktadır. Sistem sekiz temel varlık sınıfı içermektedir: User, Psikolog, Hasta, Randevu, Seans, Rapor, MusaitlikSlot ve Odeme.
+Motivasyon
+PsikoTakip'in konu alanını açıklığa kavuşturmak ve böylece henüz dikkate alınmamış gereksinimlerin tanınmasını tetiklemek. Psikolog–hasta ilişkisinin, randevu çakışma kontrolünün ve gizli not erişim kısıtlamasının doğru modellenmesi; NestJS modül sınırlarının ve Prisma ORM şemasının bu modelden türetilmesini sağlamaktadır.
+Şekil 2 Class-Sınıf Diyagramı
+Hususlar
+Benzer veya örtüşen sistemler için yararlı bir başlangıç noktası olabilecek herhangi bir veri veya nesne modeli var mı? Bu sistem tarafından ele alınan konu için bir etki alanı modeli var mı? PsikoTakip bağlamında değerlendirildiğinde, klinik yönetim sistemleri (hasta kayıt, randevu ve seans takibi) ile benzer veri yapılarına sahip hazır domain modelleri mevcuttur. Ancak KVKK uyumu, gizli not erişim kısıtlaması ve psikolog onay akışı gibi PsikoTakip'e özgü gereksinimler nedeniyle mevcut modeller doğrudan kullanılmamış; bunun yerine projeye özel bir sınıf modeli tasarlanmıştır.
+PsikoTakip'te Prisma ORM şeması bu sınıf modelinden doğrudan türetilmektedir; bu sayede sınıf diyagramı ile veritabanı şeması arasında tam tutarlılık sağlanmaktadır. Gizli not (gizliNot) alanı yalnızca psikolog rolüne açık olduğundan bu kısıtlama Seans sınıfının erişim kurallarına ve NestJS Guard yapısına yansıtılmıştır. RandevuDurum ve Rol sabit değer kümeleri (enum) ayrı olarak modellenmiş olup uygulama katmanında ek doğrulama gerektirmeksizin veri bütünlüğünü garanti altına almaktadır. Projenin ilerleyen sprintlerinde ödeme entegrasyonu (IPaymentStrategy) ve bildirim sistemi gibi yeni sınıflar bu modele eklenebilir.
+3) Performans Gereksinimleri
+3a Hız ve Gecikme Gereksinimleri
+İçerik
+PsikoTakip web uygulamasında kullanıcı ile sistem arasındaki tüm arayüz etkileşimlerinin maksimum yanıt süresi 2 saniye olacaktır. Randevu oluşturma, seans başlatma ve rapor oluşturma gibi kritik işlemlerin yanıt süresi 1 saniyeyi geçmeyecektir. Dashboard istatistiklerini yükleyen API istekleri en fazla 1.5 saniyede tamamlanacaktır. PDF rapor oluşturma işlemi en fazla 3 saniyede tamamlanacak; bu süre aşılırsa kullanıcıya ilerleme göstergesi sunulacaktır. Sayfa ilk içerik boyaması (FCP) 1.5 saniyenin altında, en büyük içerik boyaması (LCP) ise 2.5 saniyenin altında gerçekleşecektir.
+Motivasyon
+PsikoTakip, psikolog ve hastaların aktif olarak kullandığı, randevu ve seans süreçlerini yöneten bir platformdur. Yavaş yanıt süreleri kullanıcı memnuniyetini düşüreceğinden ve psikologların seans sırasında sistemi kullanmasını zorlaştıracağından hız gereksinimleri kritik önem taşımaktadır. Özellikle randevu alma akışında gecikmeler, kullanıcının aynı anda başka bir hasta tarafından alınan slotu seçmesine neden olabilir.
+Örnekler
+Hasta, psikolog listesini filtreleyerek aradığında sonuçlar 1 saniye içinde görüntülenecektir.
+Psikolog randevu onaylama işlemi 500 milisaniye içinde tamamlanacaktır.
+Seans notu kaydetme işlemi 800 milisaniye içinde veritabanına yazılacaktır.
+Next.js SSR sayfa yüklemesi 1.5 saniyenin altında gerçekleşecektir.
+Uyum Kriteri
+Sistem, API isteklerinin %90'ını 1 saniyeden kısa sürede yanıtlayacaktır. Hiçbir API yanıtı 3 saniyeyi aşmayacaktır. Lighthouse performans skoru 85 puanın üzerinde olacaktır. Bu kriterler Jest performans testleri ve Lighthouse CI araçlarıyla Sprint 6'da (10–23.05.2026) doğrulanacaktır.
+Hususlar
+PsikoTakip'in ücretsiz barındırma katmanlarında (Vercel Free, Railway Starter) çalışacağı göz önünde bulundurulduğunda, hız gereksinimleri bu platformların kapasitesiyle uyumlu belirlenmiştir. Supabase PgBouncer bağlantı havuzu ve Next.js sunucu taraflı önbelleğe alma mekanizmaları bu hedeflere ulaşmayı kolaylaştırmaktadır. Yoğun trafik dönemlerinde (sabah 09:00–11:00) yanıt sürelerinin izlenmesi için Railway ve Vercel panolarındaki metrik araçları kullanılacaktır.
+3b Kesinlik veya Doğruluk Gereksinimleri
+İçerik
+PsikoTakip sisteminde tüm parasal tutarlar (psikolog seans ücreti, ödeme miktarı) iki ondalık haneye kadar doğru olacaktır. Randevu başlangıç ve bitiş zamanları dakika hassasiyetinde saklanacak ve gösterilecektir. Seans süresi saniye cinsinden hesaplanacak, kullanıcıya dakika olarak gösterilecektir. Sistem saati UTC+3 (Türkiye Standart Saati) baz alınarak çalışacak; tüm zaman damgaları bu zaman dilimine göre saklanacaktır.
+Motivasyon
+Psikologların seans ücretlerinin ve ödeme kayıtlarının hatalı hesaplanması hem psikolog hem de hasta için hukuki sorunlara yol açabilir. Randevu zamanlarındaki yanlışlıklar çakışmalara neden olabilir. Bu nedenle sayısal ve zamansal verilerin doğruluğu sistemin güvenilirliği için kritiktir.
+Örnekler
+Psikolog saatlik ücreti 850,50 TL olarak girildiğinde sistem bu değeri 850.50 olarak saklayacak ve gösterecektir.
+Seans 10:02'de başlayıp 10:53'te bittiğinde sistem süreyi 51 dakika olarak kaydedecektir.
+Ödeme tutarı hiçbir zaman yuvarlama farkı içermeyecektir; Decimal veri tipi kullanılacaktır.
+Uyum Kriteri
+Parasal hesaplamalarda ±0,01 TL'den fazla sapma bulunmayacaktır. Randevu zaman çakışma kontrolü 1 dakikalık hassasiyetle çalışacaktır. Seans süre hesabı gerçek başlangıç ve bitiş zamanlarından otomatik olarak yapılacak; manuel girişe izin verilmeyecektir.
+Hususlar
+Japon yeni gibi bazı para birimlerinin ondalık basamak içermediği bilinmekle birlikte PsikoTakip yalnızca Türk lirası (TL) ile çalışmakta olup iki ondalık hassasiyet yeterlidir. Prisma ORM'de parasal alanlar için Decimal tipi kullanılması ve JavaScript'te kayan nokta aritmetiğinden kaçınılması bu doğruluğu garantileyecektir.
+3c Kapasite Gereksinimleri
+İçerik
+Bu bölüm, PsikoTakip sisteminin başa çıkabilmesi gereken kullanıcı hacimlerini ve depolanan veri miktarını belirtir.
+Motivasyon
+Sistemin beklenen kullanıcı hacimlerini karşılayabilmesini ve veri büyümesiyle birlikte çalışmaya devam etmesini sağlamak. Özellikle Supabase Free ve Railway Starter ücretsiz katmanlarının kapasite sınırları dahilinde çalışmak kritik önem taşımaktadır.
+Örnekler
+Sistem, eş zamanlı en fazla 50 aktif kullanıcıya hizmet verecektir. Bu sayının tamamının aynı anda API isteği gönderdiği senaryolarda sistem yanıt vermeye devam edecektir.
+Veritabanı, 500 psikolog, 5.000 hasta, 50.000 randevu ve 50.000 seans kaydını depolayabilecek kapasitede tasarlanacaktır.
+Dosya depolama (Supabase Storage) kapasitesi 500 MB olup bu limit dahilinde PDF raporlar ve profil fotoğrafları saklanacaktır.
+Sistem günlük en fazla 200 yeni randevu kaydını işleyebilecektir.
+Uyum Kriteri
+50 eş zamanlı kullanıcıyla yapılan yük testinde sistem yanıt süresi 3 saniyeyi aşmayacaktır. Veritabanı boyutu 450 MB'ı geçtiğinde sistem yöneticisi otomatik uyarı alacaktır. Bu kriterler Sprint 6'daki performans testleri sırasında doğrulanacaktır.
+4) Güvenilirlik Gereksinimleri
+4a Güvenilirlik Gereksinimleri
+İçerik
+PsikoTakip sisteminin plansız kesinti süresi ayda 4 saati geçmeyecektir. Sistem günde birden fazla arızalanmayacaktır. Herhangi bir arıza durumunda veritabanındaki hiçbir veri kaybolmayacak veya zarar görmeyecektir; Supabase'in WAL (Write-Ahead Log) mekanizması bu bütünlüğü garanti altına alacaktır. Arıza sonrası sistem otomatik yeniden başlatma mekanizmasıyla en geç 5 dakika içinde hizmet vermeye devam edecektir.
+Motivasyon
+Psikologların aktif seans sırasında sistemi kullandığı düşünüldüğünde, ani bir kesinti hem klinik sürecin aksamasına hem de hasta güveninin sarsılmasına yol açabilir. Güvenilirlik gereksinimleri bu riskleri minimize etmek amacıyla belirlenmiştir.
+Örnekler
+Sistem, bir seans yürütülürken arıza yaşansa dahi psikologun o ana kadar girdiği notlar taslak olarak yerel bellekte korunacak ve bağlantı yeniden kurulduğunda otomatik olarak senkronize edilecektir.
+Veritabanı bağlantısı kesildiğinde sistem kullanıcıya anlamlı bir hata mesajı gösterecek ve mevcut işlemi iptal etmeyecektir.
+Hususlar
+Railway Starter platformunun aylık 5 USD ücretsiz kredisi tükendiğinde servis durabilmektedir. Bu riski azaltmak amacıyla kredi kullanımı haftalık olarak izlenecek ve kritik eşiğe (4 USD) ulaşıldığında ekip bilgilendirilecektir. Vercel ve Supabase Free katmanları için de benzer izleme mekanizmaları kurulacaktır.
+4b Kullanılabilirlik Gereksinimleri
+İçerik
+PsikoTakip sistemi haftanın 7 günü, günün 24 saati kullanıma hazır olacaktır. Planlı bakım pencereleri hafta içi gece 02:00–04:00 saatleri arasında gerçekleştirilecek ve kullanıcılara en az 24 saat öncesinden bildirim yapılacaktır. Sistem yıllık %99 çalışma süresine ulaşacaktır; bu, yıllık en fazla 87.6 saat plansız kesintiye karşılık gelmektedir.
+Motivasyon
+Psikologlar hasta randevularını sabah erken saatlerden akşam geç saatlere kadar yönetmektedir. Hastaların randevu alabilmesi için ise sistemin mesai saatleri dışında da erişilebilir olması gerekmektedir. Bu nedenle 7/24 erişilebilirlik hedefi sistemin temel kullanılabilirlik gereksinimi olarak belirlenmiştir.
+Örnekler
+Sistem sabah 07:00 ile gece 23:00 saatleri arasındaki yoğun kullanım döneminde kesintisiz hizmet verecektir.
+Planlı bakım penceresi dışında herhangi bir kesinti yaşanması durumunda sistem 30 dakika içinde yeniden hizmete girecektir.
+Hususlar
+Vercel, Railway ve Supabase platformlarının her biri bağımsız servis düzeyi anlaşmalarına (SLA) sahiptir. Bu platformlardan herhangi birinin kesintiye uğraması sistemin tamamını etkileyebilmektedir. Bu riski azaltmak için her platformun durum sayfası (status page) otomatik izleme araçlarıyla takip edilecektir. Güvenilirlik ve kullanılabilirlik gereksinimleri birbiriyle yakından ilişkili olduğundan bu iki bölüm birlikte değerlendirilmelidir.
+4c Sağlamlık veya Hata Toleransı Gereksinimleri
+İçerik
+Sağlamlık, PsikoTakip sisteminin anormal koşullar altında çalışmaya devam etme yeteneğini belirtir.
+Motivasyon
+PsikoTakip'in e-posta servisi, ödeme altyapısı veya harici bağımlılıklarından birinin geçici olarak kullanılamaz duruma gelmesi halinde sistemin temel işlevlerini sunmaya devam edebilmesini sağlamak.
+Örnekler
+E-posta bildirimi servisi erişilemez olduğunda randevu oluşturma ve onaylama işlemleri yine de tamamlanacak; bildirim başarısız olarak loglanacak ve servis yeniden erişilebilir olduğunda tekrar denenecektir.
+Veritabanı bağlantısı geçici olarak kesildiğinde sistem kullanıcıya 503 hatası dönerek işlemi kayıt altına alacak; bağlantı yeniden kurulduğunda sistem otomatik olarak normale dönecektir.
+Seans sırasında bağlantı kesilirse psikologun girdiği notlar tarayıcı belleğinde geçici olarak korunacak ve bağlantı yeniden kurulduğunda otomatik kaydedilecektir.
+PDF oluşturma servisi 5 saniyeyi aşarsa işlem zaman aşımına uğrayacak ve kullanıcıya "Daha sonra tekrar deneyin" mesajı gösterilecektir; başarısız istek loglanacaktır.
+Hususlar
+NestJS'in global exception filter yapısı tüm beklenmedik hataları yakalayarak loglamakta ve kullanıcıya anlamlı hata mesajları döndürmektedir. Railway üzerindeki backend servisinin çökmesi durumunda otomatik yeniden başlatma (restart policy) yapılandırılacaktır. Olağanüstü durum kurtarma planı kapsamında Supabase'in günlük otomatik yedekleri saklı tutulacak; kritik veri değişiklikleri öncesinde manuel yedek alınacaktır.
+4d Güvenlik Açısından Kritik Gereksinimler
+İçerik
+PsikoTakip, ruh sağlığı verilerini işleyen bir platform olarak insan psikolojisini ve kişisel verilerini etkileyebilecek riskleri minimize etmekle yükümlüdür. Sistem, hastalara ait özel nitelikli kişisel verileri yetkisiz erişimden korumalı ve KVKK kapsamındaki yükümlülükleri eksiksiz yerine getirmelidir.
+Motivasyon
+Bir hastanın ruh sağlığı geçmişine veya psikolog notlarına yetkisiz kişilerin erişmesi hem bireysel zarar hem de hukuki yaptırım riski doğurmaktadır. Bu bölüm, bu tür zararları önlemek amacıyla sistemin karşılaması gereken kritik güvenlik gereksinimlerini tanımlamaktadır.
+Örnekler
+Sistem, bir psikologun başka bir psikologun hastasına ait seans notlarına erişmesine izin vermeyecektir.
+Sistem, hastalara ait gizli notlara (gizliNot alanı) yalnızca ilgili psikoloğun erişmesine izin verecek; hasta ve admin bu alana erişemeyecektir.
+Sistem, 5 başarısız giriş denemesinin ardından hesabı 15 dakika kilitleyerek kaba kuvvet saldırılarını önleyecektir.
+Tüm API iletişimi HTTPS üzerinden gerçekleşecek; HTTP bağlantıları otomatik olarak HTTPS'ye yönlendirilecektir.
+Uyum Kriteri
+RBAC kurallarına aykırı her erişim denemesi 403 hatası döndürmeli ve loglanmalıdır. Gizli not alanı GET /seanslar/:id isteğinde hasta rolüne null olarak dönmelidir. Bu kriterler Hasan Tozlu tarafından Jest ve Cypress testleriyle Sprint 6'da doğrulanacaktır. Sistem, Türkiye Cumhuriyeti KVKK (6698 sayılı Kanun) maddelerine uygunluk sağlamalıdır.
+5) Bakım ve Desteklenebilirlik Gereksinimleri
+5a Bakım Gereksinimleri
+İçerik
+PsikoTakip sisteminde yeni bir API endpoint'i veya modülü eklenmesi, gereksinimler üzerinde anlaşmaya varıldığı tarihten itibaren bir sprint (2 iş haftası) içinde tamamlanacaktır. Mevcut bir modüldeki küçük bir hata düzeltmesi (bug fix) tespit tarihinden itibaren 2 iş günü içinde production ortamına alınacaktır. Veritabanı şemasında yapılacak değişiklikler Prisma migration sistemi aracılığıyla sürüm kontrolünde takip edilecek ve geri alınabilir olacaktır.
+Motivasyon
+PsikoTakip'in proje süresinin ötesinde sürdürülebilir olmasını sağlamak ve ekip üyelerinden herhangi birinin sistemden ayrılması durumunda diğer geliştiricilerin kodu kolayca anlayarak bakımını sürdürebilmesini garantilemek.
+Örnekler
+Yeni bir psikolog uzmanlık alanı filtresi eklenmesi, tasarım onayından itibaren 3 iş günü içinde teslim edilecektir.
+Mevcut bir ödeme durumu enum değerinin güncellenmesi bir Prisma migration'ı ile bir günde tamamlanabilecektir.
+Hususlar
+Tüm backend modülleri NestJS'in modüler mimarisiyle birbirinden bağımsız olarak geliştirilmektedir; bu yapı bakım kolaylığını doğrudan desteklemektedir. Conventional Commits formatına uygun commit mesajları ve JSDoc yorumlarının zorunlu tutulması, yeni geliştiricilerin sisteme adaptasyonunu hızlandıracaktır. Tüm işlevsel gereksinimler için Jest birim testleri yazılacak; test kapsamı %80'in altına düşmeyecektir. Bu kural, bakım sırasında mevcut işlevselliğin bozulmasını erken tespit etmeyi sağlayacaktır.
+5b Desteklenebilirlik Gereksinimleri
+İçerik
+PsikoTakip, proje teslimi (01.06.2026) sonrasında teknik destek sağlayacak bir yardım masası içermemektedir. Ancak sistem, kullanıcıların karşılaştığı hataları anlayabilmesi ve raporlayabilmesi için yeterli hata mesajları ve yönlendirici bildirimler içerecektir. Tüm API endpoint'leri Swagger (/api/docs) üzerinden belgelenecek; bu belgeler teknik destek ihtiyacını azaltacaktır.
+Motivasyon
+Ürünün destek boyutunun yeterince tanımlanmasını sağlamak; kullanıcıların sorunlarını bağımsız olarak çözebileceği yeterli rehberliği sisteme entegre etmek.
+Hususlar
+Sistem tamamen kendi kendini destekler nitelikte tasarlanacaktır. Hata mesajları teknik jargon içermeyecek; kullanıcıya bir sonraki adımı açıkça söyleyecektir. Örneğin, "500 Internal Server Error" yerine "Bir sorun oluştu, lütfen birkaç dakika sonra tekrar deneyin" mesajı gösterilecektir. Admin paneli üzerinden erişilebilen sistem logları, teknik sorunların geliştiriciler tarafından uzaktan teşhis edilmesini sağlayacaktır.
+5c Uyarlanabilirlik Gereksinimleri
+İçerik
+PsikoTakip web uygulaması tüm modern tarayıcılarda (Chrome 100+, Firefox 100+, Safari 15+, Edge 100+) eksiksiz çalışacaktır. Uygulama responsive (duyarlı) tasarım ilkelerine uygun olarak hem masaüstü (1920×1080) hem de mobil (375×667 ve üzeri) ekranlarda kullanılabilir olacaktır. Next.js 14'ün Node.js 20+ gerektirdiği göz önünde bulundurularak deployment ortamları bu gereksinime uygun yapılandırılacaktır.
+Motivasyon
+Psikologların masaüstü bilgisayarlarında, hastaların ise çoğunlukla mobil cihazlarında sistemi kullanacağı öngörülmektedir. Farklı cihaz ve tarayıcılara uyarlanabilirlik, sistemin geniş bir kullanıcı kitlesine hizmet verebilmesi için zorunludur.
+Örnekler
+Sistem Android ve iOS cihazların tarayıcılarında ek bir uygulama kurulumu gerektirmeksizin çalışacaktır.
+Mobil ekranlarda randevu alma akışı, büyük dokunmatik butonlar ve tek sütunlu düzen ile sunulacaktır.
+Uyum Kriteri
+Sistemin desteklenen tüm tarayıcılarda temel işlevleri (giriş, randevu alma, seans notu kaydetme) eksiksiz çalışması gerekmektedir. Cypress E2E testleri Chrome ve Firefox üzerinde çalıştırılarak çapraz tarayıcı uyumluluğu doğrulanacaktır.
+Hususlar
+Internet Explorer desteği verilmeyecektir. Türkçe karakter desteği (ş, ğ, ü, ö, ç, ı) tüm platformlarda UTF-8 encoding ile sağlanacaktır. Gelecekte Japon veya Arap pazarlarına yönelik yerelleştirme gereksinimlerini karşılamak amacıyla sistem i18n (uluslararasılaştırma) altyapısına uyumlu şekilde geliştirilecektir; ancak çok dilli destek bu projenin kapsamı dışındadır.
+5d Ölçeklenebilirlik veya Genişletilebilirlik Gereksinimleri
+İçerik
+Bu gereksinim, PsikoTakip'in kullanıcı tabanının büyümesiyle birlikte kapasitesini artırabilme yeteneğini belirtir.
+Motivasyon
+Tasarımcıların gelecekteki kapasite artışlarına bugünden hazırlık yapmasını sağlamak; sistemin yeniden yazılmadan ölçeklendirilebilir olmasını garantilemek.
+Örnekler
+Sistem mevcut 50 eş zamanlı kullanıcı kapasitesinden başlayacak; Railway ve Supabase'in ücretli katmanlarına geçilmesiyle 500 eş zamanlı kullanıcıya kadar ölçeklenebilecektir.
+Yeni bir modülün (örn. video görüşme entegrasyonu) sisteme eklenmesi mevcut modüllerde herhangi bir değişiklik gerektirmeyecektir. NestJS'in modüler mimarisi bu genişletilebilirliği doğrudan desteklemektedir.
+İleride farklı dil desteği, ödeme entegrasyonu (İyzico, Stripe) veya takvim senkronizasyonu (Google Calendar API) gibi özellikler mevcut mimariye entegre edilebilecektir.
+5e Uzun Ömürlü Gereksinimler
+İçerik
+Bu gereksinim, PsikoTakip sisteminin beklenen işlevsel ömrünü belirtir.
+Motivasyon
+Sistemin proje teslim tarihi olan 01.06.2026 sonrasında da sürdürülebilir ve kullanılabilir kalmasını sağlamak; beklenen yatırım getirisi anlayışına dayalı olarak inşa edilmesini garantilemek.
+Örnekler
+PsikoTakip'in teslim tarihinden itibaren en az 2 yıl boyunca temel işlevleriyle (randevu, seans, rapor) çalışır durumda kalması beklenmektedir.
+Sistemin kullandığı teknoloji yığını (Next.js 14, NestJS, PostgreSQL) her biri uzun vadeli destek (LTS) versiyonları olup en az 3 yıl boyunca güvenlik güncellemeleri alacaktır.
+Veritabanı yedekleri en az 30 gün saklanacaktır.
+6) Güvenlik Gereksinimleri
+6a Erişim Gereksinimleri
+İçerik
+PsikoTakip sisteminde erişim kontrolü RBAC (Rol Tabanlı Erişim Kontrolü) ile sağlanmaktadır. Üç rol tanımlanmıştır: HASTA, PSIKOLOG ve ADMIN. Her kullanıcı yalnızca kendi rolüne tanımlı endpoint'lere ve verilere erişebilir.
+Motivasyon
+Hastaların başka hastaların verilerine, psikologların başka psikologların seans notlarına, yetkisiz kullanıcıların ise yönetimsel işlevlere erişimini engellemek. KVKK kapsamında ruh sağlığı verileri özel nitelikli kişisel veri sayıldığından erişim kısıtlaması yasal bir zorunluluktur.
+Örnekler
+Yalnızca PSIKOLOG rolüne sahip kullanıcılar seans notu oluşturabilir ve düzenleyebilir.
+Yalnızca ADMIN rolüne sahip kullanıcılar psikolog başvurularını onaylayabilir veya reddedebilir.
+Bir hasta yalnızca kendi randevularını ve raporlarını görüntüleyebilir; başka bir hastanın verilerine erişemez.
+Gizli notlara (gizliNot alanı) yalnızca ilgili psikolog erişebilir; hasta ve admin bu alana erişemez.
+Uyum Kriteri
+Her sistem fonksiyonu için izne sahip kullanıcı rolü: ADMIN → tüm endpoint'ler; PSIKOLOG → kendi hasta ve randevu verileri, seans ve raporlar; HASTA → kendi randevuları, seans özetleri ve raporları. Yetkisiz her erişim denemesi 403 hatası döndürmeli ve güvenlik logu oluşturulmalıdır.
+Hususlar
+Yönetimin hassas bulduğu veriler arasında psikolog notları, hasta anamnezi ve ödeme kayıtları yer almaktadır. Bu verilere erişim için çift doğrulama mekanizması ilerleyen sürümlerde değerlendirilebilir. NestJS @Roles() dekoratörü ve RolesGuard yapısı bu gereksinimleri karşılamak amacıyla kullanılmaktadır.
+6b Bütünlük Gereksinimleri
+İçerik
+PsikoTakip sistemi yanlış veya tutarsız verilerin girilmesini önleyecektir. Tüm API istekleri class-validator ile doğrulanacak; geçersiz veriler 400 hatası döndürerek reddedilecektir. Veritabanı düzeyinde kısıtlamalar (NOT NULL, UNIQUE, FOREIGN KEY) Prisma ORM şeması aracılığıyla uygulanacaktır.
+Motivasyon
+Bozulmuş, eksik veya hatalı verilerin sistemde kalıcı hale gelmesini önlemek. Özellikle randevu çakışması, geçersiz tarih girişi ve yetkisiz alan değişiklikleri gibi senaryolarda veri bütünlüğü kritik önem taşımaktadır.
+Örnekler
+Geçmiş bir tarihe randevu oluşturulmaya çalışıldığında sistem 400 hatası döndürecektir.
+Aynı psikolog ve zaman dilimine ikinci bir randevu oluşturulmaya çalışıldığında sistem 409 Conflict hatası döndürecektir.
+Seans, yalnızca ONAYLANDI durumundaki bir randevuya bağlanabilecektir; diğer durumlardaki randevular için seans başlatma isteği reddedilecektir.
+Bir kullanıcı başka bir kullanıcının verisini güncellemek için API isteği gönderdiğinde sistem 403 hatası döndürecektir.
+Hususlar
+Prisma ORM'in transaction yapısı, randevu çakışma kontrolü gibi birden fazla tabloyu etkileyen işlemlerde atomikliği garanti etmektedir. Veritabanı UUID birincil anahtarları çakışma olasılığını pratik olarak sıfıra indirmektedir. Düzenli veritabanı yedekleri veri kaybına karşı ek güvence sağlamaktadır.
+6c Gizlilik Gereksinimleri
+İçerik
+PsikoTakip sistemi, hakkında bilgi depoladığı kişilerin gizliliğini KVKK (6698 sayılı Kişisel Verilerin Korunması Kanunu) kapsamında koruyacaktır. Hastalar sisteme kayıt olurken kişisel verilerinin işlenmesine açık rıza verecek; bu rıza kaydı veritabanında saklanacaktır.
+Motivasyon
+Ruh sağlığı verileri KVKK kapsamında özel nitelikli kişisel veri sayılmaktadır. Bu verilerin korunamaması hem hukuki yaptırım hem de kullanıcı güveninin yitirilmesi riskini doğurmaktadır. Sistemin yasal çerçeveye uygun olması zorunludur.
+Örnekler
+Sistem, kullanıcıları kayıt aşamasında kişisel verilerinin hangi amaçlarla işleneceği hakkında açık metin üzerinden bilgilendirecektir.
+Hasta, kendi seans notlarını görüntüleyebilecek; ancak psikoloğun gizli notlarına erişemeyecektir.
+Kullanıcı hesabını silmek istediğinde sistem, ilgili kişisel verileri KVKK'nın gerektirdiği saklama süresi gözetilerek anonim hale getirecek veya silecektir.
+Sistem, üçüncü taraf reklam veya analitik platformlarına kişisel veri aktarmayacaktır.
+Tüm hassas veriler (şifre hash'leri, seans notları) şifreli olarak saklanacaktır.
+Hususlar
+Gizlilik gereksinimlerinin yasal sonuçları olabileceğinden, uygulamaya alınmadan önce bir hukuk danışmanının görüşü alınması tavsiye edilmektedir. Kullanıcılar, kendi kişisel verilerine erişim, düzeltme ve silme haklarını sistem üzerinden kullanabilmelidir. Psikologların hastalarına ait klinik verileri sistemden dışa aktarması (veri taşınabilirliği) KVKK kapsamında değerlendirilerek kısıtlamaya tabi tutulacaktır.
+6d Denetim Gereksinimleri
+İçerik
+PsikoTakip sistemi, güvenlik açısından kritik işlemleri denetim logu olarak kaydedecektir. Bu loglar; kullanıcı girişleri, başarısız giriş denemeleri, psikolog onay/red işlemleri, kullanıcı hesabı askıya alma ve veri dışa aktarma işlemlerini içerecektir.
+Motivasyon
+Uygun denetim kayıtlarının tutulması hem KVKK uyumluluğu hem de güvenlik olaylarının sonradan izlenebilmesi açısından zorunludur. Bir güvenlik ihlali yaşandığında loglar olayın kaynağının tespit edilmesini sağlayacaktır.
+Hususlar
+Denetim logları değiştirilemez nitelikte saklanacak; yalnızca ADMIN rolü bu loglara erişebilecektir. NestJS LoggingInterceptor yapısı her API isteğini zaman damgası, kullanıcı kimliği, endpoint ve sonuç kodu ile otomatik olarak loglayacaktır. Logların Railway platform logları aracılığıyla dışa aktarılması ve 90 gün boyunca saklanması hedeflenmektedir. Bu bölümün yasal sonuçları olabileceğinden denetçilerden onay alınması önerilmektedir.
+6e Muafiyet Gereksinimleri
+İçerik
+PsikoTakip sistemi, yetkisiz veya kötü niyetli yazılım müdahalelerine karşı kendini koruyacaktır.
+Motivasyon
+Kötü niyetli müdahalelere karşı mümkün olduğunca güvenli bir platform oluşturmak ve kullanıcıların kişisel verilerini dış tehditlere karşı korumak.
+Örnekler
+Sistem, tüm kullanıcı girdilerini class-validator ile doğrulayarak SQL injection ve XSS saldırılarını önleyecektir.
+API, Helmet.js middleware'i ile güvenlik HTTP başlıklarını (Content-Security-Policy, X-Frame-Options vb.) otomatik olarak ekleyecektir.
+Rate limiting (100 istek/dakika/IP) ile DDoS ve kaba kuvvet saldırıları sınırlandırılacaktır.
+JWT token'ları imzalı ve süreli olacak; çalınan bir token'ın süresi dolduğunda sistem otomatik olarak geçersiz kılacaktır.
+CORS politikası yalnızca izin verilen origin'lerden (Vercel frontend domain'i) gelen isteklere izin verecek şekilde yapılandırılacaktır.
+7) Kullanılabilirlik ve İnsanlık Gereksinimleri
+7a Kullanım Kolaylığı Gereksinimleri
+İçerik
+PsikoTakip'in arayüzü, teknik bilgisi sınırlı olan hastalar ve psikologlar tarafından herhangi bir eğitim almaksızın kullanılabilir olacaktır. Randevu alma akışı en fazla 4 adımda tamamlanabilecektir. Sık kullanılan işlevler (randevu al, seans başlat, not kaydet) ana ekrandan en fazla 2 tıklama ile erişilebilir konumda olacaktır.
+Motivasyon
+PsikoTakip'in hedef kullanıcıları arasında teknolojiyle sınırlı deneyimi olan bireyler de bulunmaktadır. Karmaşık bir arayüz, psikologların seans sırasında sistemi kullanmasını zorlaştıracak ve hastaların randevu almaktan vazgeçmesine yol açacaktır.
+Örnekler
+Sistem, kullanıcının randevu almak için kayıt olmadan önce psikolog profillerini inceleyebilmesine izin verecektir.
+Randevu iptali, tek bir butona tıklama ve onay mesajıyla tamamlanacaktır.
+Sistem, bir işlem başarılı olduğunda yeşil onay bildirimi, hata oluştuğunda kırmızı hata mesajıyla kullanıcıya geri bildirim sağlayacaktır.
+Uyum Kriteri
+Teknik olmayan 5 kişilik test panelinin %80'i, herhangi bir yönlendirme almaksızın randevu alma akışını 3 dakika içinde başarıyla tamamlayabilmelidir. Kullanıcı arayüzü testleri Sprint 5'te (26.04–09.05.2026) gerçekleştirilecektir.
+Hususlar
+Kullanım kolaylığı gereksinimleri Hasta, Psikolog ve Admin olmak üzere tüm kullanıcı türlerinin bakış açısından değerlendirilmiştir. Psikologlar için seans sırasında not girişi mümkün olduğunca hızlı ve kesintisiz olmalıdır. Admin arayüzü ise daha teknik bir kullanıcı profili öngörülerek daha işlevsel ancak aynı ölçüde sezgisel tasarlanacaktır.
+7b Kişiselleştirme ve Uluslararasılaştırma Gereksinimleri
+İçerik
+PsikoTakip, bu sürümde yalnızca Türkçe dilini desteklemekte olup yalnızca Türk lirası (TL) ile çalışmaktadır. Kullanıcılar profil sayfasından bildirim tercihlerini (e-posta bildirimleri açık/kapalı) kişiselleştirebilecektir. Psikologlar müsaitlik takvimlerini ve seans ücretlerini bağımsız olarak yapılandırabilecektir.
+Motivasyon
+Kullanıcıların sistemi kendi iş akışlarına göre yapılandırabilmesi, platformun benimsenmesini ve kullanıcı memnuniyetini artıracaktır. Uluslararasılaştırma altyapısının baştan kurulması ise ilerleyen sürümlerde çok dilli desteğin eklenmesini kolaylaştıracaktır.
+Örnekler
+Psikolog, randevu hatırlatma bildirimlerini seans öncesi 24 saat veya 1 saat olarak ayarlayabilecektir.
+Kullanıcı, profil sayfasından e-posta bildirimlerini tamamen kapatabilecektir.
+Hususlar
+Sistem şu an Türkiye pazarı için geliştirilmektedir. Ancak Next.js'in i18n (uluslararasılaştırma) desteği göz önünde bulundurularak tüm kullanıcıya gösterilen metinler sabit kodlanmayacak; dil dosyalarından okunacak şekilde tasarlanacaktır. Bu yaklaşım ilerleyen sürümlerde çok dilli desteği mümkün kılacaktır.
+7c Öğrenme Gereksinimleri
+İçerik
+PsikoTakip sistemini öğrenmek için herhangi bir resmi eğitim veya kılavuz okuma gerekmeyecektir. Hasta kullanıcılar sistemi ilk kullanımda yönlendirici arayüz unsurları (tooltip, placeholder metin, adım adım akış) ile bağımsız olarak kullanabilecektir. Psikolog kullanıcılar ise müsaitlik takvimi ve seans yönetimi gibi daha karmaşık işlevleri en fazla 30 dakikalık keşif süresiyle öğrenebilecektir.
+Motivasyon
+Sistemin proje kapsamı dahilinde resmi kullanıcı eğitimi öngörülmemiştir. Bu nedenle sistemin öğrenme eğrisinin mümkün olduğunca kısa olması, kullanıcıların sistemi hızlıca benimsemesi için kritik öneme sahiptir.
+Örnekler
+Bir hasta, sisteme ilk girişinde kayıt ve randevu alma akışını herhangi bir yardım almaksızın tamamlayabilecektir.
+Psikolog, ilk girişinde sistem tarafından sunulan yönlendirici akış ile profilini oluşturup müsaitlik takvimini tanımlayabilecektir.
+Uyum Kriteri
+Sistemi ilk kez kullanan bir test panelinin %80'i, yardım almaksızın temel işlevleri (kayıt, giriş, randevu alma) 5 dakika içinde tamamlayabilmelidir. Psikolog kullanıcıların %70'i, sistemi ilk kullandıktan sonra 30 dakika içinde seans yürütme akışını başarıyla tamamlayabilmelidir.
+Hususlar
+Öğrenme kolaylığı gereksinimleri, Hasta ve Psikolog kullanıcı profillerinin bakış açısından ayrı ayrı değerlendirilmiştir. Admin rolü teknik bir profil öngördüğünden bu rol için öğrenme eğrisi gereksinimi diğerlerinden farklı tutulmuştur.
+7d Anlaşılabilirlik ve Kibarlık Gereksinimleri
+İçerik
+PsikoTakip arayüzü, psikolog ve hasta kullanıcıların aşina olduğu kavramlar ve terminolojiyi kullanacaktır. Sistem, kullanıcıya teknik terimler (UUID, JWT, HTTP 403 vb.) göstermeyecek; bunun yerine anlamlı ve bağlama uygun mesajlar sunacaktır.
+Motivasyon
+Kullanıcıları sistemin dahili yapısıyla ilgili terimleri öğrenmeye zorlamaktan kaçınmak. Özellikle stres altında olan bir hastanın sistemi kullandığı düşünüldüğünde, karmaşık teknik mesajlar kullanıcı deneyimini olumsuz etkileyecektir.
+Örnekler
+"403 Forbidden" hatası yerine "Bu sayfaya erişim yetkiniz bulunmamaktadır." mesajı gösterilecektir.
+"ONAYLANDI" enum değeri yerine arayüzde "Onaylandı" etiketi ve yeşil rozet gösterilecektir.
+Randevu oluşturulduğunda "POST /randevular 201 Created" yerine "Randevunuz başarıyla oluşturuldu. Psikologunuzun onayı bekleniyor." mesajı gösterilecektir.
+Sistem, kullanıcıdan token yenileme işlemi yapmasını beklemeyecek; bu işlemi arka planda otomatik olarak gerçekleştirecektir.
+Hususlar
+Tüm hata mesajları ve sistem bildirimleri Türkçe olacak; mesajlar kullanıcıya bir sonraki adımı açıkça söyleyecektir. Arayüz metinleri yazılırken psikolog-hasta ilişkisinin hassas doğası göz önünde bulundurulacak; tüm mesajlar saygılı ve destekleyici bir ton taşıyacaktır.
+7e Erişilebilirlik Gereksinimleri
+İçerik
+PsikoTakip web uygulaması WCAG 2.1 AA erişilebilirlik standartlarına uygun olarak geliştirilecektir. Arayüz, görme güçlüğü çeken kullanıcıların ekran okuyucu araçlarıyla kullanabilmesine imkân tanıyacak şekilde tasarlanacaktır.
+Motivasyon
+Ruh sağlığı desteğine ihtiyaç duyan bireyler arasında görme veya motor engelli kullanıcılar da bulunabilmektedir. Bu kullanıcıları sistemin dışında bırakmak hem etik hem de yasal açıdan sorunludur.
+Örnekler
+Tüm form alanları ve butonlar ekran okuyucuların anlayabileceği ARIA etiketleri içerecektir.
+Renk kodlaması (yeşil = onaylı, kırmızı = iptal) tek başına kullanılmayacak; her zaman metin etiketi ile birlikte sunulacaktır. Bu, kırmızı-yeşil renk körü olan kullanıcıları (erkeklerin yaklaşık %8'i) da kapsayacaktır.
+Arayüz klavye navigasyonu ile tamamen kullanılabilir olacaktır.
+Hususlar
+Next.js'in semantik HTML yapısı WCAG uyumluluğunun temelini oluşturmaktadır. Tailwind CSS sınıfları kullanılırken kontrast oranlarının WCAG AA eşiğini (4.5:1) karşıladığı doğrulanacaktır. Lighthouse erişilebilirlik skoru 90 puanın üzerinde olması hedeflenmektedir.
+7f Kullanıcı Dokümantasyonu Gereksinimleri
+İçerik
+Ürünün bir parçası olarak sağlanacak kullanıcı belgelerinin listesi aşağıdaki gibidir.
+Motivasyon
+Dokümantasyon için beklentileri belirlemek ve onu oluşturmaktan kimin sorumlu olacağını belirlemek.
+Örnekler
+API Teknik Dokümantasyonu: Swagger (/api/docs) üzerinden erişilebilen ve tüm endpoint'leri, istek/yanıt şemalarını ve yetkilendirme gereksinimlerini açıklayan canlı dokümantasyon. Sorumlu: Recep Çalışkan.
+Kurulum ve Deployment Kılavuzu: Sistemin yerel geliştirme ortamında kurulumu (Docker Compose) ve production ortamına dağıtımı için adım adım talimatları içeren README.md dosyası. Sorumlu: Nihat Furkan Çakmakcı.
+Proje Yönetim Belgesi: Bu doküman; gereksinimleri, mimariyi, veri modelini ve test planını kapsayan kapsamlı proje dokümantasyonu.
+Hususlar
+Basılı kullanıcı kılavuzu üretilmeyecektir; tüm belgeler dijital formatta (Markdown, Swagger UI) sunulacaktır. API dokümantasyonu NestJS @ApiProperty() dekoratörleri aracılığıyla koddan otomatik olarak üretilecek ve her sprint sonunda güncel tutulacaktır. Belgelerin güncel tutulmasından ilgili modülü geliştiren ekip üyesi sorumludur.
+7g Eğitim Gereksinimleri
+İçerik
+Ürün kullanıcılarının ihtiyaç duyduğu eğitimin açıklaması.
+Motivasyon
+Eğitim için beklentileri belirlemek. Bu eğitimi oluşturmaktan ve sağlamaktan kimin sorumlu olduğunu belirlemek.
+Hususlar
+PsikoTakip'in bu sürümü için resmi kullanıcı eğitimi planlanmamaktadır. Sistem, eğitim gerektirmeksizin kullanılabilir olacak şekilde tasarlanacaktır (bkz. 7a Kullanım Kolaylığı ve 7c Öğrenme Gereksinimleri). Teknik ekip üyeleri için ise aşağıdaki eğitim kaynakları sağlanacaktır: NestJS resmi dokümantasyonu, Prisma ORM kılavuzu, Next.js 14 App Router eğitim materyalleri ve GitHub Actions CI/CD yapılandırma rehberi. Yeni bir ekip üyesinin projeye dahil olması durumunda projenin README.md dosyası ve bu doküman temel başvuru kaynağı olarak kullanılacaktır. Eğitim materyallerinin hazırlanmasından ve güncellenmesinden Scrum Master Arda Özkaya sorumludur.
+3) Görünüm ve Hissetme Gereksinimleri
+3a Görünüm Gereksinimleri
+İçerik
+PsikoTakip arayüzü, ruh sağlığı alanının gerektirdiği güven ve profesyonellik duygusunu yansıtacak şekilde tasarlanacaktır. Renk paleti; sakinlik ve güveni çağrıştıran mavi ve beyaz tonları üzerine kurulacaktır. Arayüz temiz, minimalist ve dikkat dağıtıcı unsurlardan arındırılmış olacaktır. Tailwind CSS utility sınıfları ile tutarlı bir tasarım sistemi uygulanacaktır.
+Motivasyon
+Ürünün görünümünün hedef kullanıcı kitlesinin beklentilerine uygun olmasını sağlamak. Psikolog ve hasta kullanıcıların sisteme duydukları güven, büyük ölçüde arayüzün verdiği ilk izlenimle şekillenmektedir. Dağınık veya amatör görünen bir arayüz, klinik bir platforma duyulması gereken güveni zedeleyecektir.
+Örnekler
+Sistem, sağlık ve psikoloji alanında kullanılan platformların görsel diline uygun, sakin ve profesyonel bir görünüme sahip olacaktır.
+Arayüz, 25–55 yaş aralığındaki psikolog ve hasta kullanıcılar için çekici ve erişilebilir olacaktır.
+Ana renk paleti: koyu mavi (#1E3A5F), orta mavi (#2E75B6), açık mavi (#DEEAF1) ve beyaz (#FFFFFF) tonlarından oluşacaktır.
+Tipografi olarak okunabilirliği yüksek, sans-serif bir yazı tipi (Inter veya benzeri) kullanılacaktır.
+Uyum Kriteri
+5 kişilik temsili kullanıcı panelinin %80'i, sistemi ilk gördükten sonra "güvenilir ve profesyonel" ifadelerini kullanacaktır. Lighthouse erişilebilirlik ve görsel kontrast skorları WCAG 2.1 AA standartlarını karşılayacaktır.
+Hususlar
+Prototip GUI mockup'ları (Sprint 1'de oluşturulan dashboard ve randevu ekranı tasarımları) görünüm gereksinimlerini ortaya çıkarmak amacıyla kullanılmıştır; bu prototiplerin gereksinimlerin yerine geçtiği düşünülmemelidir. Renk ve tipografi kararları Sprint 2 başında ekip tarafından onaylanacak ve sonraki sprintlerde tutarlı şekilde uygulanacaktır.
+3b Stil Gereksinimleri
+İçerik
+PsikoTakip'in stili; güvenilir, sakin ve destekleyici bir his yaratacak şekilde tanımlanmıştır. Arayüz, kullanıcıyı bunaltmadan tüm işlevselliği erişilebilir kılan sade bir tasarım anlayışını benimseyecektir. Seans sırasında psikologun sistemi arka planda kullandığı göz önüne alındığında, gereksiz animasyon ve dikkat çekici görsel efektlerden kaçınılacaktır.
+Motivasyon
+Yanlış bir stil seçimi, işlevsel açıdan eksiksiz bir sistemin kullanıcılar tarafından benimsenmesini engelleyebilir. Ruh sağlığı platformlarında kullanıcıların sisteme karşı hissettikleri duygusal tepki, teknik işlevsellik kadar belirleyicidir. PsikoTakip'in hedef kitlesine uygun bir stil, sistemin uzun vadeli benimsenmesini doğrudan etkileyecektir.
+Örnekler
+Sistem yetkili ve güvenilir görünmelidir; aşırı renkli veya eğlence odaklı bir his vermemelidir.
+Buton, kart ve form elemanları tutarlı köşe yarıçapı, gölge ve boşluk değerleriyle tasarlanacaktır.
+Randevu durumları (Beklemede, Onaylandı, Tamamlandı, İptal) renk kodları ve metin etiketleriyle birlikte gösterilecektir.
+Dashboard'daki istatistik kartları ve Recharts grafikleri kurumsal bir görünüm taşıyacak; parlak veya dikkat çekici renklerden kaçınılacaktır.
+Uyum Kriteri
+Temsili kullanıcıların %70'i sistemi ilk gördükten sonra "bu platforma güvenebilirim" ifadesini kullanacaktır. Tüm ekran bileşenleri Tailwind CSS utility sınıflarıyla tasarlanacak ve her sprint sonunda yapılan kod incelemesinde görsel tutarlılık kontrol edilecektir.
+Hususlar
+Görünüm ve stil gereksinimleri başlangıçta soyut görünebilir; ancak uyum kriterleri bu gereksinimleri ölçülebilir hale getirmektedir. Ekip üyelerinin farklı estetik tercihlere sahip olması nedeniyle stil kararları Sprint 1'de ortak bir Figma taslağı üzerinden uzlaşılarak belirlenecektir. PsikoTakip bir web uygulaması olduğundan fiziksel ambalaj gerekliliği bulunmamaktadır.
+4) Operasyonel ve Çevresel Gereklilikler
+4a Beklenen Fiziksel Çevre
+İçerik
+PsikoTakip, kapalı ortamlarda (klinik, ofis, ev) masaüstü bilgisayar veya dizüstü bilgisayar aracılığıyla kullanılacak bir web uygulamasıdır. Psikologların sistemi seans sırasında masaüstünde açık tutacağı, hastaların ise çoğunlukla akıllı telefon veya tablet aracılığıyla erişeceği öngörülmektedir.
+Motivasyon
+Ürünün amaçlanan fiziksel ortamda sorunsuz çalışmasını sağlamak. Psikolog kullanıcıların seans sırasında sisteme erişim biçimi, arayüz tasarımı ve performans gereksinimlerini doğrudan etkilemektedir.
+Örnekler
+Sistem, standart ofis aydınlatmasında masaüstü monitörlerde net ve okunabilir görüntülenecektir.
+Hastalar, akıllı telefon tarayıcısından randevu alabilecek; mobil ekranlarda tüm işlevler erişilebilir olacaktır.
+Sistem, ortalama bir ev ya da klinik internet bağlantısında (minimum 10 Mbps) sorunsuz çalışacaktır.
+Sistem çevrimdışı çalışma modunu desteklememektedir; internet bağlantısı zorunludur.
+Hususlar
+PsikoTakip, yağmurlu ya da tozlu dış ortamlar gibi uç fiziksel koşullar için tasarlanmamıştır. Sistemin çalışacağı ortam standarttır; bu nedenle özel donanım koruması veya dayanıklılık gereksinimi bulunmamaktadır. Psikologların seans odasında genellikle tek bir monitör kullandığı göz önüne alındığında, sistem tarayıcının tek sekmesinde tüm işlevlere erişim imkânı sunacaktır.
+4b Bitişik Sistemlerle Arayüz Gereksinimleri
+İçerik
+PsikoTakip'in başarılı çalışması için ihtiyaç duyduğu dış sistem ve servislerle arayüz gereksinimleri bu bölümde açıklanmaktadır.
+Motivasyon
+Dış sistemlere bağımlılıkların erken tespit edilmesi, uygulama sırasında ortaya çıkabilecek yüksek maliyetli yeniden çalışma riskini azaltmaktadır.
+Örnekler
+E-posta Servisi (Nodemailer + Gmail SMTP): Randevu oluşturma, onaylama, iptal ve hatırlatma bildirimlerini göndermek için kullanılacaktır. Veri içeriği: alıcı e-posta, konu, randevu detayları. Sıklık: her randevu olayında tetiklenir. Hacim: günlük maksimum 200 e-posta.
+Supabase Storage: Profil fotoğrafları ve PDF raporların depolanması için kullanılacaktır. Veri içeriği: binary dosya, metadata. Sıklık: rapor oluşturma ve profil güncelleme işlemlerinde. Hacim: 500 MB limit dahilinde.
+Vercel (Frontend Hosting): Next.js 14 uygulamasının production ortamına sunulması. GitHub Actions'dan tetiklenen otomatik deployment. Her main branch push'u yeni bir deployment oluşturacaktır.
+Railway (Backend Hosting): NestJS API'nin çalıştığı ortam. Environment variable yönetimi Railway üzerinden yapılacaktır.
+Supabase PostgreSQL: Tüm uygulama verilerinin saklandığı veritabanı servisi. PgBouncer bağlantı havuzu ile bağlantı yönetimi sağlanacaktır.
+Uyum Kriteri
+Her dış servis entegrasyonu için: veri içeriği, arayüz ortamı (HTTPS/REST), tetiklenme sıklığı ve maksimum hacim tanımlanmıştır. Dış servis kesintilerinde sistemin ana işlevleri (randevu yönetimi, seans notu) bağımsız olarak çalışmaya devam edecektir.
+4c Üretim Gereksinimleri
+İçerik
+PsikoTakip'i dağıtılabilir hale getirmek için gerekli tüm süreçler bu bölümde tanımlanmıştır.
+Motivasyon
+Sistemin production ortamına alınması için gereken adımların ve kaynakların ekip tarafından net bilinmesini sağlamak; deployment sürecinde beklenmedik engellerle karşılaşmamak.
+Örnekler
+Sistem, GitHub main branch'ine yapılan her push işleminde GitHub Actions CI/CD pipeline'ı aracılığıyla otomatik olarak test edilecek ve Vercel/Railway ortamlarına dağıtılacaktır.
+Yerel geliştirme ortamının kurulumu docker-compose up komutuyla tek adımda tamamlanabilecektir.
+Yeni bir geliştirici, README.md belgesi ve Docker Compose yapılandırması ile 30 dakika içinde yerel ortamı çalışır hale getirebilecektir.
+Veritabanı şema değişiklikleri prisma migrate deploy komutuyla production ortamına uygulanacaktır.
+Hususlar
+PsikoTakip ücretsiz barındırma katmanlarını kullanmaktadır; bu nedenle ek kurulum maliyeti bulunmamaktadır. Tüm environment variable'lar (.env) versiyon kontrolüne dahil edilmeyecek; Vercel ve Railway'in secret yönetim panelleri aracılığıyla yönetilecektir. Sprint 1'de CI/CD pipeline'ının kurulması tamamlanmış olduğundan deployment süreci otomatik hale getirilmiştir.
+4d Sürüm Gereksinimleri
+İçerik
+PsikoTakip için sprint tabanlı sürüm döngüsü ve her sürümün alacağı biçim bu bölümde tanımlanmıştır.
+Motivasyon
+Ekip üyelerinin ve paydaşların yeni sürümlerin ne sıklıkta ve nasıl üretileceğinden haberdar olmasını sağlamak.
+Örnekler
+Her 2 haftalık sprint sonunda, o sprint'te tamamlanan kullanıcı hikayeleri main branch'e merge edilerek bir sürüm etiketi (ör. v0.3.0) oluşturulacaktır.
+Her yeni sürüm, önceki sürümlerin işlevselliğini bozmayacaktır; regresyon testleri bu güvenceyi sağlayacaktır.
+Sprint 7 (24.05–01.06.2026) sonunda üretilecek v1.0.0 sürümü final production release olacaktır.
+Hotfix'ler (kritik hata düzeltmeleri) herhangi bir sprint içinde v1.0.x etiketi ile release edilebilecektir.
+Uyum Kriteri
+Her sürüm için GitHub Releases sayfasında değişiklik günlüğü (changelog) yayınlanacaktır. Sürümün production ortamına alınmadan önce tüm Jest ve Cypress testlerinin başarıyla geçmesi zorunludur. Test kapsamı %80'in altına düşen bir sürüm deploy edilemeyecektir.
+Hususlar
+PsikoTakip akademik bir proje olduğundan mevcut ticari sözleşme veya bakım anlaşması bulunmamaktadır. Ancak Conventional Commits formatı ve Semantic Versioning (SemVer) standardı tüm sürümler için uygulanacaktır; bu yaklaşım ilerleyen dönemde olası bir ticari kullanım için de uygun bir temel oluşturacaktır.
+5) Kültürel ve Politik Gereksinimler
+5a Kültürel Gereksinimler
+İçerik
+Bu bölüm, PsikoTakip'in kabul edilebilirliğini etkileyen kültürel ve sosyolojik faktörlere özgü gereklilikleri içermektedir.
+Motivasyon
+Türkiye'deki ruh sağlığı kültürüne özgü hassasiyetlerin göz ardı edilmesi, sistemin hedef kullanıcılar tarafından benimsenmesini olumsuz etkileyebilir. Bu gereksinimlerin erkenden belirlenmesi, geliştirme sürecinde kültürel uyumsuzluktan kaçınılmasını sağlar.
+Örnekler
+Sistem, herhangi bir dini, etnik veya kültürel gruba yönelik ayrımcı ya da saldırgan içerik içermeyecektir.
+Tüm tarih ve saat gösterimleri Türkiye'nin resmi tarih formatına (GG.AA.YYYY) ve UTC+3 saat dilimine uygun olacaktır.
+Sistem, Türkiye'deki resmi tatil günlerini müsaitlik takviminde dikkate alacak şekilde yapılandırılabilecektir.
+Ruh sağlığı konusundaki toplumsal damgalama (stigma) göz önünde bulundurularak sistemin arayüz metinleri destekleyici, yargısız ve kapsayıcı bir dil kullanacaktır.
+Psikolog unvanları Türkiye'deki mesleki yeterlilik çerçevesine uygun şekilde tanımlanacaktır (Psikolog, Klinik Psikolog, Psikiyatrist ayrımı).
+Hususlar
+PsikoTakip şu an yalnızca Türkiye pazarına yönelik geliştirilmektedir. Farklı kültürlerde ruh sağlığına bakış açısı ve psikolog-hasta ilişkisinin doğası farklılık gösterebileceğinden, ilerleyen sürümlerde uluslararasılaştırma yapılırken kültürel gereksinimler yeniden gözden geçirilmelidir. Kullanılan renkler (mavi tonları) Türk kültüründe güven ve sağlık ile olumlu şekilde ilişkilendirilmektedir.
+5b Politik Gereksinimler
+İçerik
+Bu bölüm, PsikoTakip'in geliştirilmesi ve kullanılmasını etkileyen kurumsal ve akademik politik faktörlere özgü gereklilikleri içermektedir.
+Motivasyon
+Ders kapsamında belirlenen kısıtlamaların ve akademik değerlendirme kriterlerinin sistemin gelişimini şekillendirdiği gerçeğini açıkça kabul etmek; bu gereksinimlere uyumun sağlanmasını güvence altına almak.
+Örnekler
+Sistem, dersin yürütücüsü Dr. Öğr. Üyesi Cevriye Altıntaş'ın belirlediği değerlendirme kriterlerine uygun şekilde geliştirilecektir.
+Tüm teknoloji seçimleri (Next.js, NestJS, PostgreSQL) ve metodoloji (Agile/Scrum) ders gereksinimleriyle uyumludur ve değiştirilmeyecektir.
+Tüm ekip üyelerinin sisteme eşit katkı sağlaması gerekmektedir; bu nedenle modüller görev dağılımı belgesine uygun şekilde dağıtılmıştır.
+Proje dokümantasyonu (bu belge), dersin şablon formatına eksiksiz uygun şekilde hazırlanacaktır.
+Hususlar
+Bu gereksinimlere katılıp katılmamak sonucu değiştirmez; akademik değerlendirme çerçevesi sistemin tüm tasarım ve geliştirme kararlarını doğrudan etkilemektedir. Ekip içi kararlar Scrum Master Arda Özkaya koordinasyonunda alınacak; anlaşmazlıklar sprint retrospektif toplantılarında çözüme kavuşturulacaktır. Açık kaynak kütüphanelerin lisans koşulları değerlendirme sürecinde sorun yaratmaması için MIT veya Apache 2.0 lisanslı paketler tercih edilmektedir.
+6) Yasal Gereksinimler
+6a Uyumluluk Gereksinimleri
+İçerik
+PsikoTakip, kişisel ve özel nitelikli kişisel verileri işleyen bir platform olarak Türkiye Cumhuriyeti'nin yürürlükteki yasal düzenlemelerine tam uyum sağlamakla yükümlüdür.
+Motivasyon
+Ruh sağlığı verilerinin işlenmesi ciddi yasal yükümlülükler doğurmaktadır. KVKK ihlalleri hem idari para cezası hem de itibar kaybı riskini beraberinde getirmektedir. Yasal uyumluluğun baştan tasarıma entegre edilmesi, sonradan yapılacak maliyetli düzeltmeleri önleyecektir.
+Örnekler
+Sistemde işlenen tüm kişisel veriler 6698 sayılı Kişisel Verilerin Korunması Kanunu'na (KVKK) uygun olarak işlenecektir.
+Hastalar kayıt sırasında kişisel verilerinin işlenmesine açık rıza verecek; bu rıza beyanı tarih damgasıyla veritabanında saklanacaktır.
+Kullanıcılar kendi kişisel verilerine erişim, düzeltme, silme ve taşıma haklarını sistem üzerinden kullanabilecektir.
+Sistemde veri ihlali yaşanması durumunda KVKK'nın öngördüğü 72 saatlik bildirim yükümlülüğüne uyulacaktır.
+Psikologların tuttuğu seans notları ve hasta sağlık bilgileri özel nitelikli kişisel veri kapsamında değerlendirilerek en yüksek koruma seviyesinde işlenecektir.
+Uyum Kriteri
+Sistemin KVKK'ya uygunluğu, Sprint 6'daki güvenlik testleri sırasında ekip tarafından KVKK maddeleri referans alınarak kontrol edilecektir. Rıza metinlerinin ve gizlilik politikasının hukuki geçerliliğinin onaylanması tavsiye edilmektedir.
+Hususlar
+PsikoTakip akademik bir proje olmakla birlikte reel kullanıcı verisi işleyebileceğinden KVKK uyumluluğu ihmal edilmemelidir. Türkiye'de ruh sağlığı hizmetleri ayrıca Sağlık Bakanlığı yönetmelikleri kapsamındadır; sistemin bu düzenlemelerle çelişmemesi gözetilecektir. Açık kaynak bileşenlerin lisans koşulları ticari kullanıma engel teşkil etmemektedir; kullanılan tüm paketler MIT veya Apache 2.0 lisanslıdır.
+6b Standart Gereksinimleri
+İçerik
+PsikoTakip'in uyması gereken teknik ve sektörel standartlar bu bölümde belirtilmektedir.
+Motivasyon
+Tanınan standartlara uyum, sistemin kalitesini, güvenliğini ve sürdürülebilirliğini artırmakta; ilerleyen dönemde olası denetim ve değerlendirme süreçlerinde referans oluşturmaktadır.
+Örnekler
+WCAG 2.1 AA: Web erişilebilirlik standardı; arayüzün görme güçlüğü çeken kullanıcılar tarafından da kullanılabilmesini sağlar.
+OpenAPI 3.0: Tüm REST API endpoint'leri bu standarta uygun şekilde Swagger üzerinden belgelenecektir.
+Conventional Commits: Tüm commit mesajları bu standartta yazılacak; bu sayede otomatik changelog üretimi mümkün olacaktır.
+Semantic Versioning (SemVer): Tüm sürümler MAJOR.MINOR.PATCH formatında etiketlenecektir.
+OWASP Top 10: API güvenlik tasarımında OWASP'ın en yaygın 10 web güvenlik açığı listesi rehber olarak kullanılacaktır.
+ISO 8601: Tüm tarih ve saat verileri bu uluslararası standartta (YYYY-MM-DDTHH:mm:ssZ) saklanacaktır.
+Uyum Kriteri
+Swagger dokümantasyonu her sprint sonunda güncel tutulacak ve ekip tarafından incelenecektir. WCAG uyumluluğu Lighthouse aracıyla her sprint sonunda ölçülecek; skor 90'ın altına düşmeyecektir. OWASP kontrol listesi Sprint 6'daki güvenlik testlerinde eksiksiz gözden geçirilecektir.
+Hususlar
+Yazılım mühendisliği dersi kapsamında Agile/Scrum metodolojisi zorunlu kılınmıştır; bu, standart geliştirme adımlarına uyumun dersin kendisi tarafından dayatılan bir gereksinim olduğu anlamına gelmektedir. Herhangi bir sektör standartlarını denetleyen kurum veya ombudsman bu aşamada devreye girmeyecektir; ancak KVKK denetimi Kişisel Verileri Koruma Kurumu (KVKK) tarafından yapılabilir.

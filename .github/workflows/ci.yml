@@ -1,0 +1,112 @@
+name: PsikoTakip CI
+
+on:
+  push:
+    branches: [main, develop, 'sprint/**']
+  pull_request:
+    branches: [main, develop]
+
+jobs:
+  backend:
+    name: Backend – Lint, Test, Build
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: apps/backend
+
+    services:
+      postgres:
+        image: postgres:15
+        env:
+          POSTGRES_USER: test
+          POSTGRES_PASSWORD: test
+          POSTGRES_DB: psikotakip_test
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    env:
+      DATABASE_URL: postgresql://test:test@localhost:5432/psikotakip_test?schema=public
+      DIRECT_URL: postgresql://test:test@localhost:5432/psikotakip_test?schema=public
+      JWT_ACCESS_SECRET: ci-test-access-secret-min-32-chars
+      JWT_REFRESH_SECRET: ci-test-refresh-secret-min-32-chars
+      ENCRYPTION_KEY: ci-test-32-byte-encryption-key!!
+      NODE_ENV: test
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+          cache-dependency-path: apps/backend/package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Generate Prisma client
+        run: npx prisma generate
+
+      - name: Run migrations (test DB)
+        run: npx prisma migrate deploy
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Unit & Integration Tests
+        run: npm test -- --passWithNoTests
+
+      - name: Build
+        run: npm run build
+
+  frontend:
+    name: Frontend – Lint, Type-check, Build
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: apps/frontend
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+          cache-dependency-path: apps/frontend/package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Type-check
+        run: npm run type-check
+
+      - name: Build
+        run: npm run build
+        env:
+          NEXT_PUBLIC_API_URL: http://localhost:3001/api/v1
+
+  security:
+    name: Security Audit
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Audit backend deps
+        run: npm audit --audit-level=high
+        working-directory: apps/backend
+        continue-on-error: true
+      - name: Audit frontend deps
+        run: npm audit --audit-level=high
+        working-directory: apps/frontend
+        continue-on-error: true

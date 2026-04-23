@@ -1,0 +1,1230 @@
+ISPARTA UYGULAMALI BİLİMLER ÜNİVERSİTESİ BİLGİSAYAR MÜHENDİSLİĞİ BÖLÜMÜ YAZILIM MÜHENDİSLİĞİ TASARIM RAPORUISPARTA UYGULAMALI BİLİMLER ÜNİVERSİTESİ BİLGİSAYAR MÜHENDİSLİĞİ BÖLÜMÜ YAZILIM MÜHENDİSLİĞİ TASARIM RAPORU20242024
+ISPARTA UYGULAMALI BİLİMLER ÜNİVERSİTESİ BİLGİSAYAR MÜHENDİSLİĞİ BÖLÜMÜ YAZILIM MÜHENDİSLİĞİ TASARIM RAPORU
+ISPARTA UYGULAMALI BİLİMLER ÜNİVERSİTESİ BİLGİSAYAR MÜHENDİSLİĞİ BÖLÜMÜ YAZILIM MÜHENDİSLİĞİ TASARIM RAPORU
+2024
+2024
+İÇİNDEKİLER
+ITasarım (Design)3
+1Sistem Tasarımı (System Design)3
+1aTasarım Hedefleri (Design Goals)3
+2Mevcut Yazılım Mimarisi (Current Software Architecture)4
+3Önerilen Yazılım Mimarisi (Proposed Software Architecture)5
+3aGenel Bakış-İnceleme (Overview)5
+3bStatik Model: Class Diyagramları5
+3cDinamik Model - Sequence Diyagramları7
+3dDonanım / Yazılım Eşlemesi (Hardware / Software Mapping)11
+3eER Diyagramı - Veri Sözlüğü15
+3fVeri Akış Şemaları (VAD)18
+3gKalıcı Veri Yönetimi (Persistent Data Management)19
+3hErişim Kontrolü ve Güvenlik (Access Control and Security)24
+3iKüresel Yazılım Kontrolü27
+3jSınır Şartları (Boundary Conditions)29
+4Alt Sistem Hizmetleri (Subsystem services)30
+5Kullanıcı Arayüz Tasarımları(GUI)32
+6Nesne Tasarımı34
+6aNesne Tasarımı Değişimleri34
+6bArayüz Dokümantasyon Kılavuzları35
+6cPaketler38
+6dArayüz (Interface) Sınıfları40
+Tablo 1: Mevcut Çözümlerin Karşılaştırması5
+Tablo 2: Mimari Katmanlar ve Sorumluluklar5
+Tablo 3: Temel Sınıf Özeti7
+Tablo 4: users Tablosu17
+Tablo 5: appointments Tablosu18
+Tablo 6: test_results Tablosu18
+Tablo 7: VAD Sembol Açıklamaları19
+Tablo 8: Veri Yönetiminde Hususlar Tablosu21
+Tablo 9: Yedekleme Türü Tablosu22
+Tablo 10: Veri Kaybı Toleransı Tablosu22
+Tablo 11: Yedekleme Anahtar Başarı Göstergeleri Tablosu24
+Tablo 12: Yedekleme Yetki/Sorumluluk Matrisi (YG: Yerine Getiren, M: Mesul, D: Danışılacak, B: Bilgi Verilecek)24
+Tablo 13: PsikoTakip Sistemi Rol-Yetki Matrisi26
+Tablo 14: Etkileşim Özeti Tablosu32
+Tablo 15: Arayüz Tasarım Standartları Tablosu34
+Tablo 16: SOLID Prensiplerinin Uygulanması35
+Tablo 17: Tasarım Kalıpları35
+Tablo 18: HTTP Durum Kodları Tablosu36
+Tablo 19: Auth Endpoint'leri37
+Tablo 20: Randevu Endpoint'leri37
+Tablo 21: Test Endpoint'leri37
+Tablo 22: Sayfalama ve Filtreleme Tablosu38
+Tablo 23: Frontend Bileşen Arayüzleri Tablosu38
+Tablo 24: Backend Paketleri40
+Tablo 25: Frontend Paketleri40
+Tablo 26: Repository Arayüz Tanımları41
+Tablo 27: Servis Arayüz Tanımları42
+Tablo 28: Ana API Endpoint Grupları42
+Şekil 1: PsikoTakip UML Class Diyagramı7
+Şekil 2: SD-01 Randevu Oluşturma Akışı — Sequence Diyagramı9
+Şekil 3: Psikolojik Test Uygulama ve Otomatik Skorlama — Sequence Diyagramı10
+Şekil 4: SD-03 Kullanıcı Girişi ve JWT Kimlik Doğrulama — Sequence Diyagramı11
+Şekil 5: SD-04 Seans Notu Kaydetme ve Danışan İlerleme Grafiği — Sequence Diyagramı12
+Şekil 6: PsikoTakip Sistemi Donanım ve Ağ Dağılım Diyagramı14
+Şekil 7: Randevu Oluşturma Süreci Sistem ve Ağ İletişimi (Sıra Diyagramı)16
+Şekil 8: PsikoTakip ER Diyagramı (Crow Foot Notasyonu)17
+Şekil 9: Supabase Veritabanı Varlık-İlişki (ER) Modeli20
+Şekil 10: PsikoTakip Rol Tabanlı Kullanım Durumu (Use Case) Diyagramı27
+Şekil 11: PsikoTakip CI/CD (Sürekli Entegrasyon ve Dağıtım) Akış Şeması29
+Şekil 12: PsikoTakip NestJS Modül Paket Diyagramı39
+Şekil 13: PsikoTakip RESTful Web API Mimarisi41
+Tasarım (Design)
+Sistem Tasarımı (System Design)
+Tasarım Hedefleri (Design Goals)
+PsikoTakip sistemi aşağıdaki tasarım hedefleri doğrultusunda geliştirilmektedir.
+Performans Hedefleri
+•Sayfa ilk yükleme süresi (FCP) < 1.5 saniye olmalıdır.
+•API yanıt süresi < 2 saniye olmalıdır.
+•Psikolojik test otomatik skorlama işlemi < 2 saniyede tamamlanmalıdır.
+•Randevu oluşturma işlemi 30 saniyeden kısa sürede tamamlanabilmelidir.
+•Sistem minimum 50 eş zamanlı kullanıcıyı sorunsuz desteklemelidir.
+Güvenilirlik ve Erişilebilirlik Hedefleri
+•Sistem %99.5 uptime ile 7/24 erişilebilir olmalıdır.
+•KVKK kapsamındaki özel nitelikli kişisel veriler AES-256 ile şifrelenmelidir.
+•Yetkilendirme JWT + RBAC ile her endpoint seviyesinde uygulanmalıdır.
+•Veriler günlük yedekleme ile korunmalıdır.
+Sürdürülebilirlik Hedefleri
+•Clean/Onion Architecture prensiplerine uygun kod tabanı oluşturulmalıdır.
+•Birim test kapsamı (coverage) %80'in üzerinde tutulmalıdır.
+•SOLID prensipleri ve GoF tasarım kalıpları uygulanmalıdır.
+•Yeni psikolojik test türleri Strategy Pattern ile mevcut kodu değiştirmeden eklenebilmelidir.
+Kullanılabilirlik Hedefleri
+•Arayüz responsive olmalı; mobil, tablet ve masaüstü cihazlarda sorunsuz çalışmalıdır.
+•Kullanıcı memnuniyet anketi skoru 5 üzerinden en az 4 olmalıdır.
+•Danışan arayüzü sakinleştirici ve güven veren bir tasarıma sahip olmalıdır.
+Mevcut Yazılım Mimarisi (Current Software Architecture)
+Türkiye'deki psikoloji kliniklerinde mevcut sistemler büyük ölçüde dijital altyapıdan yoksundur. PsikoTakip sıfırdan (greenfield) geliştirilmektedir; harici sistemlerle entegrasyon yalnızca e-posta servisi ve video görüşme servisi ile sınırlıdır.
+Tablo 1: Mevcut Çözümlerin Karşılaştırması
+Çözüm
+Güçlü Yönler
+Zayıf Yönler
+PsikoTakip Farkı
+Kağıt + Dosyalama
+Kurulum maliyeti yok
+Veri kaybı, KVKK uyumsuzluğu, raporlama imkânsız
+Dijital, güvenli, raporlanabilir
+Google Calendar
+Ücretsiz, bilinen arayüz
+Sağlık verisi güvenliği yok, test/seans notu desteği yok
+Alan odaklı, KVKK uyumlu
+PsikologNet
+Temel randevu yönetimi
+Test entegrasyonu yok, aylık abonelik, çoklu psikolog desteği kısıtlı
+Test otomatik skorlama, açık kaynak, ücretsiz
+SimplePractice
+Kapsamlı özellikler
+Türkçe yok, KVKK uyumsuz, yüksek fiyat
+Türkçe, KVKK uyumlu, yerel
+Önerilen Yazılım Mimarisi (Proposed Software Architecture)
+Genel Bakış-İnceleme (Overview)
+PsikoTakip, Clean/Onion Architecture prensiplerine dayalı çok katmanlı bir web uygulamasıdır. Backend NestJS v10+ (TypeScript), Frontend Next.js v14+ + Tailwind CSS, Veritabanı PostgreSQL 15+ (Supabase) + Prisma ORM kullanılarak geliştirilmektedir. Deploy: Frontend → Vercel, Backend → Railway, DB → Supabase. CI/CD: GitHub Actions.
+Tablo 2: Mimari Katmanlar ve Sorumluluklar
+Katman
+Teknoloji
+Sorumluluk
+Presentation
+Next.js 14, Tailwind CSS, React Query
+Kullanıcı arayüzü, form yönetimi, client-side routing, SSR/SSG
+Application (API)
+NestJS 10, TypeScript, Passport.js
+İş mantığı, kimlik doğrulama, yetkilendirme, veri doğrulama
+Domain
+TypeScript Entities, Interfaces
+İş kuralları, varlık tanımları, tasarım kalıpları
+Infrastructure
+Prisma ORM, Nodemailer, crypto-js
+Veri erişimi, harici servis entegrasyonları, şifreleme
+Database
+PostgreSQL 15+ (Supabase)
+Kalıcı veri saklama, ACID uyumlu işlemler
+Statik Model: Class Diyagramları
+PsikoTakip sisteminde 10 temel sınıf tanımlanmıştır: User (temel), Psychologist, Client, Admin (kalıtsallık), Appointment, SessionNote, PsychologicalTest, TestResult, Notification, AuditLog. Sınıf diyagramı aşağıda verilmiştir.
+Şekil 1: PsikoTakip UML Class Diyagramı
+Tablo 3: Temel Sınıf Özeti
+Sınıf Adı
+Açıklama
+User
+Temel kullanıcı sınıfı; id, email, passwordHash, role, isActive, isVerified. Kalıtsallık ile Psychologist, Client ve Admin'e genişler.
+Psychologist
+User'dan türer. specialization, biography, workingHours, sessionDurationMin, isAcceptingClients ek alanları.
+Client
+User'dan türer. dateOfBirth, gender, emergencyContact, healthNotes (AES-256 şifreli) alanları.
+Admin
+User'dan türer. clinicName, clinicSettings. Sistem genelinde yönetim yetkisine sahip.
+Appointment
+clientId, psychologistId, startTime, endTime, sessionType (in_person|online), status, videoMeetingUrl.
+SessionNote
+appointmentId, psychologistId, content (AES-256), isSharedWithClient.
+PsychologicalTest
+name, code, questions (JSON), scoringAlgorithm (JSON), categoryThresholds (JSON). Test şablonu.
+TestResult
+clientId, testId, answers (JSON şifreli), totalScore, scoreCategory, isSharedWithClient.
+Notification
+userId, type, channel (email|sms), isSent, sentAt, readAt. Observer Pattern ile tetiklenir.
+AuditLog
+userId, action, entity, entityId, ipAddress. KVKK uyumlu denetim kaydı.
+Dinamik Model - Sequence Diyagramları
+Bu bölümde PsikoTakip sisteminin temel iş akışlarını modelleyen dört adet sequence (sıralama) diyagramı sunulmaktadır. Her diyagram; aktörler, sistem bileşenleri ve aralarındaki mesaj alışverişlerini zaman boyutunda göstermektedir. Diyagramlar draw.io kullanılarak hazırlanmış olup UML 2.0 gösterimi esas alınmıştır.
+SD-1: Randevu Oluşturma Akışı
+Bu diyagram, bir danışanın sisteme giriş yaparak psikolog seçmesi, müsaitlik kontrolü ve randevu kaydının tamamlanması sürecini modellemektedir. Online seans tercih edildiğinde sistemin otomatik video görüşme linki üretmesi de bu akış içinde yer almaktadır.
+Aktörler ve Bileşenler:
+Danışan (Kullanıcı aktörü)
+Web UI / Frontend (React + Next.js)
+Auth Guard (JWT doğrulama katmanı)
+Randevu Controller (NestJS REST endpoint)
+Randevu Service (iş mantığı katmanı)
+PostgreSQL Veritabanı
+Bildirim Servisi (e-posta + uygulama içi)
+Temel Mesaj Akışı:
+Auth Guard, JWT token'ı doğrular; geçerli değilse erişim reddedilir.
+Sistem, seçilen tarihe göre müsait psikologları ve saatleri veritabanından sorgular.
+Danışan seçimini tamamlayınca POST /randevular isteği gönderilir.
+Randevu Service çakışma kontrolü yapar; çakışma yoksa kayıt oluşturulur.
+Online seans seçilmişse otomatik UUID tabanlı video görüşme bağlantısı üretilir.
+Bildirim Servisi aracılığıyla danışan ve psikolog bilgilendirilir.
+Şekil 2: SD-01 Randevu Oluşturma Akışı — Sequence Diyagramı
+SD-2: Psikolojik Test Uygulama ve Otomatik Skorlama Akışı
+Bu diyagram, bir psikoloğun danışanına psikolojik test atamasından başlayarak danışanın testi tamamlaması ve sistemin skoru otomatik olarak hesaplaması sürecini göstermektedir. PsikoTakip'te Beck Depresyon Envanteri (BDE-II), Beck Anksiyete Envanteri (BAE) ve SCL-90 testleri desteklenmektedir.
+Aktörler ve Bileşenler:
+Psikolog (test atama aktörü)
+Danışan (test yanıtlama aktörü)
+Test Yönetim UI
+Test Controller (NestJS)
+Test Service (iş mantığı)
+Skorlama Engine (Strateji tasarım kalıbı ile)
+PostgreSQL Veritabanı
+Temel Mesaj Akışı:
+Psikolog danışanı ve test türünü seçerek testi atar; sistem test sorularını DB'den çeker.
+Test formu danışanın arayüzünde görüntülenir; danışan soruları yanıtlar ve gönderir.
+Test Service, yanıtları Skorlama Engine'e iletir; algoritma toplam puanı hesaplar.
+Skor seviyeleri: NORMAL / HAFİF / ORTA / AĞIR (Beck kriterlerine göre eşik değerleri).
+Sonuç şifreli olarak veritabanına kaydedilir; psikolog ve danışan grafik ile sonucu görür.
+Skorlama işlemi sistem gereksinimlerine göre 2 saniyenin altında tamamlanmaktadır.
+Şekil 3: Psikolojik Test Uygulama ve Otomatik Skorlama — Sequence Diyagramı
+SD-3: Kullanıcı Girişi ve JWT Kimlik Doğrulama Akışı
+Bu diyagram, sistemdeki dört farklı kullanıcı rolünden birinin (Misafir, Danışan, Psikolog, Admin) giriş yapması, JWT token üretimi ve rol tabanlı yönlendirme sürecini modellemektedir.
+Aktörler ve Bileşenler:
+Kullanıcı (herhangi bir rol)
+Login Page (UI)
+Auth Controller
+Auth Service (bcrypt şifre doğrulama)
+JWT Service (token üretimi / doğrulama)
+PostgreSQL Veritabanı
+Temel Mesaj Akışı:
+Kullanıcı e-posta ve şifresini girerek giriş isteği gönderir; client-side form doğrulaması yapılır.
+Auth Controller isteği Auth Service'e iletir; servis kullanıcıyı veritabanında sorgular.
+Şifre bcrypt.compare() ile hashlenmiş değerle karşılaştırılır; yanlışsa 401 döndürülür.
+Başarılı girişte JWT Service; 15 dakika geçerli accessToken ve 7 gün geçerli refreshToken üretir.
+RefreshToken veritabanına kaydedilir; accessToken ve kullanıcı bilgisi frontend'e döndürülür.
+Frontend, kullanıcı rolüne (PSIKOLOG / DANISAN / ADMIN) göre ilgili dashboard'a yönlendirir.
+Şekil 4: SD-03 Kullanıcı Girişi ve JWT Kimlik Doğrulama — Sequence Diyagramı
+SD-04: Seans Notu Kaydetme ve Danışan İlerleme Grafiği Akışı
+Bu diyagram iki alt akışı kapsamaktadır: (A) psikoloğun seans sonrasında KVKK uyumlu not kaydetmesi ve (B) danışanın zaman içindeki ilerleme grafiğinin görüntülenmesi. Notlar AES-256-CBC şifrelemesiyle saklanmaktadır.
+Aktörler ve Bileşenler:
+Psikolog
+Seans Notu UI
+Seans Controller
+Seans Service
+AES-256 Şifreleme Modülü
+PostgreSQL Veritabanı
+Alt Akış A — Seans Notu Kaydetme:
+Psikolog not metnini, duygusal durumu ve hedefleri forma girer.
+Seans Service, not metnini AES-256-CBC ile şifreler; benzersiz IV üretir.
+Şifreli metin ve IV birlikte seans_notlari tablosuna kaydedilir.
+Alt Akış B — Danışan İlerleme Grafiği:
+Psikolog tarih aralığını seçer; sistem test skorlarını ve seans bilgilerini zaman serisi olarak çeker.
+Seans Service veriyi grafik formatına dönüştürür; frontend Recharts ile çizgi grafik render eder.
+Şekil 5: SD-04 Seans Notu Kaydetme ve Danışan İlerleme Grafiği — Sequence Diyagramı
+Donanım / Yazılım Eşlemesi (Hardware / Software Mapping)
+PsikoTakip sistemi, yapısal olarak merkezileştirilmiş (centralized) değil, dağıtılmış (distributed) bir bulut mimarisine sahiptir. Sistem; kullanıcıların erişim sağladığı fiziksel istemci cihazları ve Hizmet Olarak Platform/Arka Uç (PaaS/BaaS) sağlayıcılarının (Vercel, Railway, Supabase) yönettiği sanal sunucu kümelenmelerinden oluşmaktadır.
+Aşağıda sistemdeki her bir donanım düğümünün detaylı spesifikasyonları listelenmiştir:
+1. İstemci Cihazları (Danışan / Psikolog Bilgisayarları)
+Kimliği: Son Kullanıcı Kişisel Bilgisayarı (PC/Laptop).
+Donanım Bileşenin amacı: Sistemin web arayüzüne erişim, veri girişi (randevu, notlar) ve çevrimiçi video seansların yürütülmesi.
+Aldığı yazılım bileşeni: İşletim Sistemi (Windows 10/11, macOS, Linux), Web Tarayıcısı (Chrome, Safari, Edge) ve Next.js Frontend Uygulaması.
+Teknik özellikleri: Minimum Intel Core i3 / AMD Ryzen 3 serisi makine tipi.
+Ağ donanım arayüzleri: 802.11ac (Wi-Fi 5) kablosuz ağ bağdaştırıcısı veya 10/100/1000 Gigabit Ethernet kartı.
+Güç girişi gereksinimleri: 65W - 90W güç adaptörü, 220V AC şebeke girişi.
+Sinyal empedansları ve mantık durumları: Standart 3.3V / 5V CMOS mantık seviyeleri.
+Konektör özellikleri: RJ45 (Ağ), USB Type-A / Type-C (Harici kamera veya kulaklık bağlantısı için dişi portlar), 3.5mm ses jakı.
+Bellek ve depolama alanı özellikleri: Minimum 8 GB DDR4 RAM, 256 GB SSD (Solid State Drive).
+İşlemci gereksinimleri: Çift çekirdekli (Dual-core) min. 2.0 GHz saat hızında çalışan, video çözme (hardware decoding) destekli işlemci.
+Kablo tipleri ve uzunlukları: 1-3 metre Cat6 UTP ağ kablosu (kablolu bağlantı tercih edilirse).
+Kullanıcı arabirimleri: Q klavye, optik mouse, entegre veya harici web kamerası ve mikrofon.
+Sabit sürücü/CD-ROM: Veri okuma/yazma hızını artırmak için SSD (Okuma: 500MB/s). CD-ROM gerekmemektedir.
+Monitör çözünürlüğü: Arayüz bileşenlerinin sağlıklı görüntülenmesi için minimum 1920x1080 (FHD) piksel ekran çözünürlüğü.
+2. Sunum Sunucusu (Frontend / Edge Network)
+Kimliği: Vercel Edge Server Node (AWS Lambda tabanlı).
+Donanım Bileşenin amacı: İstemcilere arayüz statik dosyalarının dağıtımı ve Sunucu Tarafı Oluşturma (SSR) süreçlerinin işletilmesi.
+Aldığı yazılım bileşeni: Next.js Serverless Functions, Node.js runtime.
+Teknik özellikleri: AWS EC2 sanallaştırılmış donanımı (Satıcı: Amazon Web Services).
+Ağ donanım arayüzleri: 10 Gbps+ Fiber Optik ağ altyapısı.
+Bellek / İşlemci: Fonksiyon başına sınırlandırılmış 1024 MB RAM, dinamik paylaşımlı vCPU.
+Güç/Konektör/Kablo: AWS Veri Merkezi standartlarında; yedekli UPS ve jeneratör beslemeli, MPO/MTP fiber konektörlü mimari. Monitör, klavye veya arayüz (headless) barındırmaz.
+3. Uygulama ve Veritabanı Sunucuları (Backend & Storage)
+Kimliği: Railway Container Node (Backend) ve Supabase PostgreSQL Cluster (Database).
+Donanım Bileşenin amacı: API isteklerinin işlenmesi, iş mantığının (randevu çakışması, test analizi) yürütülmesi ve kalıcı verilerin (Kullanıcılar, Notlar, Loglar) güvenle saklanması.
+Aldığı yazılım bileşeni: NestJS (Backend), Prisma ORM, PostgreSQL v15 (Veritabanı).
+Teknik özellikleri: Linux tabanlı sanal makineler (Satıcı: Google Cloud / AWS). Supabase için 1 GB ayrılmış RAM, 2 vCPU, SSD destekli blok depolama (Block Storage).
+Ağ donanım arayüzleri: Veri merkezi içi düşük gecikmeli Sanal Özel Ağ (VPC).
+Şekil 6: PsikoTakip Sistemi Donanım ve Ağ Dağılım Diyagramı
+Yukarıdaki Şekil 6'da, PsikoTakip sisteminin bulut tabanlı dağıtık donanım mimarisi gösterilmektedir. İstemci cihazlarından (bilgisayar ve akıllı telefon) gelen HTTPS isteklerinin, Cloud WAF (Web Uygulaması Güvenlik Duvarı) üzerinden filtrelenerek sırasıyla Vercel (Sunum Sunucusu), Railway (Uygulama Sunucusu) ve Supabase (Veritabanı Sunucusu) sanal donanımları arasındaki güvenli ağ iletişim akışı dikey hiyerarşide modellenmiştir.
+PsikoTakip projesinin tasarım aşamasında yazılım-donanım eşlemesi yapılırken; sistem güvenliği, maliyet etkinliği, sürdürülebilirlik ve erişilebilirlik göz önünde bulundurulmuştur. Bu projede fiziksel, kurum içi (on-premise) donanımlar tedarik etmek yerine bulut bilişim (PaaS ve BaaS) donanımlarının tercih edilmesinin temel motivasyonları şunlardır:
+Odaklanma ve Verimlilik: Fiziksel donanımların kurulumu, ağ yapılandırması, soğutulması ve donanım arızalarının giderilmesi gibi süreçler yerine, ekibin tamamen yazılım geliştirmeye ve iş mantığına odaklanması hedeflenmiştir.
+Ölçeklenebilirlik (Scalability): İstemci trafiğinin (danışan ve psikolog randevu yoğunluğu) artması durumunda, fiziksel yeni sunucular satın almak yerine bulut altyapısında saniyeler içinde RAM ve CPU artırımı (Auto-scaling) yapılabilmesi amaçlanmıştır.
+Güvenlik ve KVKK Uyumluluğu: Psikolojik seans notları gibi son derece hassas verilerin, global güvenlik sertifikalarına (ISO 27001, SOC2) sahip bulut sağlayıcıların (AWS tabanlı Supabase vb.) şifrelenmiş disklerinde (encryption at rest) saklanarak donanım tabanlı veri sızıntısı risklerinin minimize edilmesi hedeflenmiştir.
+Maliyet Optimizasyonu: Kurulum aşamasında yüksek donanım maliyetlerinden (sunucu kasası, kesintisiz güç kaynağı, iklimlendirme vb.) kaçınılarak, projenin "kullandıkça öde" (pay-as-you-go) modeline uygun sanal donanımlarla hayata geçirilmesi planlanmıştır.
+Güvenlik, Performans ve Sistem Organizasyonu
+Genel Sistem ve Ağ Organizasyonu: Sistem internet (TCP/IP) üzerinden dağıtılmış olarak çalışmaktadır.
+Ağ Bantları ve Portlar: İstemciler ile Vercel (Frontend) ve Railway (Backend) arasındaki iletişim yalnızca dış ağa açık Port 443 (HTTPS) üzerinden sağlanır. Veritabanına (Supabase) doğrudan dış erişim kapalıdır; arka uç (backend) sunucusu veritabanına PgBouncer (Port 6543) kullanarak dahili VPC ağı üzerinden bağlanır.
+Çevresel Aygıtlar: Bulut sağlayıcıların sunduğu Layer 7 Yük Dengeleyiciler (Load Balancers) ve SSL Hızlandırıcılar aktif olarak kullanılmaktadır.
+Sistem Güvenliği ve Gizliliği (Security Configuration): Sistem, KVKK "özel nitelikli veri" kurallarına göre tasarlanmıştır:
+Kimlik İnceleme: Sisteme erişim NestJS üzerinden sağlanan JWT (JSON Web Token) ve bcrypt şifrelemesi ile korunur. Kullanıcı parolaları veritabanında salt eklenerek hash'lenir.
+İşlevsel Yetkilendirme (Mimari): Oturum açıldıktan sonra RBAC (Role-Based Access Control) devreye girer. Danışan, Psikolog ve Admin donanım/yazılım düzeyinde sadece kendi yetki rotalarına (API endpoints) erişebilir.
+Şifreleme Protokolü: Transit halindeki veriler için TLS 1.2+ protokolü, depolanan statik veriler ve yedeklemeler için donanım disk seviyesinde AES-256 şifrelemesi (encryption at rest) uygulanır.
+Günlüğe Kaydetme (Audit & Logging): Tüm kimlik doğrulama denemeleri, veritabanı okuma/yazma (özellikle seans notları) işlemleri uygulama sunucusu tarafından zaman damgasıyla (timestamp) loglanır ve denetim izi bırakılır.
+Performans ve Yüksek Kullanılabilirlik (High Availability): Sistemin güvenilirliğini desteklemek için Auto-Scaling (otomatik ölçeklendirme) konfigürasyonu aktiftir.
+Hata Noktaları (SPOF - Single Point of Failure): Tekil sunucu çökme riskine karşı Vercel ve Rafla, yük dengeleyiciler (Load balancer) arkasında çoklu konteyner (container kümeleme/clustering) yapısında çalışır. Bir düğüm hata verdiğinde ağ trafiği anında sağlıklı düğüme aktarılır.
+Kaynak Tahminleri: Aylık 10.000 aktif kullanıcı hedeflenerek; önbellek (Redis) için 500 MB RAM, ilişkisel depolama için başlangıçta 5 GB esnek SSD hacmi ve anlık trafiği karşılamak üzere %70 CPU kullanımında otomatik yeni sanal makine üretecek şekilde eşleme yapılmıştır.
+Şekil 7: Randevu Oluşturma Süreci Sistem ve Ağ İletişimi (Sıra Diyagramı)
+Bulut mimarisindeki dağıtık donanımların ve yazılım bileşenlerinin kendi aralarındaki senkronize haberleşmesini örneklendirmek adına, bir 'Randevu Oluşturma' senaryosuna ait UML Sıra Diyagramı Şekil 7'de verilmiştir. İstemci cihazdan gelen HTTPS isteklerinin Vercel sunum sunucusu üzerinden Railway API'sine iletilmesi ve iş mantığının (çakışma kontrolü) işletildikten sonra PgBouncer portu üzerinden Supabase veritabanına güvenle işlenmesi adım adım modellenmiştir.
+ER Diyagramı - Veri Sözlüğü
+PsikoTakip veritabanı PostgreSQL 15+ üzerinde Prisma ORM ile yönetilmektedir. Veri modeli 3NF normalizasyon kurallarına uygundur. Crow Foot notasyonu kullanılmıştır.
+ER Diyagramı
+Şekil 8: PsikoTakip ER Diyagramı (Crow Foot Notasyonu)
+Varlıklar Arası İlişkiler
+• User — Psychologist: 1'e 1   • User — Client: 1'e 1   • Psychologist — Appointment: 1'e N
+• Client — Appointment: 1'e N   • Appointment — SessionNote: 1'e 0..1
+• Client — TestResult: 1'e N   • PsychologicalTest — TestResult: 1'e N
+Veri Sözlüğü
+Tablo 4: users Tablosu
+Alan Adı
+Veri Tipi
+Uzunluk
+Zorunlu
+PK/FK
+Açıklama
+id
+UUID
+36
+Evet
+PK
+Kullanıcı benzersiz kimliği
+email
+VARCHAR
+255
+Evet
+-
+Kullanıcı e-posta adresi (unique)
+password_hash
+VARCHAR
+255
+Evet
+-
+bcrypt ile şifrelenmiş parola
+role
+ENUM
+-
+Evet
+-
+guest | client | psychologist | admin
+first_name, last_name
+VARCHAR
+100
+Evet
+-
+Kullanıcı adı ve soyadı
+is_active, is_verified
+BOOLEAN
+-
+Evet
+-
+Aktiflik ve e-posta doğrulama durumu
+created_at, updated_at
+TIMESTAMP
+-
+Evet
+-
+Oluşturma ve güncelleme zamanı
+Tablo 5: appointments Tablosu
+Alan Adı
+Veri Tipi
+Uzunluk
+Zorunlu
+PK/FK
+Açıklama
+id
+UUID
+36
+Evet
+PK
+Randevu benzersiz kimliği
+client_id
+UUID
+36
+Evet
+FK→clients
+Randevu sahibi danışan
+psychologist_id
+UUID
+36
+Evet
+FK→psychologists
+Randevu psikologu
+start_time, end_time
+TIMESTAMP
+-
+Evet
+-
+Randevu başlangıç ve bitiş zamanı
+session_type
+ENUM
+-
+Evet
+-
+in_person | online
+status
+ENUM
+-
+Evet
+-
+pending | confirmed | cancelled | completed
+video_meeting_url
+VARCHAR
+500
+Hayır
+-
+Online seans video görüşme linki
+Tablo 6: test_results Tablosu
+Alan Adı
+Veri Tipi
+Uzunluk
+Zorunlu
+PK/FK
+Açıklama
+id
+UUID
+36
+Evet
+PK
+Test sonucu kimliği
+client_id
+UUID
+36
+Evet
+FK→clients
+Testi çözen danışan
+test_id
+UUID
+36
+Evet
+FK→psychological_tests
+Test şablonu
+answers
+JSONB
+-
+Evet
+-
+Danışan cevapları (AES-256 şifreli)
+total_score
+INTEGER
+-
+Evet
+-
+Hesaplanan toplam skor
+score_category
+VARCHAR
+100
+Evet
+-
+Skor kategorisi (Hafif, Orta, Şiddetli)
+completed_at
+TIMESTAMP
+-
+Evet
+-
+Test tamamlanma zamanı
+Veri Akış Şemaları (VAD)
+PsikoTakip sistemindeki veri akışları Seviye 0 (Bağlam) ve Seviye 1 VAD'ları ile modellenmiştir. VAD dosyaları draw.io formatında ayrıca teslim edilmektedir.
+Seviye 0 — Bağlam Diyagramı
+Dış varlıklar: Danışan, Psikolog, Admin, E-posta Servisi, Video Görüşme Servisi, PostgreSQL. Merkez süreç tek bir PsikoTakip Sistemi bloğu olarak temsil edilir.
+Seviye 1 — Randevu Yönetimi
+P1 Kimlik Doğrulama → P2 Müsait Slot Sorgulama → P3 Randevu Oluşturma → P4 Video Link Üretimi → P5 Bildirim Gönderimi. AppointmentCreatedEvent Observer Pattern ile bildirim servisini tetikler.
+Seviye 1 — Psikolojik Test Süreci
+P1 Test Seçimi → P2 Test Atama → P3 Bildirim → P4 Test Sunumu → P5 Cevap Kayıt → P6 Otomatik Skorlama (Strategy Pattern: BDIScoring/BAIScoring/SCL90Scoring) → P7 Sonuç Kayıt → P8 İlerleme Grafiği.
+Tablo 7: VAD Sembol Açıklamaları
+Sembol
+Adı
+Açıklama
+Dikdörtgen
+Dış Varlık (External Entity)
+Danışan, Psikolog, Admin, E-posta Servisi, Video Servisi
+Elips
+Süreç (Process)
+Veriyi işleyen sistem işlemleri
+Çift Çizgili Dikdörtgen
+Veri Deposu (Data Store)
+users, appointments, test_results vb. tablolar
+Ok
+Veri Akışı (Data Flow)
+Varlıklar arasında akan veri
+Kalıcı Veri Yönetimi (Persistent Data Management)
+PsikoTakip sisteminde veri yönetimi; danışanlara ait kişisel bilgilerin, psikolojik test sonuçlarının ve seans notlarının güvenli, verimli ve KVKK’ya uygun bir şekilde toplanması, saklanması ve kullanılması uygulamasıdır. Projede kalıcı veri yönetimi, bulut tabanlı Supabase (PostgreSQL 15+) altyapısı ve Prisma ORM kullanılarak sağlanmaktadır. Veritabanı izleme ve bakım (maintenance) işlemleri Supabase Dashboard ve pg_stat_statements üzerinden yürütülmektedir. Sistem, AWS EC2 üzerinde "Her zaman çevrimiçi (Always on)" mimarisiyle yapılandırılmış olup, aktif çalışan veritabanının plan dışı durması durumunda otomatik yük devretme (auto-failover) ile replika sunucuların devreye girdiği bir plana sahiptir. Log kayıtları, yedekleme işlemleri, ağ araçları (PgBouncer) ve bulut depolama üniteleri (AWS S3) sistemin kalıcı veri mimarisini oluşturur.
+Şekil 9: Supabase Veritabanı Varlık-İlişki (ER) Modeli
+PsikoTakip sisteminin kalıcı veri mimarisini oluşturan temel varlıklar ve bu varlıklar arasındaki yapısal ilişkiler Şekil 9'da gösterilen Varlık-İlişki (ER) diyagramı ile modellenmiştir. Diyagramda görüldüğü üzere; sistemdeki temel kullanıcı rolleri (Danışan, Psikolog, Admin), randevular, KVKK kapsamında saklanan zaman damgalı seans notları ve analitik amaçlı JSONB formatındaki test sonuçları birbirlerine ilişkisel (bire-çok) kurallarla bağlanarak veri bütünlüğü garanti altına alınmıştır.
+PsikoTakip platformunun sunduğu hizmetlerin güvenilirliği ve KVKK kapsamındaki "özel nitelikli verilerin" gizliliği, veri tabanı yönetim sistemlerinin etkin kullanımına bağlıdır. Veritabanı yönetim sistemleri (PostgreSQL), büyük çaplı randevu ve seans verilerini saklama, değiştirme ve koruma süreçlerini kolaylaştırır. Bu kritik sistemlerin düzenli yedeklenmesi ve denetimi, uygulamanın kesintisiz, etkili ve verimli çalışmasına makul güvence vermektedir.
+Tablo 8: Veri Yönetiminde Hususlar Tablosu
+Veri Yönetimi Hedefi
+Uygulama ve Açıklama
+Verilerinizi belirlemek için bir keşif katmanı oluşturun
+Prisma Studio ve Supabase arayüzleri, geliştiricilerin veri kümelerini kolayca incelemesine ve kullanışlı hale getirmesine olanak tanıyan bir keşif katmanı işlevi görür.
+Verilerinize verimli bir şekilde yeni kullanım alanları kazandıracak bir veri bilimi ortamı geliştirin
+Test skorlamaları ve istatistiksel analizler için veritabanındaki JSONB veri türleri üzerinden analitik görünümler (views) oluşturularak manuel dönüşüm ihtiyacı ortadan kaldırılır.
+Performans seviyelerini korumak için kendi kendini yöneten teknolojiyi kullanın
+Supabase'in otomatik vakumlama (autovacuum) ve otomatik indeks öneri algoritmaları sayesinde veritabanı sorguları sürekli izlenir ve hızlı yanıt süreleri korunur.
+Mevzuat uyum gerekliliklerine ayak uydurmak için keşiften yararlanın
+KVKK uyumluluğu için veritabanı logları (Audit Logs) ve Row Level Security (RLS) kullanılarak hangi veriye kimin eriştiği takip edilir ve bağlantı zincirleri izlenir.
+Bütünleşik bir veritabanı kullandığınızdan emin olun
+İlişkisel veriler (kullanıcılar, randevular) ve yapılandırılmamış veriler (JSON formatlı seans testleri) tek bir PostgreSQL veritabanı içinde bütünleşik olarak yönetilir.
+Performans, ölçek ve kullanılabilirliğe sahip olduğundan emin olun
+Bulut tabanlı PostgreSQL kümesi, anlık trafik artışlarında dikey olarak ölçeklendirilebilir (Vertical Scaling) yapıdadır ve yüksek erişilebilirlik sunar.
+Ortak bir sorgu katmanı kullanın
+Prisma ORM, veritabanı karmaşıklığını gizleyen ortak bir sorgu katmanı sağlayarak uygulamanın verilere standart bir biçimde erişmesini sağlar.
+Tanımlar
+Tam (Full) Yedek: PsikoTakip veritabanının ve depolama alanının tüm içeriğinin eksiksiz olarak yedeklenmesi.
+Artımlı (Incremental) Yedek / WAL: Sadece bir önceki yedekten sonra değişen verilerin yedeklenmesi. PostgreSQL'in Write-Ahead Log (WAL) mimarisi ile sağlanır.
+Fark (Differential) Yedek: Bir önceki "tam" yedekten sonra değişen tüm verilerin yedeklenmesi.
+Bulut Depolama (Cloud Object Storage): Geleneksel NAS sistemleri yerine kullanılan, internet üzerinden erişilebilen ve yedek dosyalarını tutan AWS S3 tabanlı depolama.
+Soğuk Depolama (Cold Storage): Geleneksel Tape (LTO) kasetleri yerine, uzun süreli (60 ay) arşivleme için kullanılan düşük maliyetli bulut arşivi (AWS Glacier vb.).
+Zaman Damgası: Sistem loglarının ve elektronik verilerin değiştirilmediğini kanıtlamak için kullanılan kriptografik zaman kaydı.
+Yedekleme Altyapısı PsikoTakip bulut altyapısının yedekleme bileşenleri şunlardır:
+Yedekleme yazılımı (Supabase Automated Backups & WAL Archiving)
+Yedekleme ve kurtarma sunucusu (Bulut ortamındaki Recovery Node'ları)
+SSD Depolama Sistemleri (AWS EBS)
+Ağ Tabanlı Bulut Depolama (Supabase Storage / AWS S3)
+Uzun Dönem Arşiv Depolama (Cold Storage)
+Sanal Özel Ağ (VPC) ve Güvenli İletişim Kanalları.
+Yedekleme işlemi bulut sağlayıcı (Supabase) tarafından merkezi ve otomatik olarak gerçekleştirilir. Kısa süreli ve anlık geri dönüşler için aktif SSD diskler kullanılırken, uzun süreli yedek koruma politikaları için S3 tabanlı nesne depolama (Object Storage) altyapısı kullanılmaktadır.
+Yedekleme Şekli Yedekleme şekli olarak tam (full) ve artımlı (incremental/WAL tabanlı) yedekleme şekillerinin karışımı kullanılmaktadır. Her gün gece saat 03:00'te sistemin Tam Yedeği alınırken, gün içindeki tüm anlık işlemler WAL (Write-Ahead Log) mekanizmasıyla sürekli olarak artımlı şekilde yedeklenir. Bu sayede Point-in-Time Recovery (Belirli Bir Zamana Dönüş) yapılarak son 7 gün içindeki istenilen bir saniyeye veri kaybı olmadan dönülebilir.
+Tablo 9: Yedekleme Türü Tablosu
+Yedekleme Türü
+Yedekleme Hızı
+Gereken Depolama Kapasitesi
+Yedekten Geri Dönüş Hızı
+Tam Yedekleme
+Çok düşük (D)
+Çok yüksek (D)
+Çok yüksek (C)
+Fark Yedekleme
+Düşük (D)
+Yüksek (D)
+Düşük (D)
+Artımlı Yedekleme (WAL)
+Çok yüksek (C)
+Çok düşük (C)
+Çok düşük (D)
+Yedekleme Sıklığı Sistemdeki farklı veri tipleri için veri kaybı toleransı göz önüne alınarak aşağıdaki yedekleme periyotları belirlenmiştir:
+Tablo 10: Veri Kaybı Toleransı Tablosu
+Veri Kaybı Toleransı
+Yedek Alma Periyodu
+Yedek Alma Sıklığı
+Çok Düşük (Örn. Seans Notları, Loglar)
+1 saat ve daha az
+Sürekli (WAL ile anlık kayıt)
+Düşük (Örn. Randevu Kayıtları)
+4 saat ve daha az
+En az her 4 saatte bir
+Orta (Örn. Kullanıcı Profilleri)
+1 gün ve daha az
+En az her gün (Tam Yedek)
+Yüksek (Örn. Sistem Ayarları)
+1 hafta ve daha az
+En az her hafta
+Yedek Koruma/Saklama Süresi (Retention Period) KVKK, sağlık verilerinin işlenmesi yönetmelikleri ve kurumsal ihtiyaçlar çerçevesinde verilerin saklama süreleri aşağıdaki gibi kategorize edilmiştir:
+6 aylık: Sistem hata logları, performans metrikleri.
+12 aylık: İptal edilen randevu kayıtları, geçici site istatistikleri.
+24 aylık: Aktif olmayan (silinmiş) danışan temel profilleri.
+60 aylık: KVKK ve yasal zorunluluklar gereği tutulması gereken seans özetleri, zaman damgalı erişim logları. Süreleri dolan veriler bulut üzerinden "Crypto-Shredding" (şifreleme anahtarının yokedilmesi) yöntemiyle geri döndürülemez şekilde imha edilir.
+Yedekleme İşleminin ve Yedeklerin Test Edilmesi Yedeklerin sağlıklı olduğundan emin olmak için her 6 ayda bir yedeklerden geri dönüş (Recovery) testleri yapılır. Bu testleri yerine getirme sorumluluğu DevOps / Sistem Yönetimi ekibine aittir. Test başarılı olmazsa düzeltici önlemler alınır ve yedekleme zinciri yeniden oluşturulur.
+Yedekleme Medyalarının Saklanması, Güvenliği ve İmhası Olası bir veri merkezi felaketine (yangın, sel vb.) karşı, alınan yedekler uygulamanın çalıştığı ana sunucunun (örneğin Frankfurt bölgesi) dışında, fiziksel olarak farklı bir ülkedeki veri merkezinde (örneğin İrlanda bölgesi - Cross-Region) saklanmaktadır. Yedeklerin tamamı AES-256 algoritmasıyla şifrelenir (Encryption at rest). Saklama süresi biten yedek veriler fiziksel imha yerine, şifreleme anahtarlarının kalıcı olarak silinmesi (Crypto-shredding) yöntemiyle güvenli bir şekilde imha edilir.
+Yedeklerden Geri Dönüş (Restoration & Recovery) Veri kaybı durumunda yedekten geri dönüş talebi, BT Yardım Masası veya DevOps ekibi üzerinden açılacak bir talep vakası ile yapılır. Talep vakasında şu bilgiler bulunur:
+Yedekten geri dönüş talep edilen modül (Örn. Randevular tablosu).
+Kaynak sunucu bilgileri ve veritabanı cluster adı.
+Geçmişteki hangi tarih/saat noktasına dönüleceği (PITR zamanı).
+Hedef ortam bilgileri (Canlı ortam mı, test ortamı mı).
+Zaman Damgası 5651 sayılı kanun ve KVKK gereğince, sistemdeki "kimin, ne zaman giriş yaptığı", "seans notunun ne zaman oluşturulduğu veya güncellendiği" gibi kritik eylem logları, uygulamanın (NestJS) ürettiği uluslararası standartlardaki (ISO 8601) zaman damgaları ile veritabanında tutulur. Gerektiğinde bu verilerin orijinalliğini kanıtlamak için kurumun belirleyeceği bir elektronik sertifika hizmet sağlayıcısı kullanılabilir.
+Kritik Başarı Unsurları
+Herhangi bir veri kaybı durumunda, veri kaybı toleransı sınırları içinde kalarak yedek verilerin operasyonel ortama hızla geri dönülebilmesi.
+Yedeklerin AWS/Supabase üzerinde AES-256 ile şifrelenerek veri gizliliğinin sağlanması.
+Yedek verilerin yasal zorunluluklara (KVKK) uygun süreler (örn. 60 ay) boyunca güvenle muhafaza edilmesi.
+Felaket durumlarında (Disaster Recovery) uygulamanın ayağa kalkabilmesi için yedeklerin farklı coğrafi lokasyonlarda barındırılması.
+Her 6 ayda bir geri dönüş testlerinin yapılarak yedeklerin okunabilirliğinin garanti altına alınması.
+Anahtar Başarı Göstergeleri
+Tablo 11: Yedekleme Anahtar Başarı Göstergeleri Tablosu
+Anahtar Başarı Göstergesi
+Açıklama
+Sorumlu
+Metrik
+Ölçme Yöntemi
+Yedekleme sıklığı ve politikası eksikliği
+Tüm modüllerin yedekleme kurallarının belirlenmiş olması
+Proje Yöneticisi & Sistem Yönetimi
+Sıfır olmalı
+Sistem yapılandırma belgelerinin kontrolü
+Yedeklenmeyen kritik veri tespiti
+Tüm seans ve randevu verilerinin yedeklenmesi
+Sistem Yönetimi
+Sıfır olmalı
+Bulut yedek loglarının günlük kontrolü
+Sağlık kontrolleri ve geri dönüş testlerinin eksikliği
+Testlerin her 6 ayda bir eksiksiz yapılması
+Sistem Yönetimi & Güvenlik
+Sıfır olmalı
+Test tutanaklarının incelenmesi
+Uzak lokasyonda (Cross-Region) bulunmayan yedekler
+Felaket kurtarma için yedeklerin farklı bölgede olması
+Sistem Yönetimi
+Sıfır olmalı
+Bulut depolama topolojisinin kontrolü
+Güvenli imha kayıtlarının eksikliği
+Saklama süresi dolan verilerin imha edildiğinin loglanması
+Sistem Yönetimi & Güvenlik
+Eksiksiz olmalı
+İmha (Crypto-shredding) loglarının kontrolü
+Yedekten dönülemeyen veri senaryosu
+İstenen zamanda yedeğin hatasız yüklenebilmesi
+Sistem Yönetimi
+Sıfır olmalı
+Gerçekleştirilen kurtarma işlemlerinin analizi
+Yetki/Sorumluluk Matrisi
+Tablo 12: Yedekleme Yetki/Sorumluluk Matrisi (YG: Yerine Getiren, M: Mesul, D: Danışılacak, B: Bilgi Verilecek)
+Görev / Aksiyon
+Proje Yöneticisi
+Sistem / DevOps Yönetimi
+Bilgi Güvenliği Yönetimi
+Backend Ekibi (Geliştirici)
+Tüm servisler için yedekleme periyotlarını ve saklama sürelerini belirlemek.
+M
+YG
+D
+B
+Yedekleri eksiksiz ve otomatik olarak almak.
+B
+M / YG
+B
+YG
+Sağlık kontrollerini ve geri dönüş testlerini doğru yapmak.
+B
+M / YG
+D
+YG
+Olası felaketler için yedekleri uzak fiziki (Cloud Region) lokasyona taşımak.
+B
+M / YG
+D
+-
+Medyaların (Bulut Disklerin) fiziksel ömrünü/kapasitesini takip etmek, yeni kaynak belirlemek.
+M
+YG
+-
+B
+Süresi dolan verileri güvenli yöntemlerle imha etmek.
+B
+M / YG
+YG
+B
+Yedeklerden geri dönüş ihtiyacı ortaya çıktığında talep açmak / süreci başlatmak.
+YG
+B
+B
+YG
+Yedeklerden geri dönüş talebi yapıldığında, işlemi gerçekleştirmek.
+B
+M / YG
+D
+YG
+Zaman damgası ve şifreleme sertifikalarını takip etmek, yenilemek.
+B
+M / YG
+YG
+-
+Erişim Kontrolü ve Güvenlik (Access Control and Security)
+PsikoTakip projesinde bilgilere erişim için kullanılacak yöntemler ve güvenlik kuralları, uygulamanın kullandığı modern web teknolojileri (NestJS, Next.js, Supabase) temel alınarak aşağıdaki gibi tanımlanmıştır:
+Kullanıcı Hesap Yönetimi ve Bakımı: Sistemde Danışan, Psikolog ve Sistem Yöneticisi (Admin) olmak üzere üç temel hesap türü bulunmaktadır. Hesap oluşturma ve onay süreçleri Supabase Auth üzerinden yönetilmektedir.
+Kullanıcıların Hesaplarının Kaldırılması: KVKK gereğince "Unutulma Hakkı" kapsamında kullanıcılar hesaplarını silebilir. Ancak veri bütünlüğünün bozulmaması adına finansal ve sistemsel kayıtlar "Soft Delete" (gizleme) yöntemiyle anonimleştirilerek pasife alınır.
+Erişim Hakkı Verilmesi ve Gözden Geçirilmesi: Erişim hakları, kullanıcının kayıt anında seçtiği profile göre atanır. Admin paneli üzerinden Sistem Yöneticileri, şüpheli hesapların erişim haklarını askıya alabilir veya gözden geçirebilir.
+Şifre Yönetimi ve Kritik Şifrelerin Saklanması: Kullanıcı şifreleri veritabanında asla açık metin (clear-text) olarak saklanmaz. bcrypt algoritması kullanılarak tuzlanmış (salted) hash değerleri olarak muhafaza edilir. Parola sıfırlama işlemleri, e-posta adresine gönderilen sınırlı süreli (15 dakika) güvenli token'lar ile yapılır.
+Kullanıcı Erişim ve Faaliyetlerinin İzlenmesi: Sisteme yapılan tüm başarılı ve başarısız giriş denemeleri Supabase Auth Logları aracılığıyla kaydedilir. Özel nitelikli verilere (seans notları) erişimler, işlemi yapan kullanıcının kimliği (user_id) ve zaman damgası (timestamp) ile birlikte veritabanında denetim kaydına (Audit Log) işlenir.
+Uygulama ve İşletim Sistemi Seviyesinde Denetim Kaydı: Brute-force (kaba kuvvet) saldırılarını engellemek için üst üste 5 kez hatalı şifre giren kullanıcı hesapları 15 dakika süreyle kilitlenir ve bu durum loglanır. Sistemin yeniden başlatılması veya uygulama çökmeleri sunucu tarafında (Railway) kaydedilir.
+PsikoTakip Sistemi Rol-Yetki Matrisi
+Tablo 13: PsikoTakip Sistemi Rol-Yetki Matrisi
+İşlem / Modül
+Ziyaretçi
+Danışan
+Psikolog
+Sistem Yöneticisi
+Sisteme Kayıt Olma / Giriş Yapma
+✔️
+✔️
+✔️
+✔️
+Kendi Randevularını Görüntüleme / İptal Etme
+❌
+✔️
+✔️
+✔️
+Yeni Randevu Talebi Oluşturma
+❌
+✔️
+❌
+✔️
+Test Sonuçlarını ve Seans Raporlarını Görüntüleme
+❌
+❌
+✔️
+❌ (KVKK)
+Seans Notu Yazma / Düzenleme
+❌
+❌
+✔️
+❌ (KVKK)
+Kullanıcı Hesabı Askıya Alma ve Log İnceleme
+❌
+❌
+❌
+✔️
+Şekil 10: PsikoTakip Rol Tabanlı Kullanım Durumu (Use Case) Diyagramı
+Yukarıdaki matriste belirtilen rol ve erişim dağılımının sistemsel işleyişi, Şekil 4'te yer alan UML Kullanım Durumu diyagramı ile görselleştirilmiştir. Bu mimaride, sisteme giriş tüm aktörler için evrensel bir eylemken; randevu oluşturma, test sonuçlarını görüntüleme ve sistem yönetimi gibi kritik modüller kesin çizgilerle ayrılmış ve sadece yetkili aktörlerin (Danışan, Psikolog, Sistem Yöneticisi) erişimine açılmıştır.
+Yukarıdaki matriste belirtilen rol ve erişim dağılımının sistemsel işleyişi, Şekil 4'te yer alan UML Kullanım Durumu diyagramı ile görselleştirilmiştir. Bu mimaride, sisteme giriş tüm aktörler için evrensel bir eylemken; randevu oluşturma, test sonuçlarını görüntüleme ve sistem yönetimi gibi kritik modüller kesin çizgilerle ayrılmış ve sadece yetkili aktörlerin (Danışan, Psikolog, Sistem Yöneticisi) erişimine açılmıştır.
+Güvenli yazılım geliştirme sürecinde PsikoTakip altyapısında aşağıdaki 9 ana güvenlik konusu ele alınmıştır:
+Girdi Geçerleme (Input Validation): Kullanıcıdan (Frontend) gelen tüm veriler, NestJS arka ucunda class-validator kütüphanesi ile tiplerine ve sınırlarına göre (pozitif veri kontrolü) doğrulanır.
+Kimlik Doğrulama (Authentication): Tüm kimlik doğrulama işlemleri Supabase Auth ile sağlanır ve istemciye güvenli bir JWT (JSON Web Token) iletilir.
+Yetkilendirme (Authorization): NestJS tarafında "Guard" yapısı kullanılarak Rol Tabanlı Erişim Kontrolü (RBAC) sağlanır. Veritabanı seviyesinde ise Supabase RLS (Row Level Security) ile kullanıcıların yalnızca kendi verilerini okuyabilmesi garanti edilir.
+Konfigürasyon Yönetimi (Configuration Management): Veritabanı şifreleri, API anahtarları gibi kritik bilgiler kod içerisine (hardcoded) yazılmaz; ortam değişkenleri (.env) dosyalarında şifreli olarak saklanır.
+Hassas Bilgi (Sensitive Information): Transit halindeki tüm iletişim HTTPS (TLS 1.2+) protokolü ile sağlanır. Veritabanındaki disk verileri AES-256 ile şifrelenir (Encryption at rest).
+Kriptografi (Cryptography): Güvenli iletişim ve token üretim süreçlerinde endüstri standardı güçlü şifreleme algoritmaları kullanılır.
+Parametre Manipülasyonu (Parameter Manipulations): URL üzerinden gelebilecek SQL Enjeksiyonu (SQL Injection) saldırılarına karşı Prisma ORM'in parametreli sorgu (parameterized query) yapısı kullanılarak veritabanı korunur.
+Hata Yönetimi (Exception Management): Sistemde oluşan hataların (Stack Trace) son kullanıcıya yansımasını engellemek için NestJS Global Exception Filter kullanılır. Kullanıcıya yalnızca standart ve risksiz hata mesajları gösterilir.
+Kayıt Tutma ve Denetim (Logging and Auditing): Uygulama logları Winston veya benzeri bir kütüphane ile seviyelendirilerek (Info, Warn, Error) tutulur ve olası güvenlik ihlalleri anında tespit edilebilir hale getirilir.
+Küresel Yazılım Kontrolü
+PsikoTakip projesinin geliştirilme sürecinde, uluslararası kabul görmüş yazılım standartları ve modern proje yönetim metodolojileri kullanılmaktadır. Sistemimizin karmaşıklığını yönetmek, takım içi iletişimi koordine etmek ve kaliteli bir yazılım ürünü ortaya koymak amacıyla Çevik (Agile) Yazılım Geliştirme yaklaşımı ve Scrum çalışma çerçevesi (framework) benimsenmiştir. Aynı zamanda bulut tabanlı (cloud-native) bir proje olması sebebiyle DevOps kültürü (Sürekli Entegrasyon / Sürekli Teslimat - CI/CD) sürece entegre edilmiştir.
+Projemizde referans alınan temel küresel yazılım standartları şunlardır:
+IEEE 1074 (Yazılım Yaşam Döngüsü Süreçleri Standartı): Yazılımın fikir aşamasından bakım aşamasına kadar geçirdiği süreçlerin standartlaştırılması.
+ISO/IEC/IEEE 12207 (Sistem ve Yazılım Mühendisliği - Yazılım Yaşam Döngüsü Süreçleri): Geliştirme, operasyon ve bakım süreçlerinin küresel standartlara uygun yönetilmesi.
+ISO 27001 (Bilgi Güvenliği Yönetim Sistemi): Özellikle KVKK kapsamındaki psikolojik verilerin güvenliğini ve şifreleme altyapısını denetleyen standartlar bütünü.
+Yazılım endüstrisinde rekabet gücünü artırmak ve kullanıcı ihtiyaçlarına (danışan ve psikolog talepleri) hızlı cevap verebilmek için statik yöntemler (Örn. Şelale/Waterfall) yerine dinamik ve çevik yöntemler gereklidir. PsikoTakip ekibi fiziksel olarak aynı laboratuvarda sürekli bulunamayabileceğinden (dağıtık ekip / küresel yazılım geliştirme), iletişimi asenkron araçlarla yönetmek ve süreçleri standartlaştırmak zorunludur. Kaliteli, standartlara uygun, güvenli (ISO 27001) ve sürdürülebilir bir ürün ortaya çıkarmak; projenin hata maliyetlerini düşürürken, proje üyelerinin verimliliğini maksimize edecektir.
+Dağıtık bir geliştirme ekibi (Küresel Yazılım Geliştirme) olarak çalıştığımız için Scrum ve DevOps pratikleri kendi gereksinimlerimiz doğrultusunda aşağıdaki gibi uyarlanmıştır:
+Sprint Yönetimi: Proje 2 haftalık Sprint'lere (koşulara) bölünmüştür. Her Sprint başında "Sprint Planning" (Sprint Planlama) toplantısı çevrimiçi ortamda (Discord/Zoom vb.) yapılarak, Trello/Jira gibi proje yönetim araçlarındaki (Backlog) görevler takım üyelerine atanır.
+Roller: * Product Owner: Müşteri/Kullanıcı (Psikolog/Danışan) gereksinimlerini belirler.
+Scrum Master: Ekibin Agile kurallarına uymasını sağlar ve engelleri kaldırır.
+Development Team (Geliştirme Ekibi): Yazılımın arayüz, arka uç ve veritabanı kısımlarını kodlar.
+Daily Scrum (Günlük Toplantılar): Ekip üyelerinin farklı zaman dilimlerinde veya farklı ders programlarına sahip olması (asenkron çalışma) ihtimaline karşı, günlük toplantılar çevrimiçi iletişim kanalları üzerinden "Dün ne yaptım? Bugün ne yapacağım? Önümde engel var mı?" formatında asenkron mesajlaşma veya kısa sesli görüşmelerle yürütülür.
+DevOps ve Sürüm Kontrolü: Kodların küresel kontrolü için Git ve versiyon kontrol sistemi olarak GitHub / GitLab kullanılmaktadır.
+Vercel (Frontend) ve Railway (Backend) üzerinde CI/CD (Sürekli Entegrasyon ve Teslimat) boru hatları (pipelines) kurulmuştur.
+Geliştirici kodunu "main" veya "production" dalına (branch) gönderdiğinde (push), sistem kodu otomatik olarak derler ve sunucularda canlıya alır.
+Şekil 11: PsikoTakip CI/CD (Sürekli Entegrasyon ve Dağıtım) Akış Şeması
+Çevik (Agile) süreçlerin teknik altyapısını oluşturan DevOps boru hattının (pipeline) çalışma adımları Şekil 5'de detaylandırılmıştır. Geliştirici ekibin GitHub'a gönderdiği (push) kodlar, Webhook'lar aracılığıyla sürekli entegrasyon (CI) sürecini tetiklemektedir. Güvenlik ve derleme testlerinden başarıyla geçen sürümler, Vercel (Frontend) ve Railway (Backend) donanımları üzerinde eşzamanlı ve otomatik olarak canlı ortama (Production) alınmaktadır.
+Sınır Şartları (Boundary Conditions)
+Bu bölümde, PsikoTakip yazılımının sınırları, proje yönetimi kısıtlamaları ve tasarımsal zorunlulukları belirlenmiştir. Sistemin belirlenen hedeflere ulaşabilmesi için uyulması gereken temel proje ve tasarım kısıtları (constraints) aşağıda detaylandırılmıştır:
+Proje Kısıtları (Project Constraints)
+Maliyet (Cost): Projenin altyapı maliyetleri, Vercel (Hobby/Free Tier), Railway (Starter Plan) ve Supabase (Free Tier) limitleri dahilinde kalacak şekilde optimize edilmelidir. Aylık işletim maliyeti belirlenen minimum bütçeyi aşmamalıdır.
+Süre (Time): Proje, üniversitenin "Yazılım Mühendisliği" dersi akademik takviminde belirtilen final teslim tarihine kadar devreye alınmış ve testleri tamamlanmış olmalıdır.
+Kapsam (Scope): Sistem yalnızca psikolog-danışan randevu yönetimi, seans notları ve test çözümü özelliklerini kapsayacaktır; proje kapsamında harici bir muhasebe veya İK modülü geliştirilmeyecektir.
+Kalite ve Mevzuat: Tüm geliştirme süreçleri ve veri saklama koşulları KVKK (Kişisel Verilerin Korunması Kanunu) ve ISO 27001 Bilgi Güvenliği standartlarına uygun olmak zorundadır.
+Tasarım Kısıtları (Design Constraints)
+Uygulamanın arayüz tasarımı (UI) duyarlı (responsive) olacak ve mobil/masaüstü web tarayıcıları (Chrome, Safari, Edge) üzerinden ekstra donanıma ihtiyaç duyulmadan çalışacaktır.
+Veritabanı sistemi olarak NoSQL değil, ACID (Atomicity, Consistency, Isolation, Durability) uyumlu ilişkisel bir veritabanı olan PostgreSQL (Supabase) kullanılacaktır.
+Sunucu tarafı kodları (Backend) Java veya C# ile değil, TypeScript tabanlı NestJS framework'ü ile yazılacaktır.
+İstemci tarafı (Frontend) React tabanlı Next.js framework'ü ve Tailwind CSS ile geliştirilecektir.
+Sistem, çoklu kiracı (multi-tenant) veya çoklu kullanıcı yapısını destekleyecek; kullanıcılar yalnızca kendi rolleriyle (Danışan, Psikolog, Admin) ilişkili verileri görüntüleyebilecektir.
+Bir projenin başarısı en basit anlamda proje kısıtları içinde proje hedeflerine ulaşılması ve müşteri/paydaş memnuniyeti ile ölçülür. PsikoTakip projelerinin öngörülen neticelere, belirlenen zaman ve kısıtlı donanım/sunucu maliyeti içerisinde ulaşabilmesi için bu sınırların baştan çizilmesi ve etkin bir biçimde yönetilmesi gerekmektedir. Kısıtların bilinmesi, geliştirme ekibinin (development team) teknoloji seçimlerinde ve özellik (feature) geliştirmelerinde kapsam dışına çıkmasını (scope creep) engeller.
+Projeler doğası gereği geçici olduğundan, projenin başarısı onaylanmış olan kapsam, zaman, maliyet ve risk kısıtları dahilinde değerlendirilir. PsikoTakip için uygulanan sistem kısıtlarından bazıları şunlardır:
+Tüm API etkileşimlerinin ve veritabanı okuma/yazma işlemlerinin bir denetimi (audit log) olmalıdır.
+Sistem arayüzünden harici e-posta (SMTP) veya video görüşme servislerine yönelik API istekleri zaman aşımlarını engellemek için asenkron veya kuyruk (Queue) yapısında işlenmelidir.
+Uygulamanın kritik iş kurallarını (randevu çakışması, yetkilendirme) barındıran backend (arka uç) kodları, minimum %80 birim test (unit test) kapsamına sahip olmalıdır.
+Alt Sistem Hizmetleri (Subsystem services)
+PsikoTakip sistemi, Katmanlı Mimari (N-Tier Architecture) ve Modüler Monolith yaklaşımı benimsenerek tasarlanmıştır. Sistem; Frontend, Backend API, Veritabanı ve Harici Servisler olmak üzere dört ana katmana ayrılmakta; her katman kendi içinde bağımsız modüller (alt sistemler) barındırmaktadır.
+4.1 Kimlik Doğrulama ve Yetkilendirme Alt Sistemi
+Sistemdeki tüm kullanıcıların kimliklerini doğrular ve rol tabanlı erişim denetimi uygular. Dört kullanıcı rolü (MİSAFİR, DANIŞAN, PSİKOLOG, ADMİN) tanımlıdır.
+Teknoloji: NestJS AuthModule, @nestjs/jwt, @nestjs/passport, bcrypt
+Arayüzler: POST /auth/login, POST /auth/logout, POST /auth/refresh, GET /auth/me
+Güvenlik: JWT accessToken (15 dk) + refreshToken (7 gün), bcrypt salt round=12
+RolesGuard dekoratörü ile endpoint bazında rol kısıtlaması uygulanır.
+4.2 Randevu Yönetim Alt Sistemi
+Danışan-psikolog randevu süreçlerinin tamamını yönetir. Müsaitlik sorgulama, çakışma kontrolü, randevu oluşturma/iptal/güncelleme ve otomatik video bağlantısı üretimini kapsar.
+Teknoloji: NestJS AppointmentModule, dayjs (tarih işlemleri), UUID v4 (video link)
+Arayüzler: GET /randevular, POST /randevular, PATCH /randevular/:id, DELETE /randevular/:id
+İş Kuralı: Aynı saat aralığında çakışan randevu oluşturulamaz; sistem otomatik kontrol yapar.
+Online seans seçildiğinde benzersiz UUID tabanlı video görüşme bağlantısı üretilir.
+4.3 Seans Notu Yönetim Alt Sistemi
+Psikologların seans sonrası yazdıkları gizli notların KVKK uyumlu şekilde saklanmasını ve yönetilmesini sağlar. Tüm içerikler AES-256-CBC ile şifrelenerek veritabanına kaydedilir.
+Teknoloji: NestJS SessionModule, Node.js crypto (AES-256-CBC)
+Arayüzler: POST /seans-notlari, GET /seans-notlari/:seansId, PATCH /seans-notlari/:id
+Şifreleme: Her not için benzersiz IV üretilir; şifreli metin + IV birlikte saklanır.
+Yalnızca ilgili psikolog kendi notlarına erişebilir (sahip bazlı erişim kontrolü).
+4.4 Psikolojik Test Alt Sistemi
+Beck Depresyon Envanteri (BDE-II), Beck Anksiyete Envanteri (BAE) ve SCL-90 testlerinin dijital ortamda uygulanmasını ve otomatik skorlanmasını sağlar.
+Teknoloji: NestJS TestModule, özel Skorlama Engine (Strateji tasarım kalıbı)
+Arayüzler: GET /testler, POST /testler/ata, POST /testler/cevapla, GET /testler/sonuclar/:danisanId
+Seviyeler: NORMAL / HAFİF / ORTA / AĞIR (BDE: <14 / 14-19 / 20-28 / 29+ puan)
+Sonuçlar zaman serisi olarak saklanır; ilerleme grafiği için historik veri tutulur.
+4.5 Bildirim Alt Sistemi
+Randevu onayları, hatırlatıcılar ve sistem bildirimleri gibi iletişim akışlarını yönetir.
+Teknoloji: NestJS NotificationModule, @nestjs/schedule (cron), Nodemailer
+Randevu öncesi 24 saat ve 1 saat kala otomatik hatırlatıcı gönderilir.
+Kanallar: Uygulama içi bildirim + e-posta
+4.6 Güvenlik ve Denetim Günlüğü Alt Sistemi
+Tüm kritik işlemlerin izlenebilirliğini ve KVKK uyumlu denetimini sağlar.
+Teknoloji: NestJS AuditModule, Winston (log yönetimi), PostgreSQL audit_logs tablosu
+İzlenen olaylar: Giriş/çıkış, veri erişimi, şifre değiştirme, randevu işlemleri, test ataması
+Her kayıt: kullaniciId, islem, kaynak, ipAdresi, zaman damgası bilgilerini içerir.
+4.7 Yedekleme Alt Sistemi
+Teknoloji: PostgreSQL pg_dump, Railway platform otomatik yedekleme
+Zamanlama: Günlük tam yedek (gece 02:00), 4 saatte bir artımlı yedek
+Geri yükleme hedefi (RTO): 4 saat; veri kaybı hedefi (RPO): 4 saat
+4.8 Alt Sistem Etkileşim Özeti
+Tablo 14: Etkileşim Özeti Tablosu
+Alt Sistem
+Sağladığı Servis
+Bağımlı Olduğu Alt Sistemler
+Auth
+Kimlik doğrulama, JWT yönetimi, rol denetimi
+Kullanıcı, PostgreSQL
+Randevu
+Randevu CRUD, çakışma kontrolü, video link
+Auth, Bildirim, PostgreSQL
+Seans Notu
+Şifreli not kaydetme ve okuma
+Auth, Audit Log, PostgreSQL
+Psikolojik Test
+Test atama, skorlama, sonuç saklama
+Auth, Danışan, PostgreSQL
+Bildirim
+E-posta ve uygulama içi bildirim
+Randevu, Kullanıcı
+Audit Log
+İşlem izleme, KVKK denetim kaydı
+Tüm alt sistemler
+Yedekleme
+Otomatik DB yedekleme ve arşivleme
+PostgreSQL, Platform
+Kullanıcı Arayüz Tasarımları(GUI)
+PsikoTakip'in kullanıcı arayüzü; dört farklı kullanıcı rolüne (Misafir, Danışan, Psikolog, Admin) özel ekranlar içermektedir. Arayüz tasarımında Tailwind CSS + shadcn/ui tabanlı responsive yapı, erişilebilirlik standartları (WCAG 2.1 AA) ve klinik yazılım alanının gerektirdiği sade, profesyonel renk paleti esas alınmıştır.
+5.1 Giriş / Kayıt Ekranı
+Üst orta: PsikoTakip logosu ve kısa tanım metni
+Ana kart: E-posta, şifre (görünürlük toggle), 'Giriş Yap' butonu
+'Şifremi Unuttum' bağlantısı ve 'Hesap Oluştur' yönlendirmesi
+Yeni kullanıcı formu: Ad, soyad, e-posta, şifre, rol seçimi (Danışan/Psikolog)
+Responsive: Masaüstü çift sütun, mobil tek sütun
+5.2 Psikolog Dashboard Ekranı
+Navbar: Logo, bildirim zili (badge), profil avatarı, çıkış
+Sidebar: Dashboard, Randevularım, Danışanlarım, Test Yönetimi, Raporlar
+KPI Kartları: Bugünkü randevu | Aktif danışan | Bekleyen test | Tamamlanan seans
+Sol panel: Günün randevu takvimi (zaman çizelgesi)
+Sağ panel: Son danışan aktiviteleri, hızlı not ekle
+5.3 Randevu Oluşturma Ekranı (Danışan — Wizard)
+Adım 1 — Psikolog Seçimi: Fotoğraf, uzmanlık, puan, müsaitlik kartları
+Adım 2 — Tarih/Saat: Takvim (müsait=yeşil, dolu=gri), saat grid'i
+Adım 3 — Seans Türü: Yüz yüze / Online; online seçilince video bilgisi
+Adım 4 — Onay: Özet ve 'Randevuyu Onayla' butonu
+5.4 Psikolojik Test Ekranı (Danışan)
+Üst bant: Test adı, tahmini süre, ilerleme çubuğu
+Soru kartı: Numaralı soru metni, 5'li Likert butonları (0–4)
+Alt bar: Önceki / Sonraki; son soruda 'Testi Tamamla'
+Tamamlama sonrası: Skor, seviye (renk kodlu) ve açıklama
+5.5 Danışan Detay ve İlerleme Grafiği (Psikolog)
+Profil bandı: Ad, yaş, başlangıç tarihi, aktif tedavi planı
+Sekmeli yapı: Genel Bakış | Seans Notları | Test Sonuçları | Randevu Geçmişi
+Genel Bakış: Recharts ile çizgi grafik — Beck ve SCL-90 skorları zamana göre
+Grafik filtreleri: Son 1 ay / 3 ay / 6 ay / Tümü
+5.6 Admin Panel Ekranı
+İstatistikler: Toplam kullanıcı, aktif psikolog, toplam randevu
+Kullanıcı Yönetimi tablosu: Ad, e-posta, rol, durum, işlem butonları
+Psikolog onaylama: Yeni kayıtların onay/red işlemleri
+KVKK uyumluluk raporu erişimi ve audit log görüntüleme
+5.7 Arayüz Tasarım Standartları
+Tablo 15: Arayüz Tasarım Standartları Tablosu
+Bileşen
+Değer / Kural
+Renk — Birincil
+#1F3864 (Koyu Lacivert)
+Renk — İkincil
+#4472C4 (Mavi)
+Renk — Başarı
+#28A745 (Yeşil)
+Renk — Uyarı
+#FFC107 (Sarı)
+Renk — Tehlike
+#DC3545 (Kırmızı)
+Yazı Tipi — Başlık
+Inter, 600 weight
+Yazı Tipi — Gövde
+Inter, 400 weight, 16px
+Min. Tıklanabilir Alan
+44×44 px (WCAG 2.1)
+Köşe Yarıçapı
+8px (kartlar), 4px (inputlar)
+Izgara Sistemi
+Bootstrap 5 — 12 sütun, gutter 24px
+Kırılma Noktaları
+xs:<576 | sm:576-768 | md:768-992 | lg:992-1200 | xl:>1200px
+Kontrast Oranı
+Min. 4.5:1 (WCAG 2.1 AA)
+Nesne Tasarımı
+Nesne Tasarımı Değişimleri
+PsikoTakip sistemi SOLID prensipleri ve GoF tasarım kalıpları doğrultusunda modellenmiştir.
+Uygulanan SOLID Prensipleri
+Tablo 16: SOLID Prensiplerinin Uygulanması
+Prensip
+Uygulandığı Yer
+Açıklama
+Single Responsibility (SRP)
+Her NestJS modülü
+Her modül yalnızca kendi domain'inden sorumlu. AuthService sadece kimlik doğrulama.
+Open/Closed (OCP)
+TestScoringStrategy
+Yeni test türü eklendiğinde mevcut kod değiştirilmez; yeni strateji sınıfı eklenir.
+Liskov Substitution (LSP)
+User → Psychologist/Client/Admin
+Türemiş sınıflar User sınıfı yerine sorunsuz kullanılabilir.
+Interface Segregation (ISP)
+IAppointmentRepository, INotificationService
+Küçük ve odaklı arayüzler; sınıflar yalnızca kullandıkları metotları implement eder.
+Dependency Inversion (DIP)
+NestJS DI container
+Servislerin somut implementasyonlara değil arayüzlere bağımlı olması sağlanır.
+Kullanılan Tasarım Kalıpları
+Tablo 17: Tasarım Kalıpları
+Kalıp
+Türü
+Kullanıldığı Yer
+Gerekçe
+Repository
+Yapısal
+PrismaAppointmentRepository vb.
+Veri erişim katmanını iş mantığından ayırır.
+Strategy
+Davranışsal
+BDIScoring, BAIScoring, SCL90Scoring
+Her test türü için farklı skorlama algoritması runtime'da seçilir.
+Observer
+Davranışsal
+AppointmentCreatedEvent → EmailNotificationHandler
+Gevşek bağlı bildirim sistemi.
+Factory
+Yaratılış
+NotificationFactory
+Kanal tipine göre doğru bildirim nesnesinin üretimi.
+Decorator
+Yapısal
+AES256EncryptionDecorator
+Şeffaf şifreleme/deşifreleme; orijinal sınıf değiştirilmeden.
+Arayüz Dokümantasyon Kılavuzları
+Bu bölüm, PsikoTakip'in programlama arayüzlerini (API) ve bileşen arayüzlerini açıklayan geliştirici kılavuzlarını içermektedir.
+6b.1  REST API Arayüz Kılavuzu
+PsikoTakip backend'i NestJS ile geliştirilmiş RESTful API'dir. Tüm korumalı endpoint'ler JWT Bearer token gerektirir.
+Üretim URL: https://psikotakip-api.railway.app/api/v1
+Geliştirme URL: http://localhost:3001/api/v1
+Kimlik doğrulama: Authorization: Bearer <accessToken>
+Token yenileme: POST /auth/refresh; geçersiz token: 401, yetersiz yetki: 403
+6b.2  HTTP Durum Kodları
+Tablo 18: HTTP Durum Kodları Tablosu
+Kod
+Anlam
+Kullanım Senaryosu
+200 OK
+Başarılı
+GET, PATCH, PUT istekleri
+201 Created
+Oluşturuldu
+POST ile yeni kayıt oluşturma
+204 No Content
+İçerik yok
+DELETE başarılı
+400 Bad Request
+Geçersiz istek
+Eksik/hatalı parametre
+401 Unauthorized
+Kimlik doğrulanamadı
+Geçersiz/süresi dolmuş token
+403 Forbidden
+Yetkisiz erişim
+Rol yetki ihlali
+404 Not Found
+Bulunamadı
+Kaynak mevcut değil
+409 Conflict
+Çakışma
+Randevu çakışması, e-posta çakışması
+422 Unprocessable
+İşlenemiyor
+İş kuralı ihlali
+500 Internal Error
+Sunucu hatası
+Beklenmeyen sistem hatası
+6b.3  Temel API Endpoint Kılavuzu
+Tablo 19: Auth Endpoint'leri
+Metod
+Endpoint
+Yetki
+Açıklama
+POST
+/auth/login
+Herkese açık
+E-posta/şifre ile giriş; JWT döndürür
+POST
+/auth/logout
+Giriş yapılmış
+Oturumu sonlandırır, refresh token iptal
+POST
+/auth/refresh
+Herkese açık
+Refresh token ile yeni access token üretir
+GET
+/auth/me
+Giriş yapılmış
+Aktif kullanıcı bilgisini döndürür
+Tablo 20: Randevu Endpoint'leri
+Metod
+Endpoint
+Yetki
+Açıklama
+GET
+/randevular
+DANISAN/PSIKOLOG
+Kullanıcının randevularını listeler
+POST
+/randevular
+DANISAN
+Yeni randevu oluşturur
+PATCH
+/randevular/:id
+DANISAN/PSIKOLOG
+Randevu günceller
+DELETE
+/randevular/:id
+DANISAN/PSIKOLOG
+Randevu iptal eder
+GET
+/psikologlar/musait
+DANISAN
+Müsait psikolog ve saatleri listeler
+Tablo 21: Test Endpoint'leri
+Metod
+Endpoint
+Yetki
+Açıklama
+GET
+/testler
+PSIKOLOG
+Kullanılabilir test listesi
+POST
+/testler/ata
+PSIKOLOG
+Danışana test atar
+POST
+/testler/cevapla
+DANISAN
+Test cevaplarını gönderir; skor döner
+GET
+/testler/sonuclar/:danisanId
+PSIKOLOG
+Danışanın tüm test sonuçları
+6b.4  Sayfalama ve Filtreleme
+Tablo 22: Sayfalama ve Filtreleme Tablosu
+Parametre
+Tür
+Varsayılan
+Açıklama
+page
+integer
+1
+Sayfa numarası (1 tabanlı)
+limit
+integer
+20
+Sayfa başına kayıt (maks: 100)
+sortBy
+string
+createdAt
+Sıralama alanı
+order
+ASC|DESC
+DESC
+Sıralama yönü
+search
+string
+-
+Ad/soyad metin araması
+baslangic
+ISO 8601
+-
+Tarih aralığı başlangıcı
+bitis
+ISO 8601
+-
+Tarih aralığı bitişi
+6b.5  Frontend Bileşen Arayüzleri
+Tablo 23: Frontend Bileşen Arayüzleri Tablosu
+Bileşen
+Props (TypeScript)
+Açıklama
+<AppointmentCard>
+appointment: Appointment, onCancel: ()=>void
+Randevu özet kartı
+<TestForm>
+testId: string, sorular: Soru[], onSubmit: (c:Cevap[])=>void
+Likert ölçekli test formu
+<ProgressChart>
+danisanId: string, testTur: TestTur, dateRange: DateRange
+Recharts ile ilerleme grafiği
+<PsychologCard>
+psikolog: Psikolog, onSelect: (id:string)=>void
+Psikolog seçim kartı
+<NotificationBell>
+unreadCount: number, onClick: ()=>void
+Bildirim zili bileşeni
+6b.6  Hata Yönetimi Kılavuzu
+Axios interceptor ile tüm API hataları merkezi olarak yakalanır.
+401: refreshToken otomatik çağrılır; başarısızsa kullanıcı login sayfasına yönlendirilir.
+403: 'Bu işlem için yetkiniz yok.' toast mesajı gösterilir.
+5xx: 'Sistem geçici olarak kullanılamıyor.' mesajı gösterilir.
+Ağ hatası: 'İnternet bağlantınızı kontrol edin.' ve yeniden deneme butonu.
+6b.7  API Dokümantasyonu Erişim
+Swagger UI: http://localhost:3001/api/docs
+Swagger JSON (OpenAPI 3.0): http://localhost:3001/api/docs-json
+Postman koleksiyonu: GitHub repository /docs/postman klasöründe
+Paketler
+PsikoTakip MIT lisansı ile yayımlanacak açık kaynaklı bir projedir.
+Paket Diyagramı
+Şekil 12: PsikoTakip NestJS Modül Paket Diyagramı
+Backend npm Paketleri
+Tablo 24: Backend Paketleri
+Paket Adı
+Versiyon
+Kullanım Amacı
+@nestjs/core
+^10.x
+NestJS çekirdek framework; modüler mimari, DI container
+@nestjs/jwt + passport
+^10.x
+JWT kimlik doğrulama ve Passport.js entegrasyonu
+@prisma/client + prisma
+^5.x
+Prisma ORM istemcisi ve CLI; migration yönetimi
+bcrypt
+^5.x
+Parola hashleme (saltRounds: 12)
+class-validator + class-transformer
+^0.14.x
+DTO doğrulama ve nesne dönüşümü
+@nestjs/swagger
+^7.x
+OpenAPI/Swagger dokümantasyonu otomatik oluşturma
+nodemailer
+^6.x
+E-posta gönderim servisi
+crypto-js
+^4.x
+AES-256 şifreleme (KVKK kapsamı)
+@nestjs/event-emitter
+^2.x
+Observer Pattern uygulaması için event-driven mimari
+jest + @nestjs/testing
+^29.x
+Birim ve entegrasyon testleri; TDD yaklaşımı
+Frontend npm Paketleri
+Tablo 25: Frontend Paketleri
+Paket Adı
+Versiyon
+Kullanım Amacı
+next
+^14.x
+Next.js framework; App Router, SSR, SSG
+tailwindcss
+^3.x
+Utility-first CSS framework
+axios
+^1.x
+HTTP istemcisi; NestJS API ile iletişim
+react-hook-form + zod
+^7.x / ^3.x
+Form yönetimi ve şema doğrulama
+recharts
+^2.x
+Danışan ilerleme grafikleri için zaman serisi görselleştirme
+@tanstack/react-query
+^5.x
+Sunucu durumu yönetimi; API önbellekleme ve senkronizasyon
+zustand
+^4.x
+İstemci tarafı global durum yönetimi
+date-fns
+^3.x
+Tarih işleme; randevu takvimi ve zaman formatlama
+Arayüz (Interface) Sınıfları
+PsikoTakip sisteminde TypeScript arayüzleri ve soyut sınıflar katmanlı soyutlama sağlamaktadır.
+Web API Diyagramı
+Şekil 13: PsikoTakip RESTful Web API Mimarisi
+Repository Arayüzleri
+Tablo 26: Repository Arayüz Tanımları
+Arayüz Adı
+Metotlar
+Implement Eden Sınıf
+IUserRepository
+findById, findByEmail, create, update, delete
+PrismaUserRepository
+IAppointmentRepository
+findAvailableSlots, create, cancel, updateStatus
+PrismaAppointmentRepository
+ITestRepository
+findById, findAll, findByCode, create
+PrismaTestRepository
+ITestResultRepository
+create, findByClientId, findLatestScore
+PrismaTestResultRepository
+ISessionNoteRepository
+create, update, findByAppointmentId
+PrismaSessionNoteRepository
+Servis Arayüzleri
+Tablo 27: Servis Arayüz Tanımları
+Arayüz Adı
+Metotlar
+Açıklama
+INotificationService
+sendEmail(to, subject, body), sendSMS(to, message), schedule()
+EmailNotificationService ve SMSNotificationService implement eder.
+ITestScoringStrategy
+calculateScore(answers): ScoreResult, getCategory(score): string
+BDIScoring, BAIScoring, SCL90Scoring implement eder.
+IEncryptionService
+encrypt(plaintext): string, decrypt(ciphertext): string
+AES-256 şifreleme soyutlaması.
+IVideoMeetingService
+generateMeetingLink(appointmentId): string
+Jitsi veya benzeri servis entegrasyonu için soyutlama.
+RESTful API Endpoint Özeti
+Tablo 28: Ana API Endpoint Grupları
+Grup
+Prefix
+Temel Endpoint'ler
+Auth
+/api/auth
+register, login, refresh, logout, verify-email, forgot/reset-password
+Users
+/api/users
+GET/PATCH /me, PUT /me/password, GET/DELETE /:id (Admin)
+Psychologists
+/api/psychologists
+GET, GET/:id, PATCH/:id, GET/:id/available-slots
+Appointments
+/api/appointments
+GET, POST, GET/:id, PATCH/:id, DELETE/:id, POST/:id/confirm
+Tests
+/api/tests
+GET, GET/:id, POST/:id/assign, POST/results, GET/results/client/:id, GET/clients/:id/progress
+Notifications
+/api/notifications
+GET, PATCH/:id/read, DELETE/:id
+Admin
+/api/admin
+GET/stats, GET/users, POST/psychologists, DELETE/psychologists/:id, GET/audit-logs
