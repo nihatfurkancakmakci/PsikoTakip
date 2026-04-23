@@ -43,7 +43,7 @@ export class NotificationsService {
     type: string,
   ) {
     try {
-      const titles: Record<string, string> = {
+      const clientTitles: Record<string, string> = {
         APPOINTMENT_CREATED: 'Randevu Talebiniz Alındı',
         APPOINTMENT_CONFIRMED: 'Randevunuz Onaylandı',
         APPOINTMENT_CANCELLED: 'Randevunuz İptal Edildi',
@@ -51,29 +51,38 @@ export class NotificationsService {
         APPOINTMENT_RESCHEDULED: 'Randevunuz Yeniden Düzenlendi',
       };
 
-      const body = `${titles[type] ?? type}: ${new Date(appointment.startTime).toLocaleString('tr-TR')}`;
+      const psychologistTitles: Record<string, string> = {
+        APPOINTMENT_CREATED: 'Yeni Randevu Talebi',
+        APPOINTMENT_CANCELLED: 'Randevu İptal Edildi',
+        APPOINTMENT_REMINDER: 'Randevu Hatırlatması',
+        APPOINTMENT_RESCHEDULED: 'Randevu Yeniden Düzenlendi',
+      };
 
-      if (appointment.client?.user?.email) {
+      const timeStr = new Date(appointment.startTime).toLocaleString('tr-TR');
+
+      if (appointment.client?.user?.id) {
+        const clientTitle = clientTitles[type] ?? type;
         await this.prisma.notification.create({
           data: {
-            userId: appointment.client.user.id ?? '',
+            userId: appointment.client.user.id,
             appointmentId: appointment.id,
             type,
-            title: titles[type] ?? type,
-            body,
+            title: clientTitle,
+            body: `${clientTitle}: ${timeStr}`,
           },
         });
-        await this.sendEmail(appointment.client.user.email, titles[type] ?? type, body);
       }
 
-      if (appointment.psychologist?.user?.email) {
+      // Psikolog sadece danışandan gelen olaylarda bildirim alır (kendi yaptıklarında almaz)
+      if (appointment.psychologist?.user?.id && psychologistTitles[type]) {
+        const psychTitle = psychologistTitles[type];
         await this.prisma.notification.create({
           data: {
-            userId: appointment.psychologist.user.id ?? '',
+            userId: appointment.psychologist.user.id,
             appointmentId: appointment.id,
             type,
-            title: titles[type] ?? type,
-            body,
+            title: psychTitle,
+            body: `${psychTitle}: ${timeStr}`,
           },
         });
       }
