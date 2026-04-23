@@ -77,8 +77,8 @@ export class AppointmentsService {
         videoMeetingUrl,
       },
       include: {
-        client: { include: { user: { select: { email: true, firstName: true, lastName: true } } } },
-        psychologist: { include: { user: { select: { email: true, firstName: true, lastName: true } } } },
+        client: { include: { user: { select: { id: true, email: true, firstName: true, lastName: true } } } },
+        psychologist: { include: { user: { select: { id: true, email: true, firstName: true, lastName: true } } } },
       },
     });
 
@@ -131,8 +131,8 @@ export class AppointmentsService {
         status: AppointmentStatus.CONFIRMED,
       },
       include: {
-        client: { include: { user: { select: { email: true, firstName: true, lastName: true } } } },
-        psychologist: { include: { user: { select: { email: true, firstName: true, lastName: true } } } },
+        client: { include: { user: { select: { id: true, email: true, firstName: true, lastName: true } } } },
+        psychologist: { include: { user: { select: { id: true, email: true, firstName: true, lastName: true } } } },
       },
     });
 

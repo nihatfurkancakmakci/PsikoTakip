@@ -76,6 +76,7 @@ export class NotificationsService {
             body,
           },
         });
+        await this.sendEmail(appointment.psychologist.user.email, titles[type] ?? type, body);
       }
     } catch (err) {
       this.logger.error('Bildirim gönderilemedi', err);
