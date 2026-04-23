@@ -44,20 +44,42 @@ export default function AdminUsersPage() {
   const approveMutation = useMutation({
     mutationFn: ({ psychId, status }: { psychId: string; status: 'APPROVED' | 'REJECTED' }) =>
       api.patch(`/users/psychologists/${psychId}/approval`, { status }),
-    onSuccess: () => {
-      toast.success('Durum güncellendi');
+    onMutate: async ({ psychId, status }) => {
+      await qc.cancelQueries({ queryKey: ['admin-users', search, roleFilter] });
+      const prev = qc.getQueryData<UserWithMeta[]>(['admin-users', search, roleFilter]);
+      qc.setQueryData<UserWithMeta[]>(['admin-users', search, roleFilter], old =>
+        old?.map(u => u.psychologist?.id === psychId
+          ? { ...u, psychologist: { ...u.psychologist!, approvalStatus: status } }
+          : u) ?? []
+      );
+      return { prev };
+    },
+    onSuccess: (_, { status }) => {
+      toast.success(status === 'APPROVED' ? 'Psikolog onaylandı' : 'Psikolog reddedildi');
       qc.invalidateQueries({ queryKey: ['admin-users'] });
     },
-    onError: (e: any) => toast.error(e.response?.data?.message ?? 'Hata'),
+    onError: (e: any, _, ctx) => {
+      if (ctx?.prev) qc.setQueryData(['admin-users', search, roleFilter], ctx.prev);
+      toast.error(e.response?.data?.message ?? 'Hata');
+    },
   });
 
   const deleteMutation = useMutation({
     mutationFn: (userId: string) => api.delete(`/users/${userId}`),
-    onSuccess: () => {
-      toast.success('Kullanıcı silindi');
-      qc.invalidateQueries({ queryKey: ['admin-users'] });
+    onMutate: async (userId) => {
+      await qc.cancelQueries({ queryKey: ['admin-users', search, roleFilter] });
+      const prev = qc.getQueryData<UserWithMeta[]>(['admin-users', search, roleFilter]);
+      qc.setQueryData<UserWithMeta[]>(['admin-users', search, roleFilter], old =>
+        old?.filter(u => u.id !== userId) ?? []
+      );
+      return { prev };
     },
-    onError: (e: any) => toast.error(e.response?.data?.message ?? 'Hata'),
+    onSuccess: () => toast.success('Kullanıcı silindi'),
+    onError: (e: any, _, ctx) => {
+      if (ctx?.prev) qc.setQueryData(['admin-users', search, roleFilter], ctx.prev);
+      toast.error(e.response?.data?.message ?? 'Hata');
+    },
+    onSettled: () => qc.invalidateQueries({ queryKey: ['admin-users'] }),
   });
 
   return (
