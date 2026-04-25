@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { useQuery, useMutation } from '@tanstack/react-query';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { api } from '@/lib/api';
 import { Psychologist } from '@/types';
 import { toast } from 'sonner';
@@ -10,7 +10,8 @@ import AutoTextarea from '@/components/AutoTextarea';
 
 export default function NewAppointmentPage() {
   const router = useRouter();
-  const [selectedPsych, setSelectedPsych] = useState('');
+  const searchParams = useSearchParams();
+  const [selectedPsych, setSelectedPsych] = useState(searchParams.get('psychologistId') ?? '');
   const [date, setDate] = useState('');
   const [startTime, setStartTime] = useState('');
   const [sessionType, setSessionType] = useState<'IN_PERSON' | 'ONLINE'>('IN_PERSON');
