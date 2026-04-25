@@ -9,6 +9,9 @@ interface PsychProfile {
   specialization: string;
   biography?: string;
   photoUrl?: string;
+  educationInfo?: string;
+  experienceYears?: number;
+  certificates?: string;
   sessionDurationMin: number;
   isAcceptingClients: boolean;
   approvalStatus: string;
@@ -28,6 +31,10 @@ const DAYS = [
 export default function PsychProfilePage() {
   const [specialization, setSpecialization] = useState('');
   const [biography, setBiography] = useState('');
+  const [photoUrl, setPhotoUrl] = useState('');
+  const [educationInfo, setEducationInfo] = useState('');
+  const [experienceYears, setExperienceYears] = useState<number | ''>('');
+  const [certificates, setCertificates] = useState('');
   const [sessionDuration, setSessionDuration] = useState(50);
   const [isAccepting, setIsAccepting] = useState(true);
   const [workingHours, setWorkingHours] = useState<Record<string, { start: string; end: string } | null>>({});
@@ -41,6 +48,10 @@ export default function PsychProfilePage() {
     if (!profile) return;
     setSpecialization(profile.specialization ?? '');
     setBiography(profile.biography ?? '');
+    setPhotoUrl(profile.photoUrl ?? '');
+    setEducationInfo(profile.educationInfo ?? '');
+    setExperienceYears(profile.experienceYears ?? '');
+    setCertificates(profile.certificates ?? '');
     setSessionDuration(profile.sessionDurationMin ?? 50);
     setIsAccepting(profile.isAcceptingClients ?? true);
     const wh: Record<string, { start: string; end: string } | null> = {};
@@ -54,6 +65,10 @@ export default function PsychProfilePage() {
     mutationFn: () => api.put('/users/psychologists/profile', {
       specialization,
       biography,
+      ...(photoUrl && { photoUrl }),
+      educationInfo,
+      ...(experienceYears !== '' && { experienceYears: Number(experienceYears) }),
+      certificates,
       sessionDurationMin: sessionDuration,
       isAcceptingClients: isAccepting,
       workingHours: Object.fromEntries(
@@ -91,6 +106,17 @@ export default function PsychProfilePage() {
       </div>
 
       <div className="card space-y-4">
+        {/* Fotoğraf */}
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-1">Profil Fotoğrafı (URL)</label>
+          <div className="flex items-center gap-3">
+            {photoUrl && (
+              <img src={photoUrl} alt="Profil" className="w-14 h-14 rounded-full object-cover border border-gray-200 flex-shrink-0" onError={e => { (e.target as HTMLImageElement).style.display = 'none'; }} />
+            )}
+            <input type="url" className="input-field" value={photoUrl} onChange={e => setPhotoUrl(e.target.value)} placeholder="https://..." />
+          </div>
+        </div>
+
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1">Uzmanlık Alanı</label>
           <input type="text" className="input-field" value={specialization} onChange={e => setSpecialization(e.target.value)} placeholder="örn. Bilişsel Davranışçı Terapi" />
@@ -99,6 +125,31 @@ export default function PsychProfilePage() {
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1">Biyografi</label>
           <textarea className="input-field" rows={4} value={biography} onChange={e => setBiography(e.target.value)} placeholder="Kendinizi kısaca tanıtın..." />
+        </div>
+
+        <div className="grid grid-cols-2 gap-4">
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">Deneyim Süresi (yıl)</label>
+            <input
+              type="number"
+              min={0}
+              max={50}
+              className="input-field"
+              value={experienceYears}
+              onChange={e => setExperienceYears(e.target.value === '' ? '' : Number(e.target.value))}
+              placeholder="örn. 5"
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">Eğitim Bilgileri</label>
+            <input type="text" className="input-field" value={educationInfo} onChange={e => setEducationInfo(e.target.value)} placeholder="örn. Psikoloji Lisans - İÜ" />
+          </div>
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-1">Sertifikalar</label>
+          <textarea className="input-field" rows={2} value={certificates} onChange={e => setCertificates(e.target.value)} placeholder="Her satıra bir sertifika, örn.&#10;CBT Sertifikası&#10;EMDR Uygulayıcı Belgesi" />
+          <p className="text-xs text-gray-400 mt-1">Her satıra bir sertifika adı yazın</p>
         </div>
 
         <div className="grid grid-cols-2 gap-4">

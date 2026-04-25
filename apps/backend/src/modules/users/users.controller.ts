@@ -46,18 +46,18 @@ export class UsersController {
     return this.usersService.findAllPsychologists(status);
   }
 
-  @Public()
-  @Get('psychologists/:id')
-  @ApiOperation({ summary: 'Psikolog detayı (misafir erişilebilir)' })
-  findPsychologist(@Param('id') id: string) {
-    return this.usersService.findPsychologistById(id);
-  }
-
   @Get('psychologists/profile')
   @Roles(Role.PSYCHOLOGIST)
   @ApiOperation({ summary: 'Psikolog kendi profilini görüntüle' })
   getPsychologistProfile(@CurrentUser() user: JwtPayload) {
     return this.usersService.findPsychologistByUserId(user.sub);
+  }
+
+  @Public()
+  @Get('psychologists/:id')
+  @ApiOperation({ summary: 'Psikolog detayı (misafir erişilebilir)' })
+  findPsychologist(@Param('id') id: string) {
+    return this.usersService.findPsychologistById(id);
   }
 
   @Put('psychologists/profile')

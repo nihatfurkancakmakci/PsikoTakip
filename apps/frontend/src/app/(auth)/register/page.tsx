@@ -10,11 +10,18 @@ import { useAuth } from '@/hooks/useAuth';
 
 const schema = z.object({
   email: z.string().email('Geçerli bir e-posta girin'),
-  password: z.string().min(8, 'En az 8 karakter'),
+  password: z
+    .string()
+    .min(8, 'En az 8 karakter olmalı')
+    .regex(/[A-Z]/, 'En az 1 büyük harf içermeli')
+    .regex(/[a-z]/, 'En az 1 küçük harf içermeli')
+    .regex(/[0-9]/, 'En az 1 rakam içermeli')
+    .regex(/[.?!@#$%^&*]/, 'En az 1 özel karakter içermeli (.?!@#...)'),
   firstName: z.string().min(1, 'Ad zorunludur'),
   lastName: z.string().min(1, 'Soyad zorunludur'),
   phone: z.string().optional(),
   role: z.enum(['CLIENT', 'PSYCHOLOGIST']),
+  kvkk: z.literal(true, { errorMap: () => ({ message: 'KVKK metnini kabul etmelisiniz' }) }),
 });
 
 type FormData = z.infer<typeof schema>;
@@ -27,9 +34,9 @@ export default function RegisterPage() {
     defaultValues: { role: 'CLIENT' },
   });
 
-  const onSubmit = async (data: FormData) => {
+  const onSubmit = async ({ kvkk: _kvkk, ...rest }: FormData) => {
     try {
-      await registerUser(data);
+      await registerUser(rest);
       toast.success('Kayıt başarılı! Lütfen e-postanızı doğrulayın.');
       router.push('/login');
     } catch (err: unknown) {
@@ -68,8 +75,24 @@ export default function RegisterPage() {
 
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">Şifre</label>
-            <input type="password" className="input-field" placeholder="En az 8 karakter" {...register('password')} />
-            {errors.password && <p className="text-red-500 text-xs mt-1">{errors.password.message}</p>}
+            <input type="password" className="input-field" placeholder="Şifrenizi girin" {...register('password')} />
+            {errors.password ? (
+              <p className="text-red-500 text-xs mt-1">{errors.password.message}</p>
+            ) : (
+              <ul className="mt-1.5 space-y-0.5">
+                {[
+                  'En az 8 karakter',
+                  '1 büyük harf (A-Z)',
+                  '1 küçük harf (a-z)',
+                  '1 rakam (0-9)',
+                  '1 özel karakter (.?!@#...)',
+                ].map(rule => (
+                  <li key={rule} className="text-xs text-gray-400 flex items-center gap-1">
+                    <span className="text-gray-300">•</span> {rule}
+                  </li>
+                ))}
+              </ul>
+            )}
           </div>
 
           <div>
@@ -85,9 +108,21 @@ export default function RegisterPage() {
             </select>
           </div>
 
-          <p className="text-xs text-gray-500 bg-blue-50 p-3 rounded-lg">
-            Kişisel verileriniz KVKK kapsamında korunmaktadır. Kayıt olarak gizlilik politikamızı kabul etmiş sayılırsınız.
-          </p>
+          <div className="flex items-start gap-3 p-3 bg-blue-50 rounded-lg">
+            <input
+              type="checkbox"
+              id="kvkk"
+              className="mt-0.5 h-4 w-4 rounded border-gray-300 text-primary-600 accent-primary-600 flex-shrink-0 cursor-pointer"
+              {...register('kvkk')}
+            />
+            <label htmlFor="kvkk" className="text-xs text-gray-600 cursor-pointer leading-relaxed">
+              <Link href="/kvkk" target="_blank" className="text-primary-600 hover:underline font-medium">
+                KVKK Aydınlatma Metni
+              </Link>
+              {"'ni okudum ve kişisel verilerimin işlenmesini kabul ediyorum."}
+            </label>
+          </div>
+          {errors.kvkk && <p className="text-red-500 text-xs -mt-2">{errors.kvkk.message}</p>}
 
           <button type="submit" className="btn-primary w-full py-3" disabled={isSubmitting}>
             {isSubmitting ? 'Kayıt yapılıyor...' : 'Kayıt Ol'}

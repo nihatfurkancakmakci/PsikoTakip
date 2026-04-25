@@ -214,12 +214,20 @@ function ClientPanel({ client, onClose }: { client: ClientSummary; onClose: () =
 export default function PsychClientsPage() {
   const [selected, setSelected] = useState<ClientSummary | null>(null);
 
-  const { data: clients, isLoading } = useQuery<ClientSummary[]>({
+  const { data: clients, isLoading, isError, refetch } = useQuery<ClientSummary[]>({
     queryKey: ['psych-clients'],
     queryFn: () => api.get('/users/my-clients').then(r => r.data),
+    staleTime: 0,
   });
 
   if (isLoading) return <div className="p-6 text-gray-500">Yükleniyor...</div>;
+
+  if (isError) return (
+    <div className="p-6 text-center">
+      <p className="text-red-500 text-sm mb-3">Danışan listesi yüklenemedi.</p>
+      <button onClick={() => refetch()} className="btn-primary text-sm px-4 py-2">Tekrar Dene</button>
+    </div>
+  );
 
   return (
     <div className="p-6 space-y-6 max-w-3xl mx-auto">

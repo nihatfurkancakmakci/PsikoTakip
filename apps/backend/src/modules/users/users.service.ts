@@ -52,6 +52,9 @@ export class UsersService {
         ...(dto.specialization && { specialization: dto.specialization }),
         ...(dto.biography !== undefined && { biography: dto.biography }),
         ...(dto.photoUrl !== undefined && { photoUrl: dto.photoUrl }),
+        ...(dto.educationInfo !== undefined && { educationInfo: dto.educationInfo }),
+        ...(dto.experienceYears !== undefined && { experienceYears: dto.experienceYears }),
+        ...(dto.certificates !== undefined && { certificates: dto.certificates }),
         ...(dto.workingHours && { workingHours: dto.workingHours as Prisma.InputJsonValue }),
         ...(dto.sessionDurationMin && { sessionDurationMin: dto.sessionDurationMin }),
         ...(dto.isAcceptingClients !== undefined && { isAcceptingClients: dto.isAcceptingClients }),
@@ -214,7 +217,7 @@ export class UsersService {
           select: {
             id: true,
             userId: true,
-            user: { select: { firstName: true, lastName: true, email: true } },
+            user: { select: { firstName: true, lastName: true, email: true, phone: true } },
           },
         },
         startTime: true,
@@ -222,9 +225,10 @@ export class UsersService {
       orderBy: { startTime: 'desc' },
     });
 
-    const clientMap = new Map<string, { id: string; userId: string; user: { firstName: string; lastName: string; email: string }; appointmentCount: number; lastAppointmentAt?: string }>();
+    const clientMap = new Map<string, { id: string; userId: string; user: { firstName: string; lastName: string; email: string; phone?: string | null }; appointmentCount: number; lastAppointmentAt?: string }>();
     for (const apt of appointments) {
       const c = apt.client;
+      if (!c) continue;
       if (!clientMap.has(c.id)) {
         clientMap.set(c.id, { id: c.id, userId: c.userId, user: c.user, appointmentCount: 0, lastAppointmentAt: apt.startTime.toISOString() });
       }

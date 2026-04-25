@@ -96,6 +96,9 @@ model Psychologist {
   specialization      String
   biography           String?
   photoUrl            String?
+  educationInfo       String?
+  experienceYears     Int?
+  certificates        String?
   workingHours        Json
   sessionDurationMin  Int                        @default(50)
   isAcceptingClients  Boolean                    @default(true)

@@ -17,6 +17,22 @@ export class UpdatePsychologistDto {
   @IsOptional()
   photoUrl?: string;
 
+  @ApiPropertyOptional({ description: 'Eğitim bilgileri' })
+  @IsString()
+  @IsOptional()
+  educationInfo?: string;
+
+  @ApiPropertyOptional({ description: 'Deneyim süresi (yıl)', minimum: 0 })
+  @IsInt()
+  @Min(0)
+  @IsOptional()
+  experienceYears?: number;
+
+  @ApiPropertyOptional({ description: 'Sertifikalar (virgülle ayrılmış)' })
+  @IsString()
+  @IsOptional()
+  certificates?: string;
+
   @ApiPropertyOptional()
   @IsOptional()
   workingHours?: Record<string, unknown>;
