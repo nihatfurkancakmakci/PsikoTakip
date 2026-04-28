@@ -8,6 +8,7 @@ import { tr } from 'date-fns/locale';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { toast } from 'sonner';
+import { Calendar, Users, Clock, ChevronRight, FlaskConical, Video, MapPin, FileText, CheckCircle } from 'lucide-react';
 
 interface SessionNote {
   id: string;
@@ -38,11 +39,11 @@ const statusLabel: Record<string, string> = {
   PENDING: 'Onay Bekliyor', CONFIRMED: 'Onaylandı', CANCELLED: 'İptal', COMPLETED: 'Tamamlandı', NO_SHOW: 'Gelmedi',
 };
 const statusColor: Record<string, string> = {
-  PENDING: 'bg-yellow-100 text-yellow-700',
-  CONFIRMED: 'bg-green-100 text-green-700',
-  CANCELLED: 'bg-red-100 text-red-700',
-  COMPLETED: 'bg-blue-100 text-blue-700',
-  NO_SHOW: 'bg-gray-100 text-gray-600',
+  PENDING: 'bg-amber-50 text-amber-700 border border-amber-200',
+  CONFIRMED: 'bg-emerald-50 text-emerald-700 border border-emerald-200',
+  CANCELLED: 'bg-red-50 text-red-700 border border-red-200',
+  COMPLETED: 'bg-primary-50 text-primary-700 border border-primary-200',
+  NO_SHOW: 'bg-slate-100 text-slate-600 border border-slate-200',
 };
 
 function useCountdown(targetDate: string) {
@@ -275,29 +276,58 @@ export default function PsychologistDashboard() {
     ?.filter(a => ['CONFIRMED', 'PENDING'].includes(a.status) && new Date(a.startTime) > new Date(now.getTime() - 60 * 60 * 1000))
     ?.sort((a, b) => new Date(a.startTime).getTime() - new Date(b.startTime).getTime())[0];
 
-  if (isLoading) return <div className="p-8 text-center text-gray-500">Yükleniyor...</div>;
+  if (isLoading) {
+    return (
+      <div className="p-8 flex items-center justify-center min-h-[400px]">
+        <div className="flex flex-col items-center gap-3">
+          <div className="w-8 h-8 border-2 border-slate-200 border-t-primary-500 rounded-full animate-spin" />
+          <p className="text-slate-400 text-sm">Yükleniyor...</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
-    <div className="p-6 space-y-6">
-      <h1 className="text-2xl font-bold text-gray-800">Psikolog Paneli</h1>
+    <div className="p-6 space-y-6 animate-slide-up">
+      <div>
+        <h1 className="text-2xl font-bold text-slate-900">Psikolog Paneli</h1>
+        <p className="text-slate-500 text-sm mt-0.5">Randevularınızı ve danışanlarınızı yönetin</p>
+      </div>
 
       {/* Stats */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 stagger">
         <div className="card">
-          <p className="text-sm text-gray-500">Bugünkü Seans</p>
-          <p className="text-3xl font-bold text-primary-600">{todayAppts.length}</p>
+          <div className="flex items-start justify-between mb-3">
+            <p className="text-sm font-medium text-slate-500">Bugünkü Seans</p>
+            <div className="w-9 h-9 rounded-xl bg-primary-50 flex items-center justify-center">
+              <Clock className="w-4 h-4 text-primary-500" />
+            </div>
+          </div>
+          <p className="text-3xl font-bold text-slate-900">{todayAppts.length}</p>
         </div>
         <div className="card">
-          <p className="text-sm text-gray-500">Onay Bekleyen</p>
-          <p className="text-3xl font-bold text-yellow-500">{pending.length}</p>
+          <div className="flex items-start justify-between mb-3">
+            <p className="text-sm font-medium text-slate-500">Onay Bekleyen</p>
+            <div className="w-9 h-9 rounded-xl bg-amber-50 flex items-center justify-center">
+              <Calendar className="w-4 h-4 text-amber-500" />
+            </div>
+          </div>
+          <p className="text-3xl font-bold text-slate-900">{pending.length}</p>
         </div>
         <div className="card">
-          <p className="text-sm text-gray-500">Toplam Randevu</p>
-          <p className="text-3xl font-bold text-gray-700">{appointments?.length ?? 0}</p>
+          <div className="flex items-start justify-between mb-3">
+            <p className="text-sm font-medium text-slate-500">Toplam Randevu</p>
+            <div className="w-9 h-9 rounded-xl bg-slate-50 flex items-center justify-center">
+              <Users className="w-4 h-4 text-slate-500" />
+            </div>
+          </div>
+          <p className="text-3xl font-bold text-slate-900">{appointments?.length ?? 0}</p>
         </div>
-        <div className="card flex items-center justify-center">
-          <Link href="/psychologist/appointments" className="btn-primary text-sm px-4 py-2.5 text-center w-full">
-            📅 Tüm Randevular
+        <div className="card flex flex-col justify-between">
+          <p className="text-sm font-medium text-slate-500 mb-3">Hızlı Erişim</p>
+          <Link href="/psychologist/appointments" className="btn-primary text-sm py-2.5 w-full">
+            <Calendar className="w-4 h-4" />
+            Randevular
           </Link>
         </div>
       </div>
@@ -306,39 +336,44 @@ export default function PsychologistDashboard() {
       {nextSession ? (
         <NextSessionPanel appointment={nextSession} />
       ) : (
-        <div className="card text-center py-10">
-          <p className="text-4xl mb-3">✅</p>
-          <p className="text-gray-500 font-medium">Yaklaşan onaylanmış randevu yok</p>
-          <p className="text-gray-400 text-sm mt-1">Yeni randevu talepleri geldiğinde burada görünecek</p>
+        <div className="card text-center py-12">
+          <div className="w-14 h-14 rounded-2xl bg-emerald-50 flex items-center justify-center mx-auto mb-4">
+            <CheckCircle className="w-7 h-7 text-emerald-500" />
+          </div>
+          <p className="text-slate-700 font-semibold">Yaklaşan onaylanmış randevu yok</p>
+          <p className="text-slate-400 text-sm mt-1">Yeni randevu talepleri geldiğinde burada görünecek</p>
         </div>
       )}
 
       {/* Bugünkü randevular (sıradaki dışındakiler) */}
       {todayAppts.filter(a => a.id !== nextSession?.id).length > 0 && (
         <div className="card">
-          <h2 className="font-semibold text-gray-800 mb-4">Bugünkü Diğer Randevular</h2>
-          <div className="space-y-3">
+          <h2 className="font-semibold text-slate-900 mb-4">Bugünkü Diğer Randevular</h2>
+          <div className="space-y-2.5 stagger">
             {todayAppts.filter(a => a.id !== nextSession?.id).map(a => (
-              <div key={a.id} className="flex items-center justify-between p-3 bg-gray-50 rounded-xl">
+              <div key={a.id} className="flex items-center justify-between p-3.5 bg-slate-50 hover:bg-slate-100 rounded-xl transition-colors duration-150">
                 <div>
-                  <p className="font-medium text-gray-800">
+                  <p className="font-semibold text-slate-800 text-sm">
                     {a.client?.user.firstName} {a.client?.user.lastName}
                   </p>
-                  <p className="text-sm text-gray-500">
-                    {format(new Date(a.startTime), 'HH:mm', { locale: tr })} –{' '}
-                    {format(new Date(a.endTime), 'HH:mm', { locale: tr })}
-                    {' · '}{a.sessionType === 'ONLINE' ? '🎥 Online' : '🏥 Yüz yüze'}
+                  <p className="text-xs text-slate-500 mt-0.5 flex items-center gap-1.5">
+                    {format(new Date(a.startTime), 'HH:mm', { locale: tr })} – {format(new Date(a.endTime), 'HH:mm', { locale: tr })}
+                    <span className="text-slate-300">·</span>
+                    {a.sessionType === 'ONLINE'
+                      ? <><Video className="w-3 h-3" /> Online</>
+                      : <><MapPin className="w-3 h-3" /> Yüz yüze</>
+                    }
                   </p>
                 </div>
                 <div className="flex items-center gap-2">
-                  <span className={`text-xs px-2 py-1 rounded-full font-medium ${statusColor[a.status]}`}>
+                  <span className={`text-xs px-2.5 py-1 rounded-full font-semibold ${statusColor[a.status]}`}>
                     {statusLabel[a.status]}
                   </span>
                   <Link
                     href={`/psychologist/sessions/${a.id}`}
-                    className="text-xs bg-primary-600 text-white px-3 py-1.5 rounded-lg hover:bg-primary-700"
+                    className="text-xs bg-primary-600 text-white px-3 py-1.5 rounded-lg hover:bg-primary-700 transition-colors flex items-center gap-1"
                   >
-                    Not
+                    <FileText className="w-3 h-3" /> Not
                   </Link>
                 </div>
               </div>
@@ -350,24 +385,31 @@ export default function PsychologistDashboard() {
       {/* Bekleyen onaylar */}
       {pending.length > 0 && (
         <div className="card">
-          <h2 className="font-semibold text-gray-800 mb-4">Onay Bekleyen Randevular ({pending.length})</h2>
-          <div className="space-y-2">
+          <div className="flex items-center justify-between mb-4">
+            <h2 className="font-semibold text-slate-900">Onay Bekleyen Randevular</h2>
+            <span className="text-xs font-semibold bg-amber-100 text-amber-700 px-2 py-0.5 rounded-full">{pending.length}</span>
+          </div>
+          <div className="space-y-2.5 stagger">
             {pending.map(a => (
-              <div key={a.id} className="flex items-center justify-between p-3 bg-yellow-50 rounded-xl border border-yellow-100">
+              <div key={a.id} className="flex items-center justify-between p-3.5 bg-amber-50 rounded-xl border border-amber-100">
                 <div>
-                  <p className="font-medium text-gray-800">
+                  <p className="font-semibold text-slate-800 text-sm">
                     {a.client?.user.firstName} {a.client?.user.lastName}
                   </p>
-                  <p className="text-sm text-gray-500">
+                  <p className="text-xs text-slate-500 mt-0.5 flex items-center gap-1.5">
                     {format(new Date(a.startTime), 'dd MMM yyyy HH:mm', { locale: tr })}
-                    {' · '}{a.sessionType === 'ONLINE' ? '🎥 Online' : '🏥 Yüz yüze'}
+                    <span className="text-slate-300">·</span>
+                    {a.sessionType === 'ONLINE'
+                      ? <><Video className="w-3 h-3" /> Online</>
+                      : <><MapPin className="w-3 h-3" /> Yüz yüze</>
+                    }
                   </p>
                 </div>
                 <Link
                   href="/psychologist/appointments"
-                  className="text-xs bg-green-600 text-white px-3 py-1.5 rounded-lg hover:bg-green-700"
+                  className="text-xs bg-emerald-600 text-white px-3.5 py-1.5 rounded-lg hover:bg-emerald-700 transition-colors font-semibold flex items-center gap-1"
                 >
-                  Onayla →
+                  <ChevronRight className="w-3 h-3" /> Onayla
                 </Link>
               </div>
             ))}
@@ -377,13 +419,23 @@ export default function PsychologistDashboard() {
 
       {/* Quick links */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <Link href="/psychologist/tests" className="card hover:shadow-md transition-shadow cursor-pointer">
-          <h3 className="font-semibold text-gray-800">🧪 Psikolojik Testler</h3>
-          <p className="text-sm text-gray-500 mt-1">Danışanlara test ata ve sonuçları gör</p>
+        <Link href="/psychologist/tests" className="card-hover">
+          <div className="flex items-center gap-3 mb-2">
+            <div className="w-9 h-9 rounded-xl bg-violet-50 flex items-center justify-center">
+              <FlaskConical className="w-4.5 h-4.5 text-violet-500" />
+            </div>
+            <h3 className="font-semibold text-slate-800">Psikolojik Testler</h3>
+          </div>
+          <p className="text-sm text-slate-500">Danışanlara test ata ve sonuçları gör</p>
         </Link>
-        <Link href="/psychologist/clients" className="card hover:shadow-md transition-shadow cursor-pointer">
-          <h3 className="font-semibold text-gray-800">👥 Danışanlarım</h3>
-          <p className="text-sm text-gray-500 mt-1">Danışan geçmişi ve ilerleme grafikleri</p>
+        <Link href="/psychologist/clients" className="card-hover">
+          <div className="flex items-center gap-3 mb-2">
+            <div className="w-9 h-9 rounded-xl bg-primary-50 flex items-center justify-center">
+              <Users className="w-4.5 h-4.5 text-primary-500" />
+            </div>
+            <h3 className="font-semibold text-slate-800">Danışanlarım</h3>
+          </div>
+          <p className="text-sm text-slate-500">Danışan geçmişi ve ilerleme grafikleri</p>
         </Link>
       </div>
     </div>

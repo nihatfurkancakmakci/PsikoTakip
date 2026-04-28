@@ -7,6 +7,7 @@ import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
 import Link from 'next/link';
 import { useAuth } from '@/hooks/useAuth';
+import { Brain, User, Mail, Lock, Phone, Users, ArrowRight, Check } from 'lucide-react';
 
 const schema = z.object({
   email: z.string().email('Geçerli bir e-posta girin'),
@@ -26,10 +27,22 @@ const schema = z.object({
 
 type FormData = z.infer<typeof schema>;
 
+const passwordRules = [
+  'En az 8 karakter',
+  '1 büyük harf (A-Z)',
+  '1 küçük harf (a-z)',
+  '1 rakam (0-9)',
+  '1 özel karakter (.?!@#...)',
+];
+
 export default function RegisterPage() {
   const router = useRouter();
   const { register: registerUser } = useAuth();
-  const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm<FormData>({
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+  } = useForm<FormData>({
     resolver: zodResolver(schema),
     defaultValues: { role: 'CLIENT' },
   });
@@ -40,98 +53,138 @@ export default function RegisterPage() {
       toast.success('Kayıt başarılı! Lütfen e-postanızı doğrulayın.');
       router.push('/login');
     } catch (err: unknown) {
-      const msg = (err as { response?: { data?: { message?: string } } })?.response?.data?.message ?? 'Kayıt başarısız';
+      const msg =
+        (err as { response?: { data?: { message?: string } } })?.response?.data?.message ??
+        'Kayıt başarısız';
       toast.error(msg);
     }
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-primary-50 to-calm-50 flex items-center justify-center px-4 py-8">
-      <div className="card max-w-md w-full space-y-6">
-        <div className="text-center">
-          <h1 className="text-2xl font-bold text-primary-800">PsikoTakip</h1>
-          <p className="text-gray-500 mt-1">Yeni hesap oluşturun</p>
+    <div className="min-h-screen bg-surface-50 flex items-center justify-center px-4 py-10">
+      <div className="w-full max-w-md animate-slide-up">
+
+        {/* Header */}
+        <div className="text-center mb-8">
+          <div className="inline-flex items-center justify-center w-12 h-12 rounded-2xl bg-gradient-to-br from-primary-500 to-primary-600 shadow-lg shadow-primary-500/30 mb-4">
+            <Brain className="w-6 h-6 text-white" />
+          </div>
+          <h1 className="text-3xl font-bold text-slate-900 mb-1">Hesap oluşturun</h1>
+          <p className="text-slate-500 text-sm">PsikoTakip'e katılın</p>
         </div>
 
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-          <div className="grid grid-cols-2 gap-3">
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Ad</label>
-              <input className="input-field" placeholder="Ad" {...register('firstName')} />
-              {errors.firstName && <p className="text-red-500 text-xs mt-1">{errors.firstName.message}</p>}
+        <div className="card shadow-md border-slate-100">
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+
+            {/* Name row */}
+            <div className="grid grid-cols-2 gap-3">
+              <div>
+                <label className="label">Ad</label>
+                <div className="relative">
+                  <User className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 pointer-events-none" />
+                  <input className="input-field pl-10" placeholder="Adınız" {...register('firstName')} />
+                </div>
+                {errors.firstName && <p className="text-red-500 text-xs mt-1">{errors.firstName.message}</p>}
+              </div>
+              <div>
+                <label className="label">Soyad</label>
+                <input className="input-field" placeholder="Soyadınız" {...register('lastName')} />
+                {errors.lastName && <p className="text-red-500 text-xs mt-1">{errors.lastName.message}</p>}
+              </div>
             </div>
+
+            {/* Email */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Soyad</label>
-              <input className="input-field" placeholder="Soyad" {...register('lastName')} />
-              {errors.lastName && <p className="text-red-500 text-xs mt-1">{errors.lastName.message}</p>}
+              <label className="label">E-posta</label>
+              <div className="relative">
+                <Mail className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 pointer-events-none" />
+                <input type="email" className="input-field pl-10" placeholder="ornek@email.com" {...register('email')} />
+              </div>
+              {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email.message}</p>}
             </div>
-          </div>
 
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">E-posta</label>
-            <input type="email" className="input-field" placeholder="ornek@email.com" {...register('email')} />
-            {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email.message}</p>}
-          </div>
+            {/* Password */}
+            <div>
+              <label className="label">Şifre</label>
+              <div className="relative">
+                <Lock className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 pointer-events-none" />
+                <input type="password" className="input-field pl-10" placeholder="Güçlü bir şifre girin" {...register('password')} />
+              </div>
+              {errors.password ? (
+                <p className="text-red-500 text-xs mt-1.5">{errors.password.message}</p>
+              ) : (
+                <div className="mt-2 grid grid-cols-2 gap-x-4 gap-y-1">
+                  {passwordRules.map((rule) => (
+                    <span key={rule} className="text-xs text-slate-400 flex items-center gap-1">
+                      <span className="w-1 h-1 rounded-full bg-slate-300 flex-shrink-0" />
+                      {rule}
+                    </span>
+                  ))}
+                </div>
+              )}
+            </div>
 
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Şifre</label>
-            <input type="password" className="input-field" placeholder="Şifrenizi girin" {...register('password')} />
-            {errors.password ? (
-              <p className="text-red-500 text-xs mt-1">{errors.password.message}</p>
-            ) : (
-              <ul className="mt-1.5 space-y-0.5">
-                {[
-                  'En az 8 karakter',
-                  '1 büyük harf (A-Z)',
-                  '1 küçük harf (a-z)',
-                  '1 rakam (0-9)',
-                  '1 özel karakter (.?!@#...)',
-                ].map(rule => (
-                  <li key={rule} className="text-xs text-gray-400 flex items-center gap-1">
-                    <span className="text-gray-300">•</span> {rule}
-                  </li>
-                ))}
-              </ul>
-            )}
-          </div>
+            {/* Phone */}
+            <div>
+              <label className="label">
+                Telefon <span className="text-slate-400 font-normal">(opsiyonel)</span>
+              </label>
+              <div className="relative">
+                <Phone className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 pointer-events-none" />
+                <input className="input-field pl-10" placeholder="+905551234567" {...register('phone')} />
+              </div>
+            </div>
 
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Telefon <span className="text-gray-400">(opsiyonel)</span></label>
-            <input className="input-field" placeholder="+905551234567" {...register('phone')} />
-          </div>
+            {/* Role */}
+            <div>
+              <label className="label">Hesap Türü</label>
+              <div className="relative">
+                <Users className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 pointer-events-none" />
+                <select className="input-field pl-10 appearance-none bg-white" {...register('role')}>
+                  <option value="CLIENT">Danışan</option>
+                  <option value="PSYCHOLOGIST">Psikolog</option>
+                </select>
+              </div>
+            </div>
 
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Hesap Türü</label>
-            <select className="input-field" {...register('role')}>
-              <option value="CLIENT">Danışan</option>
-              <option value="PSYCHOLOGIST">Psikolog</option>
-            </select>
-          </div>
+            {/* KVKK */}
+            <div className="flex items-start gap-3 p-3.5 bg-primary-50 rounded-xl border border-primary-100">
+              <div className="relative flex-shrink-0 mt-0.5">
+                <input
+                  type="checkbox"
+                  id="kvkk"
+                  className="w-4 h-4 rounded border-slate-300 text-primary-600 accent-primary-600 cursor-pointer"
+                  {...register('kvkk')}
+                />
+              </div>
+              <label htmlFor="kvkk" className="text-xs text-slate-600 cursor-pointer leading-relaxed">
+                <Link href="/kvkk" target="_blank" className="text-primary-600 hover:text-primary-700 font-semibold transition-colors">
+                  KVKK Aydınlatma Metni
+                </Link>
+                {"'ni okudum ve kişisel verilerimin işlenmesini kabul ediyorum."}
+              </label>
+            </div>
+            {errors.kvkk && <p className="text-red-500 text-xs -mt-2">{errors.kvkk.message}</p>}
 
-          <div className="flex items-start gap-3 p-3 bg-blue-50 rounded-lg">
-            <input
-              type="checkbox"
-              id="kvkk"
-              className="mt-0.5 h-4 w-4 rounded border-gray-300 text-primary-600 accent-primary-600 flex-shrink-0 cursor-pointer"
-              {...register('kvkk')}
-            />
-            <label htmlFor="kvkk" className="text-xs text-gray-600 cursor-pointer leading-relaxed">
-              <Link href="/kvkk" target="_blank" className="text-primary-600 hover:underline font-medium">
-                KVKK Aydınlatma Metni
-              </Link>
-              {"'ni okudum ve kişisel verilerimin işlenmesini kabul ediyorum."}
-            </label>
-          </div>
-          {errors.kvkk && <p className="text-red-500 text-xs -mt-2">{errors.kvkk.message}</p>}
+            <button type="submit" className="btn-primary w-full py-3 text-[15px]" disabled={isSubmitting}>
+              {isSubmitting ? (
+                <>
+                  <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                  Kayıt yapılıyor...
+                </>
+              ) : (
+                <>
+                  Kayıt Ol
+                  <ArrowRight className="w-4 h-4" />
+                </>
+              )}
+            </button>
+          </form>
+        </div>
 
-          <button type="submit" className="btn-primary w-full py-3" disabled={isSubmitting}>
-            {isSubmitting ? 'Kayıt yapılıyor...' : 'Kayıt Ol'}
-          </button>
-        </form>
-
-        <p className="text-center text-sm text-gray-600">
+        <p className="text-center text-sm text-slate-500 mt-5">
           Zaten hesabınız var mı?{' '}
-          <Link href="/login" className="text-primary-600 hover:underline font-medium">
+          <Link href="/login" className="text-primary-600 hover:text-primary-700 font-semibold transition-colors">
             Giriş yapın
           </Link>
         </p>
