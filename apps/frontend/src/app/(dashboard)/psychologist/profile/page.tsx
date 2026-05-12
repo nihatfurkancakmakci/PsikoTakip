@@ -1,9 +1,10 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { useQuery, useMutation } from '@tanstack/react-query';
-import { api } from '@/lib/api';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { api, API_ORIGIN } from '@/lib/api';
 import { toast } from 'sonner';
+import { Camera, Upload } from 'lucide-react';
 
 interface PsychProfile {
   specialization: string;
@@ -29,6 +30,7 @@ const DAYS = [
 ];
 
 export default function PsychProfilePage() {
+  const qc = useQueryClient();
   const [specialization, setSpecialization] = useState('');
   const [biography, setBiography] = useState('');
   const [photoUrl, setPhotoUrl] = useState('');
@@ -38,6 +40,7 @@ export default function PsychProfilePage() {
   const [sessionDuration, setSessionDuration] = useState(50);
   const [isAccepting, setIsAccepting] = useState(true);
   const [workingHours, setWorkingHours] = useState<Record<string, { start: string; end: string } | null>>({});
+  const photoSrc = photoUrl?.startsWith('/uploads') ? `${API_ORIGIN}${photoUrl}` : photoUrl;
 
   const { data: profile, isLoading } = useQuery<PsychProfile>({
     queryKey: ['psych-profile'],
@@ -79,6 +82,36 @@ export default function PsychProfilePage() {
     onError: (e: any) => toast.error(e.response?.data?.message ?? 'Hata oluştu'),
   });
 
+  const photoMutation = useMutation({
+    mutationFn: async (file: File) => {
+      const formData = new FormData();
+      formData.append('photo', file);
+      const { data } = await api.post('/users/psychologists/profile/photo', formData, {
+        headers: { 'Content-Type': 'multipart/form-data' },
+      });
+      return data as { photoUrl: string };
+    },
+    onSuccess: (data) => {
+      setPhotoUrl(data.photoUrl);
+      qc.invalidateQueries({ queryKey: ['psych-profile'] });
+      toast.success('Profil fotoğrafı yüklendi');
+    },
+    onError: (e: any) => toast.error(e.response?.data?.message ?? 'Fotoğraf yüklenemedi'),
+  });
+
+  const uploadPhoto = (file?: File) => {
+    if (!file) return;
+    if (!['image/jpeg', 'image/png', 'image/webp', 'image/gif'].includes(file.type)) {
+      toast.error('Sadece JPG, PNG, WEBP veya GIF yükleyebilirsiniz');
+      return;
+    }
+    if (file.size > 5 * 1024 * 1024) {
+      toast.error('Fotoğraf 5 MB sınırını aşmamalı');
+      return;
+    }
+    photoMutation.mutate(file);
+  };
+
   const toggleDay = (key: string) => {
     setWorkingHours(prev => ({
       ...prev,
@@ -108,12 +141,34 @@ export default function PsychProfilePage() {
       <div className="card space-y-4">
         {/* Fotoğraf */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Profil Fotoğrafı (URL)</label>
-          <div className="flex items-center gap-3">
-            {photoUrl && (
-              <img src={photoUrl} alt="Profil" className="w-14 h-14 rounded-full object-cover border border-gray-200 flex-shrink-0" onError={e => { (e.target as HTMLImageElement).style.display = 'none'; }} />
-            )}
-            <input type="url" className="input-field" value={photoUrl} onChange={e => setPhotoUrl(e.target.value)} placeholder="https://..." />
+          <label className="block text-sm font-medium text-gray-700 mb-2">Profil Fotoğrafı</label>
+          <div className="flex items-center gap-4">
+            <div className="w-20 h-20 rounded-full bg-slate-100 border border-gray-200 overflow-hidden flex items-center justify-center flex-shrink-0">
+              {photoSrc ? (
+                <img
+                  src={photoSrc}
+                  alt="Profil"
+                  className="w-full h-full object-cover"
+                  onError={e => { (e.target as HTMLImageElement).style.display = 'none'; }}
+                />
+              ) : (
+                <Camera className="w-7 h-7 text-slate-400" />
+              )}
+            </div>
+            <div className="flex-1">
+              <label className="btn-secondary cursor-pointer">
+                <Upload className="w-4 h-4" />
+                {photoMutation.isPending ? 'Yükleniyor...' : 'Fotoğraf Yükle'}
+                <input
+                  type="file"
+                  accept="image/jpeg,image/png,image/webp,image/gif"
+                  className="hidden"
+                  disabled={photoMutation.isPending}
+                  onChange={(e) => uploadPhoto(e.target.files?.[0])}
+                />
+              </label>
+              <p className="text-xs text-gray-400 mt-2">JPG, PNG, WEBP veya GIF. En fazla 5 MB.</p>
+            </div>
           </div>
         </div>
 

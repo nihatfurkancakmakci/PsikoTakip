@@ -7,9 +7,10 @@ import { z } from 'zod';
 import Link from 'next/link';
 import { toast } from 'sonner';
 import { api } from '@/lib/api';
+import { emailSchema } from '@/lib/auth-validation';
 
 const schema = z.object({
-  email: z.string().email('Geçerli bir e-posta girin'),
+  email: emailSchema,
 });
 
 type FormData = z.infer<typeof schema>;
@@ -67,7 +68,12 @@ export default function ForgotPasswordPage() {
             </div>
 
             <button type="submit" className="btn-primary w-full py-3" disabled={isSubmitting}>
-              {isSubmitting ? 'Gönderiliyor...' : 'Sıfırlama Bağlantısı Gönder'}
+              {isSubmitting ? (
+                <>
+                  <span className="spinner !w-4 !h-4 !border-white/30 !border-t-white" />
+                  Gönderiliyor...
+                </>
+              ) : 'Sıfırlama Bağlantısı Gönder'}
             </button>
           </form>
         )}

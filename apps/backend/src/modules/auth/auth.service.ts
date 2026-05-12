@@ -20,6 +20,7 @@ import { AuditService } from '../audit/audit.service';
 export class AuthService {
   private readonly logger = new Logger(AuthService.name);
   private transporter: nodemailer.Transporter;
+  private transporterReady: Promise<void>;
 
   constructor(
     private readonly prisma: PrismaService,
@@ -27,7 +28,7 @@ export class AuthService {
     private readonly config: ConfigService,
     private readonly auditService: AuditService,
   ) {
-    this.initTransporter();
+    this.transporterReady = this.initTransporter();
   }
 
   private async initTransporter() {
@@ -67,21 +68,13 @@ export class AuthService {
         firstName: dto.firstName,
         lastName: dto.lastName,
         phone: dto.phone,
-        role: dto.role ?? Role.CLIENT,
+        role: Role.CLIENT,
         verifyToken,
       },
     });
 
     if (user.role === Role.CLIENT) {
       await this.prisma.client.create({ data: { userId: user.id } });
-    } else if (user.role === Role.PSYCHOLOGIST) {
-      await this.prisma.psychologist.create({
-        data: {
-          userId: user.id,
-          specialization: '',
-          workingHours: {},
-        },
-      });
     }
 
     await this.auditService.log({
@@ -197,6 +190,7 @@ export class AuthService {
     const from = this.config.get('SMTP_FROM', 'PsikoTakip <noreply@psikotakip.com>');
 
     try {
+      await this.transporterReady;
       const info = await this.transporter.sendMail({
         from,
         to: user.email,
@@ -238,6 +232,8 @@ export class AuthService {
       data: { passwordHash, resetToken: null, resetTokenExp: null },
     });
 
+    await this.sendPasswordChangedMail(user.email, user.firstName);
+
     await this.auditService.log({
       userId: user.id,
       action: 'UPDATE',
@@ -247,6 +243,30 @@ export class AuthService {
     });
 
     return { message: 'Şifre başarıyla sıfırlandı' };
+  }
+
+  private async sendPasswordChangedMail(email: string, firstName: string) {
+    const from = this.config.get('SMTP_FROM', 'PsikoTakip <noreply@psikotakip.com>');
+
+    try {
+      await this.transporterReady;
+      const info = await this.transporter.sendMail({
+        from,
+        to: email,
+        subject: 'Şifreniz güncellendi - PsikoTakip',
+        html: `
+          <div style="font-family:sans-serif;max-width:480px;margin:0 auto;">
+            <h2>Merhaba ${firstName},</h2>
+            <p>PsikoTakip hesabınızın şifresi başarıyla güncellendi.</p>
+            <p style="margin-top:16px;font-size:13px;color:#666;">Bu işlemi siz yapmadıysanız lütfen hemen destek ekibiyle iletişime geçin.</p>
+          </div>
+        `,
+      });
+      const previewUrl = nodemailer.getTestMessageUrl(info);
+      if (previewUrl) this.logger.log(`Şifre güncelleme e-posta önizleme: ${previewUrl}`);
+    } catch (err) {
+      this.logger.warn('Şifre güncelleme e-postası gönderilemedi', err);
+    }
   }
 
   private async generateTokens(userId: string, email: string, role: Role) {

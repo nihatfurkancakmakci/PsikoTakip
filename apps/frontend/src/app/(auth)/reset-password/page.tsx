@@ -8,9 +8,10 @@ import Link from 'next/link';
 import { toast } from 'sonner';
 import { api } from '@/lib/api';
 import { Suspense } from 'react';
+import { passwordChecks, passwordSchema, passwordScore } from '@/lib/auth-validation';
 
 const schema = z.object({
-  password: z.string().min(8, 'En az 8 karakter'),
+  password: passwordSchema,
   confirm: z.string(),
 }).refine((d) => d.password === d.confirm, {
   message: 'Şifreler eşleşmiyor',
@@ -19,14 +20,37 @@ const schema = z.object({
 
 type FormData = z.infer<typeof schema>;
 
+function PasswordMeter({ password }: { password: string }) {
+  const score = passwordScore(password);
+
+  return (
+    <div className="mt-2 space-y-2">
+      <div className="h-2 rounded-full bg-slate-100 overflow-hidden">
+        <div
+          className={`h-full transition-all ${score < 4 ? 'bg-red-500' : score < 7 ? 'bg-amber-500' : 'bg-emerald-500'}`}
+          style={{ width: `${Math.max(1, score) * (100 / passwordChecks.length)}%` }}
+        />
+      </div>
+      <div className="grid grid-cols-2 gap-x-4 gap-y-1">
+        {passwordChecks.map((rule) => (
+          <span key={rule.label} className={`text-xs ${rule.test(password) ? 'text-emerald-600' : 'text-slate-400'}`}>
+            {rule.label}
+          </span>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 function ResetPasswordForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const token = searchParams.get('token') ?? '';
 
-  const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm<FormData>({
+  const { register, handleSubmit, watch, formState: { errors, isSubmitting } } = useForm<FormData>({
     resolver: zodResolver(schema),
   });
+  const watchedPassword = watch('password') ?? '';
 
   const onSubmit = async (data: FormData) => {
     if (!token) {
@@ -58,9 +82,10 @@ function ResetPasswordForm() {
         <input
           type="password"
           className="input-field"
-          placeholder="En az 8 karakter"
+          placeholder="Güçlü bir şifre girin"
           {...register('password')}
         />
+        <PasswordMeter password={watchedPassword} />
         {errors.password && <p className="text-red-500 text-xs mt-1">{errors.password.message}</p>}
       </div>
 

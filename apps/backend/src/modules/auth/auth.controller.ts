@@ -1,7 +1,8 @@
 import { Controller, Post, Body, UseGuards, Req, HttpCode, HttpStatus, Get, Query } from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiBearerAuth } from '@nestjs/swagger';
 import { ThrottlerGuard } from '@nestjs/throttler';
-import { IsEmail, MinLength } from 'class-validator';
+import { Transform } from 'class-transformer';
+import { IsEmail, Matches, MinLength } from 'class-validator';
 import { Request } from 'express';
 import { AuthService } from './auth.service';
 import { RegisterDto } from './dto/register.dto';
@@ -10,15 +11,23 @@ import { RefreshTokenDto } from './dto/refresh-token.dto';
 import { Public } from '../../common/decorators/public.decorator';
 import { CurrentUser, JwtPayload } from '../../common/decorators/current-user.decorator';
 import { JwtAuthGuard } from '../../common/guards/jwt-auth.guard';
+import { ALLOWED_EMAIL_REGEX, STRONG_PASSWORD_REGEX } from '../../common/validation/auth-validation';
 
 class ForgotPasswordDto {
+  @Transform(({ value }) => (typeof value === 'string' ? value.trim().toLowerCase() : value))
   @IsEmail({}, { message: 'Geçerli bir e-posta girin' })
+  @Matches(ALLOWED_EMAIL_REGEX, { message: 'Desteklenen bir e-posta domaini girin' })
   email: string;
 }
 
 class ResetPasswordDto {
   token: string;
+
   @MinLength(8, { message: 'Şifre en az 8 karakter olmalı' })
+  @Matches(STRONG_PASSWORD_REGEX, {
+    message:
+      'Şifre en az 1 büyük harf, 1 küçük harf, 1 rakam, 1 özel karakter içermeli; tekrar eden veya sıralı karakterler içermemelidir',
+  })
   password: string;
 }
 

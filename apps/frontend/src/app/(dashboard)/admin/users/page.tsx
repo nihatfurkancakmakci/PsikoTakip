@@ -5,6 +5,7 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { api } from '@/lib/api';
 import { User, UserRole } from '@/types';
 import { toast } from 'sonner';
+import { formatTurkishMobilePhone, normalizeTurkishMobilePhone } from '@/lib/auth-validation';
 
 interface UserWithMeta extends User {
   createdAt: string;
@@ -30,6 +31,14 @@ export default function AdminUsersPage() {
   const qc = useQueryClient();
   const [search, setSearch] = useState('');
   const [roleFilter, setRoleFilter] = useState<UserRole | ''>('');
+  const [psychForm, setPsychForm] = useState({
+    firstName: '',
+    lastName: '',
+    email: '',
+    phone: '',
+    password: '',
+    specialization: '',
+  });
 
   const { data: users, isLoading } = useQuery<UserWithMeta[]>({
     queryKey: ['admin-users', search, roleFilter],
@@ -82,6 +91,19 @@ export default function AdminUsersPage() {
     onSettled: () => qc.invalidateQueries({ queryKey: ['admin-users'] }),
   });
 
+  const createPsychologistMutation = useMutation({
+    mutationFn: () => api.post('/users/psychologists', {
+      ...psychForm,
+      phone: `+90${normalizeTurkishMobilePhone(psychForm.phone)}`,
+    }),
+    onSuccess: () => {
+      toast.success('Psikolog oluşturuldu');
+      setPsychForm({ firstName: '', lastName: '', email: '', phone: '', password: '', specialization: '' });
+      qc.invalidateQueries({ queryKey: ['admin-users'] });
+    },
+    onError: (e: any) => toast.error(e.response?.data?.message ?? 'Psikolog oluşturulamadı'),
+  });
+
   return (
     <div className="p-6 space-y-6 max-w-5xl mx-auto">
       <div>
@@ -103,6 +125,40 @@ export default function AdminUsersPage() {
           <option value="PSYCHOLOGIST">Psikolog</option>
           <option value="ADMIN">Admin</option>
         </select>
+      </div>
+
+      <div className="card space-y-4">
+        <div>
+          <h2 className="font-semibold text-gray-800">Psikolog Ekle</h2>
+          <p className="text-xs text-gray-500 mt-1">Psikolog hesapları yalnızca admin tarafından oluşturulur.</p>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+          <input className="input-field" placeholder="Ad" value={psychForm.firstName} onChange={(e) => setPsychForm((f) => ({ ...f, firstName: e.target.value }))} />
+          <input className="input-field" placeholder="Soyad" value={psychForm.lastName} onChange={(e) => setPsychForm((f) => ({ ...f, lastName: e.target.value }))} />
+          <input className="input-field" type="email" placeholder="E-posta" value={psychForm.email} onChange={(e) => setPsychForm((f) => ({ ...f, email: e.target.value }))} />
+          <div className="flex gap-2">
+            <select className="input-field w-24" defaultValue="+90" aria-label="Ülke kodu">
+              <option value="+90">+90</option>
+            </select>
+            <input
+              className="input-field"
+              inputMode="numeric"
+              placeholder="545 987 12 45"
+              value={psychForm.phone}
+              onChange={(e) => setPsychForm((f) => ({ ...f, phone: formatTurkishMobilePhone(e.target.value) }))}
+            />
+          </div>
+          <input className="input-field" type="password" placeholder="Geçici şifre" value={psychForm.password} onChange={(e) => setPsychForm((f) => ({ ...f, password: e.target.value }))} />
+          <input className="input-field" placeholder="Uzmanlık" value={psychForm.specialization} onChange={(e) => setPsychForm((f) => ({ ...f, specialization: e.target.value }))} />
+        </div>
+        <button
+          type="button"
+          className="btn-primary"
+          disabled={createPsychologistMutation.isPending}
+          onClick={() => createPsychologistMutation.mutate()}
+        >
+          {createPsychologistMutation.isPending ? 'Oluşturuluyor...' : 'Psikolog Oluştur'}
+        </button>
       </div>
 
       <div className="card overflow-hidden !p-0">

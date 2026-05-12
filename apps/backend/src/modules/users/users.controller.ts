@@ -1,16 +1,31 @@
 import {
-  Controller, Get, Put, Patch, Delete, Body, Param, Query, UseGuards
+  BadRequestException, Body, Controller, Delete, Get, Param, Patch, Post, Put, Query, UploadedFile, UseGuards, UseInterceptors
 } from '@nestjs/common';
 import { ApiTags, ApiBearerAuth, ApiOperation, ApiQuery } from '@nestjs/swagger';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { diskStorage } from 'multer';
+import { extname, join } from 'path';
+import { existsSync, mkdirSync } from 'fs';
+import { randomUUID } from 'crypto';
 import { Role, PsychologistApprovalStatus } from '@prisma/client';
 import { UsersService } from './users.service';
 import { UpdatePsychologistDto } from './dto/update-psychologist.dto';
 import { UpdateClientDto } from './dto/update-client.dto';
+import { CreatePsychologistDto } from './dto/create-psychologist.dto';
 import { Roles } from '../../common/decorators/roles.decorator';
 import { Public } from '../../common/decorators/public.decorator';
 import { CurrentUser, JwtPayload } from '../../common/decorators/current-user.decorator';
 import { JwtAuthGuard } from '../../common/guards/jwt-auth.guard';
 import { RolesGuard } from '../../common/guards/roles.guard';
+
+const profilePhotoUploadDir = join(process.cwd(), 'uploads', 'psychologists');
+const allowedProfilePhotoMimeTypes = ['image/jpeg', 'image/png', 'image/webp', 'image/gif'];
+
+function ensureProfilePhotoUploadDir() {
+  if (!existsSync(profilePhotoUploadDir)) {
+    mkdirSync(profilePhotoUploadDir, { recursive: true });
+  }
+}
 
 @ApiTags('Users')
 @ApiBearerAuth()
@@ -29,6 +44,13 @@ export class UsersController {
     @Query('role') role?: Role,
   ) {
     return this.usersService.findAllUsers(search, role);
+  }
+
+  @Post('psychologists')
+  @Roles(Role.ADMIN)
+  @ApiOperation({ summary: 'Psikolog oluştur (admin)' })
+  createPsychologist(@Body() dto: CreatePsychologistDto, @CurrentUser() admin: JwtPayload) {
+    return this.usersService.createPsychologist(dto, admin.sub);
   }
 
   @Get('my-clients')
@@ -68,6 +90,38 @@ export class UsersController {
     @Body() dto: UpdatePsychologistDto,
   ) {
     return this.usersService.updatePsychologistProfile(user.sub, dto);
+  }
+
+  @Post('psychologists/profile/photo')
+  @Roles(Role.PSYCHOLOGIST)
+  @UseInterceptors(FileInterceptor('photo', {
+    storage: diskStorage({
+      destination: (_req, _file, cb) => {
+        ensureProfilePhotoUploadDir();
+        cb(null, profilePhotoUploadDir);
+      },
+      filename: (_req, file, cb) => {
+        const extension = extname(file.originalname).toLowerCase() || '.jpg';
+        cb(null, `${randomUUID()}${extension}`);
+      },
+    }),
+    limits: { fileSize: 5 * 1024 * 1024 },
+    fileFilter: (_req, file, cb) => {
+      if (!allowedProfilePhotoMimeTypes.includes(file.mimetype)) {
+        cb(new BadRequestException('Sadece JPG, PNG, WEBP veya GIF yükleyebilirsiniz'), false);
+        return;
+      }
+      cb(null, true);
+    },
+  }))
+  @ApiOperation({ summary: 'Psikolog profil fotoğrafı yükle' })
+  uploadPsychologistProfilePhoto(
+    @CurrentUser() user: JwtPayload,
+    @UploadedFile() file: any,
+  ) {
+    if (!file) throw new BadRequestException('Fotoğraf dosyası zorunludur');
+    const photoUrl = `/uploads/psychologists/${file.filename}`;
+    return this.usersService.updatePsychologistPhoto(user.sub, photoUrl);
   }
 
   @Patch('psychologists/:id/approve')

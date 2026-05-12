@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
-const PUBLIC_PATHS = ['/', '/login', '/register'];
+const PUBLIC_PATHS = ['/', '/login', '/admin/login', '/register', '/forgot-password', '/reset-password', '/verify-email', '/kvkk'];
 const ROLE_PATHS: Record<string, string> = {
   CLIENT: '/client',
   PSYCHOLOGIST: '/psychologist',

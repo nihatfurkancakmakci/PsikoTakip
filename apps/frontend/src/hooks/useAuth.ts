@@ -38,7 +38,7 @@ export function useAuth() {
   }, []);
 
   const register = useCallback(async (payload: {
-    email: string; password: string; firstName: string; lastName: string; role?: string;
+    email: string; password: string; firstName: string; lastName: string; phone: string;
   }) => {
     const { data } = await api.post('/auth/register', payload);
     return data;

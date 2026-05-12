@@ -1,7 +1,5 @@
 import { Transform } from 'class-transformer';
-import { IsEmail, IsString, MinLength, IsEnum, IsOptional, Matches } from 'class-validator';
-import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import { Role } from '@prisma/client';
+import { IsEmail, IsOptional, IsString, Matches, MinLength } from 'class-validator';
 import {
   ALLOWED_EMAIL_REGEX,
   STRONG_PASSWORD_REGEX,
@@ -9,14 +7,12 @@ import {
   normalizeTurkishMobilePhone,
 } from '../../../common/validation/auth-validation';
 
-export class RegisterDto {
-  @ApiProperty({ example: 'user@gmail.com' })
+export class CreatePsychologistDto {
   @Transform(({ value }) => (typeof value === 'string' ? value.trim().toLowerCase() : value))
   @IsEmail({}, { message: 'Geçerli bir e-posta adresi girin' })
   @Matches(ALLOWED_EMAIL_REGEX, { message: 'Desteklenen bir e-posta domaini girin' })
   email: string;
 
-  @ApiProperty({ minLength: 8 })
   @IsString()
   @MinLength(8, { message: 'Şifre en az 8 karakter olmalıdır' })
   @Matches(STRONG_PASSWORD_REGEX, {
@@ -25,15 +21,12 @@ export class RegisterDto {
   })
   password: string;
 
-  @ApiProperty({ example: 'Ahmet' })
   @IsString()
   firstName: string;
 
-  @ApiProperty({ example: 'Yılmaz' })
   @IsString()
   lastName: string;
 
-  @ApiPropertyOptional({ example: '+905551234567' })
   @Transform(({ value }) => (typeof value === 'string' ? normalizeTurkishMobilePhone(value) : value))
   @IsString()
   @Matches(TURKISH_MOBILE_PHONE_REGEX, {
@@ -41,8 +34,7 @@ export class RegisterDto {
   })
   phone: string;
 
-  @ApiProperty({ enum: [Role.CLIENT], default: Role.CLIENT })
-  @IsEnum([Role.CLIENT], { message: 'Kamuya açık kayıt yalnızca danışan hesabı oluşturabilir' })
   @IsOptional()
-  role?: Role;
+  @IsString()
+  specialization?: string;
 }

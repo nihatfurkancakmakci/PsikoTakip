@@ -1,4 +1,4 @@
-import { PrismaClient, Role, PsychologistApprovalStatus } from '@prisma/client';
+import { PrismaClient, Role } from '@prisma/client';
 import * as bcrypt from 'bcrypt';
 
 const prisma = new PrismaClient();
@@ -358,54 +358,6 @@ async function main() {
     },
   });
 
-  const psychHash = await bcrypt.hash('Psikolog1234!', 12);
-  await prisma.user.upsert({
-    where: { email: 'psikolog@psikotakip.com' },
-    update: {},
-    create: {
-      email: 'psikolog@psikotakip.com',
-      passwordHash: psychHash,
-      firstName: 'Ayşe',
-      lastName: 'Kaya',
-      role: Role.PSYCHOLOGIST,
-      isActive: true,
-      isVerified: true,
-      psychologist: {
-        create: {
-          specialization: 'Bilişsel Davranışçı Terapi',
-          biography: 'BDT uzmanı, 10 yıl deneyimli.',
-          workingHours: {
-            monday: { start: '09:00', end: '17:00' },
-            tuesday: { start: '09:00', end: '17:00' },
-            wednesday: { start: '09:00', end: '17:00' },
-            thursday: { start: '09:00', end: '17:00' },
-            friday: { start: '09:00', end: '15:00' },
-          },
-          sessionDurationMin: 50,
-          isAcceptingClients: true,
-          approvalStatus: PsychologistApprovalStatus.APPROVED,
-          approvedAt: new Date(),
-        },
-      },
-    },
-  });
-
-  const clientHash = await bcrypt.hash('Danisan1234!', 12);
-  await prisma.user.upsert({
-    where: { email: 'danisan@psikotakip.com' },
-    update: {},
-    create: {
-      email: 'danisan@psikotakip.com',
-      passwordHash: clientHash,
-      firstName: 'Mehmet',
-      lastName: 'Öztürk',
-      role: Role.CLIENT,
-      isActive: true,
-      isVerified: true,
-      client: { create: {} },
-    },
-  });
-
   // Beck Depresyon Envanteri II (BDE-II)
   const bdeQuestions = BDE_QUESTIONS.map((q, i) => ({ id: i + 1, text: q.text, options: q.options }));
   await prisma.psychologicalTest.upsert({
@@ -486,8 +438,6 @@ async function main() {
 
   console.log('Seed tamamlandı!');
   console.log('Admin: admin@psikotakip.com / Admin1234!');
-  console.log('Psikolog: psikolog@psikotakip.com / Psikolog1234!');
-  console.log('Danışan: danisan@psikotakip.com / Danisan1234!');
 }
 
 main()

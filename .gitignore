@@ -2,6 +2,7 @@ node_modules/
 dist/
 .next/
 build/
+*.tsbuildinfo
 .env
 .env.local
 .env.production
@@ -9,6 +10,11 @@ build/
 *.env
 coverage/
 .nyc_output/
+uploads/
+.claude/worktrees/
+apps/backend/prisma/seed.js
+apps/backend/prisma/seed.js.map
+apps/backend/prisma/seed.d.ts
 prisma/migrations/*.sql.bak
 *.log
 npm-debug.log*

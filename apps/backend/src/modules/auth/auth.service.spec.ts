@@ -53,7 +53,7 @@ describe('AuthService', () => {
 
       const result = await service.register({
         email: 'test@test.com', password: 'Sifre1234!',
-        firstName: 'Test', lastName: 'User',
+        firstName: 'Test', lastName: 'User', phone: '+905551234567',
       });
       expect(result.message).toContain('başarılı');
     });
@@ -62,7 +62,7 @@ describe('AuthService', () => {
       mockPrisma.user.findUnique.mockResolvedValue({ id: 'existing' });
       await expect(service.register({
         email: 'existing@test.com', password: 'Sifre1234!',
-        firstName: 'A', lastName: 'B',
+        firstName: 'A', lastName: 'B', phone: '+905551234567',
       })).rejects.toThrow(ConflictException);
     });
   });

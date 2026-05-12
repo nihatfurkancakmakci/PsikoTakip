@@ -8,9 +8,10 @@ import { toast } from 'sonner';
 import Link from 'next/link';
 import { useAuth } from '@/hooks/useAuth';
 import { Brain, CheckCircle, Mail, Lock, ArrowRight } from 'lucide-react';
+import { emailSchema } from '@/lib/auth-validation';
 
 const schema = z.object({
-  email: z.string().email('Geçerli bir e-posta girin'),
+  email: emailSchema,
   password: z.string().min(1, 'Şifre zorunludur'),
 });
 
@@ -45,7 +46,7 @@ export default function LoginPage() {
         (err as { response?: { data?: { message?: string } } })?.response?.data?.message ??
         'Giriş başarısız';
       toast.error(msg);
-      reset({ email: data.email, password: data.password });
+      reset({ email: data.email, password: '' });
     }
   };
 

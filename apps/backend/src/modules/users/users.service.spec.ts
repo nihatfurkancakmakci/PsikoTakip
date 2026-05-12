@@ -6,7 +6,7 @@ import { EncryptionService } from '../../common/crypto/encryption.service';
 import { AuditService } from '../audit/audit.service';
 
 const mockPrisma = {
-  user: { findUnique: jest.fn(), findMany: jest.fn(), update: jest.fn(), delete: jest.fn() },
+  user: { findUnique: jest.fn(), findMany: jest.fn(), create: jest.fn(), update: jest.fn(), delete: jest.fn() },
   psychologist: { findUnique: jest.fn(), findMany: jest.fn(), update: jest.fn() },
   client: { findUnique: jest.fn(), update: jest.fn() },
   appointment: { findMany: jest.fn() },

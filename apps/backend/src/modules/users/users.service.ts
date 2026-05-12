@@ -1,8 +1,10 @@
-import { Injectable, NotFoundException, ForbiddenException } from '@nestjs/common';
+import { Injectable, NotFoundException, ForbiddenException, ConflictException } from '@nestjs/common';
+import * as bcrypt from 'bcrypt';
 import { PrismaService } from '../../common/prisma/prisma.service';
 import { EncryptionService } from '../../common/crypto/encryption.service';
 import { UpdatePsychologistDto } from './dto/update-psychologist.dto';
 import { UpdateClientDto } from './dto/update-client.dto';
+import { CreatePsychologistDto } from './dto/create-psychologist.dto';
 import { PsychologistApprovalStatus, Role, Prisma } from '@prisma/client';
 import { AuditService } from '../audit/audit.service';
 
@@ -22,6 +24,52 @@ export class UsersService {
       },
       orderBy: { createdAt: 'desc' },
     });
+  }
+
+  async createPsychologist(dto: CreatePsychologistDto, adminId: string) {
+    const existing = await this.prisma.user.findUnique({ where: { email: dto.email } });
+    if (existing) throw new ConflictException('Bu e-posta adresi zaten kayıtlı');
+
+    const passwordHash = await bcrypt.hash(dto.password, 12);
+    const user = await this.prisma.user.create({
+      data: {
+        email: dto.email,
+        passwordHash,
+        firstName: dto.firstName,
+        lastName: dto.lastName,
+        phone: dto.phone,
+        role: Role.PSYCHOLOGIST,
+        isActive: true,
+        isVerified: true,
+        psychologist: {
+          create: {
+            specialization: dto.specialization ?? '',
+            workingHours: {},
+            approvalStatus: PsychologistApprovalStatus.APPROVED,
+            approvedAt: new Date(),
+            approvedById: adminId,
+          },
+        },
+      },
+      select: {
+        id: true,
+        email: true,
+        firstName: true,
+        lastName: true,
+        role: true,
+        psychologist: { select: { id: true, approvalStatus: true } },
+      },
+    });
+
+    await this.auditService.log({
+      userId: adminId,
+      action: 'CREATE',
+      entity: 'User',
+      entityId: user.id,
+      details: { role: Role.PSYCHOLOGIST },
+    });
+
+    return user;
   }
 
   async findPsychologistByUserId(userId: string) {
@@ -59,6 +107,17 @@ export class UsersService {
         ...(dto.sessionDurationMin && { sessionDurationMin: dto.sessionDurationMin }),
         ...(dto.isAcceptingClients !== undefined && { isAcceptingClients: dto.isAcceptingClients }),
       },
+    });
+  }
+
+  async updatePsychologistPhoto(userId: string, photoUrl: string) {
+    const p = await this.prisma.psychologist.findUnique({ where: { userId } });
+    if (!p) throw new NotFoundException('Psikolog profili bulunamadı');
+
+    return this.prisma.psychologist.update({
+      where: { userId },
+      data: { photoUrl },
+      select: { id: true, photoUrl: true },
     });
   }
 
