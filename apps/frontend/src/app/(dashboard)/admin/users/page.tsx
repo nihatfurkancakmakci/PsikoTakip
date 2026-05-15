@@ -6,6 +6,7 @@ import { api } from '@/lib/api';
 import { User, UserRole } from '@/types';
 import { toast } from 'sonner';
 import { formatTurkishMobilePhone, normalizeTurkishMobilePhone } from '@/lib/auth-validation';
+import { Key, X } from 'lucide-react';
 
 interface UserWithMeta extends User {
   createdAt: string;
@@ -27,10 +28,92 @@ const roleColor: Record<UserRole, string> = {
   ADMIN: 'bg-purple-100 text-purple-700',
 };
 
+function ChangePasswordModal({ user, onClose }: { user: UserWithMeta; onClose: () => void }) {
+  const [newPassword, setNewPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+
+  const mutation = useMutation({
+    mutationFn: () => api.patch(`/users/${user.id}/password`, { newPassword }),
+    onSuccess: () => {
+      toast.success(`${user.firstName} ${user.lastName} kullanıcısının şifresi değiştirildi`);
+      onClose();
+    },
+    onError: (e: any) => toast.error(e.response?.data?.message ?? 'Şifre değiştirilemedi'),
+  });
+
+  const handleSubmit = (ev: React.FormEvent) => {
+    ev.preventDefault();
+    if (newPassword.length < 8) return toast.error('Şifre en az 8 karakter olmalı');
+    if (newPassword !== confirmPassword) return toast.error('Şifreler uyuşmuyor');
+    mutation.mutate();
+  };
+
+  return (
+    <>
+      <div className="fixed inset-0 z-40 bg-black/40" onClick={onClose} />
+      <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+        <div className="bg-white rounded-2xl shadow-2xl w-full max-w-md">
+          <div className="flex items-center justify-between p-5 border-b border-gray-100">
+            <div>
+              <h2 className="text-lg font-bold text-gray-900">Şifre Değiştir</h2>
+              <p className="text-xs text-gray-500 mt-0.5">{user.firstName} {user.lastName} ({user.email})</p>
+            </div>
+            <button onClick={onClose} className="p-1.5 rounded-lg hover:bg-gray-100 text-gray-400 hover:text-gray-600">
+              <X className="w-5 h-5" />
+            </button>
+          </div>
+          <form onSubmit={handleSubmit} className="p-5 space-y-4">
+            <div className="p-3 bg-blue-50 border border-blue-200 rounded-xl">
+              <p className="text-xs text-blue-700 font-medium">🔒 Şifre Güvenliği</p>
+              <p className="text-xs text-blue-600 mt-1">Kullanıcı şifreleri bcrypt algoritmasıyla hash&apos;lenmiş olarak saklanmaktadır. Admin dahil hiç kimse mevcut şifreleri görüntüleyemez.</p>
+            </div>
+            <div className="p-3 bg-amber-50 border border-amber-200 rounded-xl">
+              <p className="text-xs text-amber-700 font-medium">⚠️ Admin Yetkisiyle Şifre Değiştirme</p>
+              <p className="text-xs text-amber-600 mt-1">Bu işlem 6698 sayılı KVKK uyarınca denetim günlüğüne (audit log) kaydedilecektir. Değişiklik yapan admin, tarih, saat ve işlem detayları kayıt altına alınır. Kullanıcıya yeni şifresini güvenli bir kanal üzerinden bildirmeyi unutmayın.</p>
+            </div>
+            <div>
+              <label className="label">Yeni Şifre</label>
+              <input
+                type="password"
+                className="input-field"
+                placeholder="En az 8 karakter"
+                value={newPassword}
+                onChange={e => setNewPassword(e.target.value)}
+                required
+                minLength={8}
+              />
+            </div>
+            <div>
+              <label className="label">Şifre Tekrar</label>
+              <input
+                type="password"
+                className="input-field"
+                placeholder="Yeni şifreyi tekrar girin"
+                value={confirmPassword}
+                onChange={e => setConfirmPassword(e.target.value)}
+                required
+              />
+            </div>
+            <div className="flex gap-3 pt-2">
+              <button type="button" onClick={onClose} className="flex-1 py-2.5 border border-gray-300 text-gray-700 font-semibold rounded-lg hover:bg-gray-50 transition-colors">
+                Vazgeç
+              </button>
+              <button type="submit" className="flex-1 btn-primary py-2.5" disabled={mutation.isPending}>
+                {mutation.isPending ? 'Değiştiriliyor...' : 'Şifreyi Değiştir'}
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </>
+  );
+}
+
 export default function AdminUsersPage() {
   const qc = useQueryClient();
   const [search, setSearch] = useState('');
   const [roleFilter, setRoleFilter] = useState<UserRole | ''>('');
+  const [passwordUser, setPasswordUser] = useState<UserWithMeta | null>(null);
   const [psychForm, setPsychForm] = useState({
     firstName: '',
     lastName: '',
@@ -222,14 +305,24 @@ export default function AdminUsersPage() {
                           </>
                         )}
                         {u.role !== 'ADMIN' && (
-                          <button
-                            onClick={() => {
-                              if (confirm(`${u.firstName} ${u.lastName} adlı kullanıcıyı kalıcı olarak silmek istediğinizden emin misiniz? Bu işlem geri alınamaz.`)) {
-                                deleteMutation.mutate(u.id);
-                              }
-                            }}
-                            className="text-xs bg-red-600 text-white px-2.5 py-1 rounded hover:bg-red-700"
-                          >Sil</button>
+                          <>
+                            <button
+                              onClick={() => setPasswordUser(u)}
+                              className="text-xs bg-amber-100 text-amber-700 px-2.5 py-1 rounded hover:bg-amber-200 flex items-center gap-1"
+                              title="Şifre Değiştir"
+                            >
+                              <Key className="w-3 h-3" />
+                              Şifre
+                            </button>
+                            <button
+                              onClick={() => {
+                                if (confirm(`${u.firstName} ${u.lastName} adlı kullanıcıyı kalıcı olarak silmek istediğinizden emin misiniz? Bu işlem geri alınamaz.`)) {
+                                  deleteMutation.mutate(u.id);
+                                }
+                              }}
+                              className="text-xs bg-red-600 text-white px-2.5 py-1 rounded hover:bg-red-700"
+                            >Sil</button>
+                          </>
                         )}
                       </div>
                     </td>
@@ -240,6 +333,8 @@ export default function AdminUsersPage() {
           </div>
         )}
       </div>
+
+      {passwordUser && <ChangePasswordModal user={passwordUser} onClose={() => setPasswordUser(null)} />}
     </div>
   );
 }

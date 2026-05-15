@@ -178,10 +178,10 @@ describe('UsersService', () => {
   describe('updatePsychologistProfile', () => {
     it('profili günceller', async () => {
       mockPrisma.psychologist.findUnique.mockResolvedValue({ id: 'p1', userId: 'u1' });
-      mockPrisma.psychologist.update.mockResolvedValue({ id: 'p1', specialization: 'BDT' });
+      mockPrisma.psychologist.update.mockResolvedValue({ id: 'p1', specializations: ['BDT'] });
 
-      const result = await service.updatePsychologistProfile('u1', { specialization: 'BDT' });
-      expect(result.specialization).toBe('BDT');
+      const result = await service.updatePsychologistProfile('u1', { specializations: ['BDT'] });
+      expect(result.specializations).toContain('BDT');
     });
 
     it('bulunamazsa NotFoundException fırlatır', async () => {

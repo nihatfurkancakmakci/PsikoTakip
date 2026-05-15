@@ -124,6 +124,48 @@ export class UsersController {
     return this.usersService.updatePsychologistPhoto(user.sub, photoUrl);
   }
 
+  @Delete('psychologists/profile/photo')
+  @Roles(Role.PSYCHOLOGIST)
+  @ApiOperation({ summary: 'Psikolog profil fotoğrafını kaldır' })
+  removePsychologistProfilePhoto(@CurrentUser() user: JwtPayload) {
+    return this.usersService.removePsychologistPhoto(user.sub);
+  }
+
+  @Post('psychologists/profile/certificate')
+  @Roles(Role.PSYCHOLOGIST)
+  @UseInterceptors(FileInterceptor('file', {
+    storage: diskStorage({
+      destination: (_req, _file, cb) => {
+        const dir = join(process.cwd(), 'uploads', 'certificates');
+        if (!existsSync(dir)) mkdirSync(dir, { recursive: true });
+        cb(null, dir);
+      },
+      filename: (_req, file, cb) => {
+        const extension = extname(file.originalname).toLowerCase() || '.pdf';
+        cb(null, `${randomUUID()}${extension}`);
+      },
+    }),
+    limits: { fileSize: 10 * 1024 * 1024 },
+    fileFilter: (_req, file, cb) => {
+      const allowed = ['application/pdf', 'image/jpeg', 'image/png', 'image/webp'];
+      if (!allowed.includes(file.mimetype)) {
+        cb(new BadRequestException('Sadece PDF, JPG, PNG veya WEBP yükleyebilirsiniz'), false);
+        return;
+      }
+      cb(null, true);
+    },
+  }))
+  @ApiOperation({ summary: 'Psikolog sertifika dosyası yükle' })
+  uploadCertificateFile(
+    @CurrentUser() user: JwtPayload,
+    @UploadedFile() file: any,
+    @Body() body: { name?: string },
+  ) {
+    if (!file) throw new BadRequestException('Sertifika dosyası zorunludur');
+    const fileUrl = `/uploads/certificates/${file.filename}`;
+    return { fileUrl, name: body.name ?? file.originalname };
+  }
+
   @Patch('psychologists/:id/approve')
   @Roles(Role.ADMIN)
   @ApiOperation({ summary: 'Psikolog onayla/reddet (admin) - eski' })
@@ -180,5 +222,16 @@ export class UsersController {
   @ApiOperation({ summary: 'Kullanıcıyı sil (admin)' })
   deleteUser(@Param('id') id: string, @CurrentUser() admin: JwtPayload) {
     return this.usersService.deleteUser(id, admin.sub);
+  }
+
+  @Patch(':id/password')
+  @Roles(Role.ADMIN)
+  @ApiOperation({ summary: 'Kullanıcı şifresini değiştir (admin)' })
+  changeUserPassword(
+    @Param('id') id: string,
+    @Body() body: { newPassword: string },
+    @CurrentUser() admin: JwtPayload,
+  ) {
+    return this.usersService.adminChangePassword(id, body.newPassword, admin.sub);
   }
 }

@@ -1,5 +1,5 @@
 import { Transform } from 'class-transformer';
-import { IsEmail, IsString, MinLength, IsEnum, IsOptional, Matches } from 'class-validator';
+import { IsEmail, IsString, MinLength, IsEnum, IsOptional, Matches, IsDateString } from 'class-validator';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { Role } from '@prisma/client';
 import {
@@ -40,6 +40,16 @@ export class RegisterDto {
     message: 'Telefon numarası +90 ile başlayan 10 haneli mobil numara olmalıdır',
   })
   phone: string;
+
+  @ApiPropertyOptional({ example: 'MALE', enum: ['MALE', 'FEMALE', 'OTHER'] })
+  @IsString()
+  @IsOptional()
+  gender?: string;
+
+  @ApiPropertyOptional({ example: '2000-01-15' })
+  @IsDateString()
+  @IsOptional()
+  dateOfBirth?: string;
 
   @ApiProperty({ enum: [Role.CLIENT], default: Role.CLIENT })
   @IsEnum([Role.CLIENT], { message: 'Kamuya açık kayıt yalnızca danışan hesabı oluşturabilir' })

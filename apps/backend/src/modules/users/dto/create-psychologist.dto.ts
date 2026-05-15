@@ -1,5 +1,6 @@
 import { Transform } from 'class-transformer';
-import { IsEmail, IsOptional, IsString, Matches, MinLength } from 'class-validator';
+import { IsEmail, IsOptional, IsString, Matches, MinLength, IsArray } from 'class-validator';
+import { ApiPropertyOptional } from '@nestjs/swagger';
 import {
   ALLOWED_EMAIL_REGEX,
   STRONG_PASSWORD_REGEX,
@@ -34,7 +35,9 @@ export class CreatePsychologistDto {
   })
   phone: string;
 
+  @ApiPropertyOptional()
+  @IsArray()
+  @IsString({ each: true })
   @IsOptional()
-  @IsString()
-  specialization?: string;
+  specializations?: string[];
 }

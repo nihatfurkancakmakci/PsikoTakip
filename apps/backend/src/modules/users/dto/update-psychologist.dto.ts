@@ -1,11 +1,12 @@
-import { IsString, IsOptional, IsBoolean, IsInt, Min, Max, IsUrl } from 'class-validator';
+import { IsString, IsOptional, IsBoolean, IsInt, Min, IsArray } from 'class-validator';
 import { ApiPropertyOptional } from '@nestjs/swagger';
 
 export class UpdatePsychologistDto {
   @ApiPropertyOptional()
-  @IsString()
+  @IsArray()
+  @IsString({ each: true })
   @IsOptional()
-  specialization?: string;
+  specializations?: string[];
 
   @ApiPropertyOptional()
   @IsString()
@@ -13,7 +14,7 @@ export class UpdatePsychologistDto {
   biography?: string;
 
   @ApiPropertyOptional()
-  @IsUrl()
+  @IsString()
   @IsOptional()
   photoUrl?: string;
 
@@ -28,7 +29,7 @@ export class UpdatePsychologistDto {
   @IsOptional()
   experienceYears?: number;
 
-  @ApiPropertyOptional({ description: 'Sertifikalar (virgülle ayrılmış)' })
+  @ApiPropertyOptional({ description: 'Sertifikalar (JSON array string)' })
   @IsString()
   @IsOptional()
   certificates?: string;
@@ -36,13 +37,6 @@ export class UpdatePsychologistDto {
   @ApiPropertyOptional()
   @IsOptional()
   workingHours?: Record<string, unknown>;
-
-  @ApiPropertyOptional({ minimum: 30, maximum: 120 })
-  @IsInt()
-  @Min(30)
-  @Max(120)
-  @IsOptional()
-  sessionDurationMin?: number;
 
   @ApiPropertyOptional()
   @IsBoolean()

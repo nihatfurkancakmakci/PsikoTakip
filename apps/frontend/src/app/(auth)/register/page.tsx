@@ -16,7 +16,7 @@ import {
   passwordScore,
   phoneSchema,
 } from '@/lib/auth-validation';
-import { ArrowRight, Brain, Check, Loader2, Lock, Mail, Phone, User, X } from 'lucide-react';
+import { ArrowRight, Brain, Check, Loader2, Lock, Mail, Phone, User, X, Calendar } from 'lucide-react';
 
 const schema = z.object({
   email: emailSchema,
@@ -24,6 +24,8 @@ const schema = z.object({
   firstName: z.string().trim().min(1, 'Ad zorunludur'),
   lastName: z.string().trim().min(1, 'Soyad zorunludur'),
   phone: phoneSchema,
+  gender: z.string().optional(),
+  dateOfBirth: z.string().optional(),
   kvkk: z.literal(true, { errorMap: () => ({ message: 'KVKK metnini kabul etmelisiniz' }) }),
 });
 
@@ -41,7 +43,7 @@ export default function RegisterPage() {
     formState: { errors, isSubmitting },
   } = useForm<FormData>({
     resolver: zodResolver(schema),
-    defaultValues: { kvkk: false as unknown as true },
+    defaultValues: { kvkk: false as unknown as true, gender: '' },
   });
 
   const password = watch('password') ?? '';
@@ -50,7 +52,7 @@ export default function RegisterPage() {
   const onSubmit = async ({ kvkk: _kvkk, ...rest }: FormData) => {
     try {
       await registerUser(rest);
-      toast.success('Kayıt başarılı. Lütfen e-postanızı doğrulayın.');
+      toast.success('Kayıt başarılı. Lütfen giriş yapın.');
       router.push('/login');
     } catch (err: unknown) {
       const msg =
@@ -68,7 +70,7 @@ export default function RegisterPage() {
             <Brain className="w-6 h-6 text-white" />
           </div>
           <h1 className="text-3xl font-bold text-slate-900 mb-1">Hesap oluşturun</h1>
-          <p className="text-slate-500 text-sm">Danışan hesabınızla PsikoTakip'e katılın</p>
+          <p className="text-slate-500 text-sm">Danışan hesabınızla PsikoTakip&apos;e katılın</p>
         </div>
 
         <div className="card shadow-md border-slate-100">
@@ -147,6 +149,31 @@ export default function RegisterPage() {
               {errors.phone && <p className="text-red-500 text-xs mt-1">{errors.phone.message}</p>}
             </div>
 
+            {/* Cinsiyet ve Doğum Tarihi */}
+            <div className="grid grid-cols-2 gap-3">
+              <div>
+                <label className="label">Cinsiyet</label>
+                <select className="input-field" {...register('gender')}>
+                  <option value="">Belirtmek istemiyorum</option>
+                  <option value="MALE">Erkek</option>
+                  <option value="FEMALE">Kadın</option>
+                  <option value="OTHER">Diğer</option>
+                </select>
+              </div>
+              <div>
+                <label className="label">Doğum Tarihi</label>
+                <div className="relative">
+                  <Calendar className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 pointer-events-none" />
+                  <input
+                    type="date"
+                    className="input-field pl-10"
+                    max={new Date().toISOString().split('T')[0]}
+                    {...register('dateOfBirth')}
+                  />
+                </div>
+              </div>
+            </div>
+
             <div className="flex items-start gap-3 p-3.5 bg-primary-50 rounded-xl border border-primary-100">
               <input
                 type="checkbox"
@@ -158,7 +185,7 @@ export default function RegisterPage() {
                 {...register('kvkk')}
               />
               <button type="button" onClick={() => setKvkkOpen(true)} className="text-left text-xs text-slate-600 leading-relaxed">
-                KVKK Aydınlatma Metni'ni okuyup kabul ediyorum.
+                6698 sayılı KVKK Aydınlatma Metni&apos;ni okudum ve kabul ediyorum.
               </button>
             </div>
             {errors.kvkk && <p className="text-red-500 text-xs -mt-2">{errors.kvkk.message}</p>}
@@ -197,10 +224,25 @@ export default function RegisterPage() {
               </button>
             </div>
             <div className="px-5 py-4 overflow-y-auto text-sm text-slate-600 leading-6 space-y-3">
-              <p>PsikoTakip, hesap oluşturma, randevu yönetimi, danışan iletişimi ve yasal yükümlülüklerin yerine getirilmesi amacıyla kişisel verilerinizi işler.</p>
-              <p>Kimlik ve iletişim bilgileriniz, sağlık verilerinizle ilişkili güvenli kayıtlar ve sistem işlem günlükleri yalnızca yetkili kullanıcılar tarafından erişilebilir şekilde saklanır.</p>
-              <p>Verileriniz KVKK kapsamında açık rızanız, sözleşmenin kurulması ve kanuni yükümlülükler çerçevesinde işlenir. Hesabınız üzerinden verilerinize erişme, düzeltme, dışa aktarma ve silme haklarınızı kullanabilirsiniz.</p>
-              <p>Metnin tamamını okuduğunuzu ve kişisel verilerinizin bu kapsamda işlenmesini kabul ettiğinizi onaylayarak kayıt işlemine devam edebilirsiniz.</p>
+              <p className="font-semibold text-slate-800">6698 Sayılı Kişisel Verilerin Korunması Kanunu Kapsamında Aydınlatma Metni</p>
+              <p className="text-xs text-slate-500">7 Nisan 2016 tarih ve 29677 sayılı Resmî Gazete&apos;de yayımlanan kanun uyarınca</p>
+              <p><strong>Veri Sorumlusu:</strong> PsikoTakip Psikolog Yönetim Sistemi</p>
+              <p><strong>1. İşlenen Kişisel Veri Kategorileri (KVKK m.3)</strong><br />
+                Kimlik bilgileri (ad, soyad, doğum tarihi, cinsiyet), iletişim bilgileri (e-posta, telefon), <u>özel nitelikli kişisel veriler</u> (KVKK m.6 kapsamında sağlık verileri: seans notları, psikolojik test sonuçları), işlem güvenliği bilgileri (oturum açma kayıtları, IP adresi, erişim logları) işlenmektedir.</p>
+              <p><strong>2. Hukuki Sebepler (KVKK m.5 ve m.6)</strong><br />
+                <strong>m.5/2-c:</strong> Sözleşmenin kurulması veya ifası (randevu hizmeti).<br />
+                <strong>m.5/2-ç:</strong> Hukuki yükümlülük (yasal saklama süreleri).<br />
+                <strong>m.5/2-f:</strong> Meşru menfaat (sistem güvenliği).<br />
+                <strong>m.6/2:</strong> Sağlık verileri için ilgili kişinin açık rızası.</p>
+              <p><strong>3. Verilerin Aktarılması (KVKK m.8-9)</strong><br />
+                Kişisel verileriniz yalnızca ilgili psikologunuza, yasal zorunluluk halinde yetkili kamu kurumlarına ve teknik altyapı sağlayıcılarına (bulut veritabanı, e-posta servisi) aktarılmaktadır. Sağlık verileriniz AES-256 şifreleme ile korunmaktadır. Üçüncü taraf reklam veya pazarlama amaçlı aktarım yapılmamaktadır.</p>
+              <p><strong>4. Saklama Süresi (KVKK m.7)</strong><br />
+                Verileriniz hizmet ilişkisi süresince; sağlık verileri ilişki sonrasında 5 yıl boyunca yasal yükümlülükler gereği saklanmaktadır. Süre sonunda Crypto-Shredding yöntemiyle imha edilmektedir.</p>
+              <p><strong>5. Haklarınız (KVKK m.11)</strong><br />
+                Kişisel verilerinizin işlenip işlenmediğini öğrenme; işlenmişse bilgi talep etme; işlenme amacını ve amacına uygun kullanılıp kullanılmadığını öğrenme; yurt içi/yurt dışı aktarım yapılan üçüncü kişileri bilme; düzeltilmesini isteme; silinmesini veya yok edilmesini isteme; üçüncü kişilere bildirilmesini isteme; otomatik analiz sonucu aleyhinize bir sonuca itiraz etme; kanuna aykırı işleme sebebiyle zarara uğranılması halinde tazminat talep etme haklarına sahipsiniz.</p>
+              <p><strong>6. Başvuru (KVKK m.13)</strong><br />
+                Hesabınız üzerinden &quot;Verilerimi İndir&quot; ve &quot;Hesabımı Sil&quot; seçeneklerini kullanabilirsiniz. Detaylı başvurularınız en geç 30 gün içinde ücretsiz olarak sonuçlandırılacaktır. Başvurunuzun reddedilmesi halinde KVKK m.14 uyarınca Kişisel Verileri Koruma Kurulu&apos;na şikâyette bulunabilirsiniz.</p>
+              <p className="text-xs text-slate-400 mt-4 p-2 bg-slate-50 rounded-lg">İşbu aydınlatma metni, 6698 sayılı KVKK, Aydınlatma Yükümlülüğünün Yerine Getirilmesinde Uyulacak Usul ve Esaslar Hakkında Tebliğ ve Kişisel Verilerin Silinmesi, Yok Edilmesi veya Anonim Hale Getirilmesi Hakkında Yönetmelik hükümlerine uygun olarak hazırlanmıştır.</p>
             </div>
             <div className="p-5 border-t border-slate-100">
               <button

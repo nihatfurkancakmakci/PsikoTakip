@@ -74,7 +74,13 @@ export class AuthService {
     });
 
     if (user.role === Role.CLIENT) {
-      await this.prisma.client.create({ data: { userId: user.id } });
+      await this.prisma.client.create({
+        data: {
+          userId: user.id,
+          ...(dto.gender && { gender: dto.gender }),
+          ...(dto.dateOfBirth && { dateOfBirth: new Date(dto.dateOfBirth) }),
+        },
+      });
     }
 
     await this.auditService.log({

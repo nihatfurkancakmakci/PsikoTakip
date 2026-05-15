@@ -46,37 +46,18 @@ const statusColor: Record<string, string> = {
   NO_SHOW: 'bg-slate-100 text-slate-600 border border-slate-200',
 };
 
-function useCountdown(targetDate: string) {
-  const [diff, setDiff] = useState(new Date(targetDate).getTime() - Date.now());
-  useEffect(() => {
-    const id = setInterval(() => setDiff(new Date(targetDate).getTime() - Date.now()), 1000);
-    return () => clearInterval(id);
-  }, [targetDate]);
-  return diff;
-}
-
-function formatCountdown(ms: number): { label: string; color: string } {
-  if (ms < 0) {
-    const elapsed = Math.abs(ms);
-    const m = Math.floor(elapsed / 60000);
-    const s = Math.floor((elapsed % 60000) / 1000);
-    return { label: `Başladı — ${m}d ${s}s geçti`, color: 'bg-green-400 text-white animate-pulse' };
-  }
-  const totalSec = Math.floor(ms / 1000);
-  const h = Math.floor(totalSec / 3600);
-  const m = Math.floor((totalSec % 3600) / 60);
-  const s = totalSec % 60;
-  const label = h > 0 ? `${h}s ${m}d ${s}s` : `${m}d ${s}s`;
-  return { label: `Başlamasına ${label}`, color: 'bg-primary-500 text-white' };
-}
-
 function NextSessionPanel({ appointment }: { appointment: Appointment }) {
   const qc = useQueryClient();
+  const [showConfirm, setShowConfirm] = useState(false);
   const clientUserId = appointment.client?.user?.id;
-  const startDiff = useCountdown(appointment.startTime);
-  const endDiff = useCountdown(appointment.endTime);
-  const sessionStarted = startDiff <= 0;
-  const sessionEnded = endDiff <= 0;
+  
+  const startTime = new Date(appointment.startTime);
+  const endTime = new Date(appointment.endTime);
+  const now = new Date();
+  
+  const sessionStarted = now >= startTime;
+  const sessionEnded = now >= endTime;
+  const isToday = startTime.toDateString() === now.toDateString();
 
   const complete = useMutation({
     mutationFn: () => api.patch(`/appointments/${appointment.id}/status`, { status: 'COMPLETED' }),
@@ -101,28 +82,64 @@ function NextSessionPanel({ appointment }: { appointment: Appointment }) {
 
   const client = appointment.client;
   const initials = client ? `${client.user.firstName[0]}${client.user.lastName[0]}` : '?';
-  const { label: timerLabel, color: timerColor } = formatCountdown(startDiff);
 
-  const endLabel = (() => {
-    if (!sessionStarted) return null;
-    if (sessionEnded) return 'Seans süresi doldu';
-    const m = Math.floor(endDiff / 60000);
-    const s = Math.floor((endDiff % 60000) / 1000);
-    return `Bitimine ${m}d ${s}s`;
-  })();
+  let timerLabel = 'Yaklaşıyor';
+  let timerColor = 'bg-primary-500 text-white';
+  
+  if (sessionEnded) {
+    timerLabel = 'Süresi Doldu';
+    timerColor = 'bg-red-500 text-white';
+  } else if (sessionStarted) {
+    timerLabel = 'Devam Ediyor';
+    timerColor = 'bg-green-500 text-white animate-pulse';
+  } else if (isToday) {
+    timerLabel = 'Bugün';
+  }
+
+  const handleConnect = () => {
+    if (appointment.status !== 'CONFIRMED') {
+      toast.error('Bu randevu henüz onaylanmamış. Lütfen önce onaylayın.');
+      return;
+    }
+    setShowConfirm(true);
+  };
+
+  const confirmConnection = () => {
+    setShowConfirm(false);
+    if (appointment.videoMeetingUrl) {
+      window.open(appointment.videoMeetingUrl, '_blank');
+    }
+  };
 
   return (
-    <div className="bg-white border border-primary-100 rounded-2xl shadow-sm overflow-hidden">
+    <div className="bg-white border border-primary-100 rounded-2xl shadow-sm overflow-hidden relative">
+      {/* Onay Modalı */}
+      {showConfirm && (
+        <div className="absolute inset-0 bg-white/95 backdrop-blur-sm z-10 flex flex-col items-center justify-center p-6 text-center animate-fade-in">
+          <div className="w-16 h-16 bg-blue-50 rounded-full flex items-center justify-center mb-4">
+            <Video className="w-8 h-8 text-blue-500" />
+          </div>
+          <h3 className="text-lg font-bold text-gray-800">Görüşmeyi Başlat</h3>
+          <p className="text-sm text-gray-500 mt-2 mb-6">
+            <strong>{format(startTime, 'HH:mm')}</strong> seansına bağlanmak üzeresiniz. Emin misiniz?
+          </p>
+          <div className="flex gap-3">
+            <button onClick={() => setShowConfirm(false)} className="btn-secondary px-6">İptal</button>
+            <button onClick={confirmConnection} className="btn-primary px-6 shadow-md shadow-primary-500/30">Evet, Bağlan</button>
+          </div>
+        </div>
+      )}
+
       {/* Panel header */}
       <div className="bg-gradient-to-r from-primary-600 to-primary-700 p-5 text-white">
         <div className="flex items-center justify-between mb-4">
           <div>
             <p className="text-primary-200 text-xs font-semibold uppercase tracking-wider">Sıradaki Seans</p>
             <p className="text-white font-bold text-lg mt-0.5">
-              {format(new Date(appointment.startTime), 'dd MMMM yyyy, EEEE', { locale: tr })}
+              {format(startTime, 'dd MMMM yyyy, EEEE', { locale: tr })}
             </p>
             <p className="text-primary-100 text-sm">
-              {format(new Date(appointment.startTime), 'HH:mm')} – {format(new Date(appointment.endTime), 'HH:mm')}
+              {format(startTime, 'HH:mm')} – {format(endTime, 'HH:mm')}
               {' · '}{appointment.sessionType === 'ONLINE' ? '🎥 Online' : '🏥 Yüz yüze'}
             </p>
           </div>
@@ -130,11 +147,6 @@ function NextSessionPanel({ appointment }: { appointment: Appointment }) {
             <div className={`text-xs font-bold px-3 py-1.5 rounded-full ${timerColor}`}>
               {timerLabel}
             </div>
-            {sessionStarted && endLabel && (
-              <div className={`text-xs font-bold px-3 py-1.5 rounded-full ${sessionEnded ? 'bg-red-400 text-white' : 'bg-white/20 text-white'}`}>
-                {endLabel}
-              </div>
-            )}
           </div>
         </div>
 
@@ -155,15 +167,13 @@ function NextSessionPanel({ appointment }: { appointment: Appointment }) {
             >
               📝 Seans Notu
             </Link>
-            {appointment.videoMeetingUrl && (
-              <a
-                href={appointment.videoMeetingUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="bg-primary-500 text-white text-sm font-bold px-4 py-2 rounded-lg hover:bg-primary-400 transition-colors border border-primary-400"
+            {appointment.sessionType === 'ONLINE' && appointment.videoMeetingUrl && (
+              <button
+                onClick={handleConnect}
+                className="bg-primary-500 text-white text-sm font-bold px-4 py-2 rounded-lg hover:bg-primary-400 transition-colors border border-primary-400 flex items-center gap-2 shadow-sm"
               >
                 🎥 Bağlan
-              </a>
+              </button>
             )}
           </div>
         </div>

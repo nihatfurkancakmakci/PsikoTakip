@@ -42,9 +42,14 @@ export default function LoginPage() {
       else if (user.role === 'PSYCHOLOGIST') router.push('/psychologist');
       else router.push('/client');
     } catch (err: unknown) {
-      const msg =
-        (err as { response?: { data?: { message?: string } } })?.response?.data?.message ??
-        'Giriş başarısız';
+      let msg = 'Giriş başarısız';
+      const axiosErr = err as { response?: { status?: number; data?: { message?: string | string[] } } };
+      if (axiosErr?.response?.data?.message) {
+        const m = axiosErr.response.data.message;
+        msg = Array.isArray(m) ? m[0] : m;
+      } else if (axiosErr?.response?.status === 401) {
+        msg = 'E-posta veya şifre hatalı';
+      }
       toast.error(msg);
       reset({ email: data.email, password: '' });
     }
@@ -96,7 +101,7 @@ export default function LoginPage() {
             </div>
           </div>
 
-          <p className="text-slate-600 text-xs">© 2025 PsikoTakip · KVKK Uyumlu</p>
+          <p className="text-slate-600 text-xs">© 2026 PsikoTakip · KVKK Uyumlu</p>
         </div>
       </div>
 

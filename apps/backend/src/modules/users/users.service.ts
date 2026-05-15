@@ -43,7 +43,7 @@ export class UsersService {
         isVerified: true,
         psychologist: {
           create: {
-            specialization: dto.specialization ?? '',
+            specializations: dto.specializations ?? [],
             workingHours: {},
             approvalStatus: PsychologistApprovalStatus.APPROVED,
             approvedAt: new Date(),
@@ -94,31 +94,71 @@ export class UsersService {
     const p = await this.prisma.psychologist.findUnique({ where: { userId } });
     if (!p) throw new NotFoundException('Psikolog profili bulunamadı');
 
-    return this.prisma.psychologist.update({
+    const updated = await this.prisma.psychologist.update({
       where: { userId },
       data: {
-        ...(dto.specialization && { specialization: dto.specialization }),
+        ...(dto.specializations && { specializations: dto.specializations }),
         ...(dto.biography !== undefined && { biography: dto.biography }),
         ...(dto.photoUrl !== undefined && { photoUrl: dto.photoUrl }),
         ...(dto.educationInfo !== undefined && { educationInfo: dto.educationInfo }),
         ...(dto.experienceYears !== undefined && { experienceYears: dto.experienceYears }),
         ...(dto.certificates !== undefined && { certificates: dto.certificates }),
         ...(dto.workingHours && { workingHours: dto.workingHours as Prisma.InputJsonValue }),
-        ...(dto.sessionDurationMin && { sessionDurationMin: dto.sessionDurationMin }),
         ...(dto.isAcceptingClients !== undefined && { isAcceptingClients: dto.isAcceptingClients }),
       },
     });
+
+    await this.auditService.log({
+      userId,
+      action: 'UPDATE',
+      entity: 'PsychologistProfile',
+      entityId: p.id,
+      details: { updatedFields: Object.keys(dto) },
+    });
+
+    return updated;
   }
 
   async updatePsychologistPhoto(userId: string, photoUrl: string) {
     const p = await this.prisma.psychologist.findUnique({ where: { userId } });
     if (!p) throw new NotFoundException('Psikolog profili bulunamadı');
 
-    return this.prisma.psychologist.update({
+    const updated = await this.prisma.psychologist.update({
       where: { userId },
       data: { photoUrl },
       select: { id: true, photoUrl: true },
     });
+
+    await this.auditService.log({
+      userId,
+      action: 'UPDATE',
+      entity: 'PsychologistPhoto',
+      entityId: p.id,
+      details: { action: 'UPLOAD', newPhotoUrl: photoUrl },
+    });
+
+    return updated;
+  }
+
+  async removePsychologistPhoto(userId: string) {
+    const p = await this.prisma.psychologist.findUnique({ where: { userId } });
+    if (!p) throw new NotFoundException('Psikolog profili bulunamadı');
+
+    const updated = await this.prisma.psychologist.update({
+      where: { userId },
+      data: { photoUrl: null },
+      select: { id: true, photoUrl: true },
+    });
+
+    await this.auditService.log({
+      userId,
+      action: 'DELETE',
+      entity: 'PsychologistPhoto',
+      entityId: p.id,
+      details: { action: 'REMOVE' },
+    });
+
+    return updated;
   }
 
   async approvePsychologist(psychologistId: string, adminId: string, approve: boolean, reason?: string) {
@@ -211,7 +251,7 @@ export class UsersService {
         },
         psychologist: {
           select: {
-            specialization: true, biography: true,
+            specializations: true, biography: true,
             approvalStatus: true, createdAt: true,
           },
         },
@@ -248,9 +288,7 @@ export class UsersService {
     if (!user) throw new NotFoundException('Kullanıcı bulunamadı');
     if (user.role === Role.ADMIN) throw new ForbiddenException('Admin kullanıcı silinemez');
 
-    if (user.psychologist) {
-      await this.prisma.sessionNote.deleteMany({ where: { psychologistId: user.psychologist.id } });
-    }
+    // SessionNote deletion is now handled by Prisma Cascade
 
     await this.prisma.user.delete({ where: { id: userId } });
 
@@ -295,6 +333,28 @@ export class UsersService {
     }
 
     return Array.from(clientMap.values());
+  }
+
+  async adminChangePassword(userId: string, newPassword: string, adminId: string) {
+    const user = await this.prisma.user.findUnique({ where: { id: userId } });
+    if (!user) throw new NotFoundException('Kullanıcı bulunamadı');
+    if (user.role === Role.ADMIN) throw new ForbiddenException('Admin şifresi bu yöntemle değiştirilemez');
+
+    const passwordHash = await bcrypt.hash(newPassword, 12);
+    await this.prisma.user.update({
+      where: { id: userId },
+      data: { passwordHash },
+    });
+
+    await this.auditService.log({
+      userId: adminId,
+      action: 'UPDATE',
+      entity: 'User',
+      entityId: userId,
+      details: { action: 'admin_password_change' },
+    });
+
+    return { message: 'Şifre başarıyla değiştirildi' };
   }
 
   async approvePsychologistByStatus(psychologistId: string, adminId: string, status: 'APPROVED' | 'REJECTED', reason?: string) {
