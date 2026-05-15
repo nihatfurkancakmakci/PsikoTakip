@@ -20,6 +20,7 @@ export interface Psychologist {
   specialization: string;
   specializations?: string[];
   biography?: string;
+  experienceYears?: number;
   photoUrl?: string;
   sessionDurationMin: number;
   isAcceptingClients: boolean;
