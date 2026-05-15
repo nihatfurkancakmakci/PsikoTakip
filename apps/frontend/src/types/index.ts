@@ -18,6 +18,7 @@ export interface Psychologist {
   id: string;
   userId: string;
   specialization: string;
+  specializations?: string[];
   biography?: string;
   photoUrl?: string;
   sessionDurationMin: number;
